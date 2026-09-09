@@ -1,0 +1,39 @@
+[data-theme="light"], :root {
+  /* 1. Primary & Secondary */
+  --primary: #0b4668;
+  --primary-hover: #08354f;
+  --primary-foreground: #FFFFFF;
+  --primary-light: #f0f7fa;
+
+  --secondary: #457b8d;
+  --secondary-hover: #366270;
+  --secondary-foreground: #FFFFFF;
+
+  /* 2. Muted & Neutrals */
+  --muted: #6B7280;
+  --muted-foreground: #45464D;
+  --muted-background: #f1f1f1;
+
+  /* 3. Feedback & Status */
+  --success: #4edea3;
+  --success-foreground: #065f46;
+  --warning: #fbbf24;
+  --warning-foreground: #92400e;
+  --destructive: #b22b32;
+  --destructive-foreground: #FFFFFF;
+
+  /* 4. Surfaces & Layout */
+  --background: #f1f1f1;
+  --surface: #FFFFFF;
+  --surface-hover: #f8fafc;
+  --sidebar: #FFFFFF;
+  --sidebar-border: #E2E8F0;
+  --sidebar-active: #0b4668;
+  --sidebar-active-foreground: #FFFFFF;
+  --header: #FFFFFF;
+
+  /* 5. Borders & Focus Rings */
+  --border: #E2E8F0;
+  --border-focus: #0b4668;
+  --ring: #0b4668;
+}

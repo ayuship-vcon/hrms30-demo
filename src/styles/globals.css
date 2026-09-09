@@ -1,0 +1,283 @@
+@import './reset.css';
+@import './fonts.css';
+@import './variables.css';
+@import './theme/light.theme.css';
+@import './theme/dark.theme.css';
+@import './utilities.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--background, #f1f1f1);
+    color: var(--muted-foreground, #45464D);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: #000000;
+    font-family: inherit;
+  }
+}
+
+/* Custom Soft Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+@layer components {
+  /* ==========================================================================
+     1. BUTTONS & ACTIONS (Global Material 3 HRMS Standard)
+     ========================================================================== */
+
+  /* Primary Action Button (+ Primary Action, Add Holiday, Submit) */
+  .btn-primary {
+    @apply w-full py-2.5 sm:py-3 text-white rounded text-sm font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed active:scale-[0.99] shadow-xs;
+    background-color: #0b4668;
+  }
+  .btn-primary:hover:not(:disabled) {
+    background-color: #08354f;
+  }
+
+  /* Secondary Button (Vibrant / Secondary Theme) */
+  .btn-secondary {
+    @apply w-full py-2.5 sm:py-3 text-white rounded text-sm font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed active:scale-[0.99];
+    background-color: #457b8d;
+  }
+  .btn-secondary:hover:not(:disabled) {
+    background-color: #366270;
+  }
+
+  /* Outline Action Button */
+  .btn-outline {
+    @apply w-full py-2.5 sm:py-3 rounded text-sm font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-[0.99] shadow-2xs;
+    background-color: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    color: #45464D;
+  }
+  .btn-outline:hover {
+    background-color: #F8FAFC;
+    color: #0b4668;
+    border-color: #0b4668;
+  }
+
+  /* Ghost Style Action Button */
+  .btn-ghost {
+    @apply py-2 px-3 rounded text-sm font-medium transition-all flex items-center justify-center gap-1.5 cursor-pointer;
+    background-color: transparent;
+    color: #45464D;
+  }
+  .btn-ghost:hover {
+    background-color: #F1F5F9;
+    color: #0b4668;
+  }
+
+  /* Floating Action Chat Button (FAB) */
+  .fab-chat {
+    @apply fixed bottom-6 right-6 w-12 h-12 sm:w-14 sm:h-14 text-white rounded-full shadow-lg flex items-center justify-center cursor-pointer transition-transform hover:scale-105 active:scale-95 z-50;
+    background-color: #0b4668;
+  }
+  .fab-chat:hover {
+    background-color: #08354f;
+  }
+
+  /* ==========================================================================
+     2. FORM CONTROLS & INPUTS
+     ========================================================================== */
+
+  .input-label {
+    @apply text-sm font-semibold mb-1.5 block;
+    color: #45464D;
+  }
+
+  .input-control {
+    @apply w-full px-3.5 py-2.5 rounded text-sm transition-all;
+    background-color: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    color: #45464D;
+  }
+  .input-control::placeholder {
+    color: #6B7280;
+  }
+  .input-control:focus {
+    outline: none;
+    border-color: #0b4668;
+    box-shadow: 0 0 0 1px #0b4668;
+  }
+
+  .input-success {
+    border-color: #4edea3 !important;
+  }
+  .input-success:focus {
+    border-color: #4edea3 !important;
+    outline: none;
+    box-shadow: 0 0 0 1px #4edea3 !important;
+  }
+
+  .input-error {
+    border-color: #b22b32 !important;
+    color: #b22b32 !important;
+  }
+  .input-error:focus {
+    border-color: #b22b32 !important;
+    outline: none;
+    box-shadow: 0 0 0 1px #b22b32 !important;
+  }
+
+  .input-helper-error {
+    @apply text-[10px] sm:text-sm mt-1 flex items-center gap-1;
+    color: #b22b32;
+  }
+
+  /* ==========================================================================
+     3. STATUS BADGES & CHIPS (with Live Status Dot)
+     ========================================================================== */
+
+  .badge-chip {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-sm font-medium select-none;
+  }
+
+  .badge-active {
+    background-color: #e6f9f2;
+    color: #065f46;
+  }
+  .badge-active .status-dot {
+    @apply w-1.5 h-1.5 rounded-full;
+    background-color: #4edea3;
+  }
+
+  .badge-onleave {
+    background-color: #fef3c7;
+    color: #92400e;
+  }
+  .badge-onleave .status-dot {
+    @apply w-1.5 h-1.5 rounded-full;
+    background-color: #fbbf24;
+  }
+
+  .badge-terminated {
+    background-color: #fee2e2;
+    color: #991b1b;
+  }
+  .badge-terminated .status-dot {
+    @apply w-1.5 h-1.5 rounded-full;
+    background-color: #b22b32;
+  }
+
+  .badge-draft {
+    background-color: #f1f5f9;
+    color: #475569;
+  }
+  .badge-draft .status-dot {
+    @apply w-1.5 h-1.5 rounded-full;
+    background-color: #94a3b8;
+  }
+
+  /* ==========================================================================
+     4. TABLES & DATA GRIDS (Material 3 HRMS UI Kit Spec)
+     ========================================================================== */
+
+  .table-container {
+    @apply w-full overflow-hidden rounded shadow-card;
+    border: 1px solid #E2E8F0;
+    background-color: #FFFFFF;
+  }
+
+  /* Deep Navy Table Header (Page 1 Spec) */
+  .table-header-navy, .data-table-header {
+    @apply text-white text-sm font-semibold tracking-wider py-3.5 px-4 text-left;
+    background-color: #0b4668;
+  }
+
+  /* Clean Light Table Header (Page 3 Spec) */
+  .table-header-clean {
+    @apply text-sm font-semibold uppercase tracking-wider py-3.5 px-4 text-left;
+    background-color: #F8FAFC;
+    border-bottom: 1px solid #E2E8F0;
+    color: #45464D;
+  }
+
+  /* Table Row */
+  .table-row, .data-table-row {
+    @apply transition-colors;
+    border-bottom: 1px solid #E2E8F0;
+  }
+  .table-row:hover, .data-table-row:hover {
+    background-color: #F8FAFC;
+  }
+
+  /* Table Data Cell */
+  .table-cell, .data-table-cell {
+    @apply py-3.5 px-4 text-sm align-middle;
+    color: #45464D;
+  }
+
+  /* Circular Avatar with Initials Badge */
+  .table-avatar {
+    @apply w-8 h-8 rounded-full font-bold text-sm flex items-center justify-center shrink-0;
+    background-color: #bad9e6;
+    color: #0b4668;
+    border: 1px solid #bad9e6;
+  }
+
+  /* Table Action Text Link */
+  .table-action-link {
+    @apply hover:underline font-semibold text-sm cursor-pointer;
+    color: #0b4668;
+  }
+
+  /* ==========================================================================
+     5. TYPOGRAPHY HIERARCHY HELPERS
+     ========================================================================== */
+
+  .typo-d1 {
+    @apply text-d1 font-bold tracking-tight;
+    color: #000000;
+  }
+
+  .typo-h1 {
+    @apply text-h1 font-semibold tracking-tight;
+    color: #000000;
+  }
+
+  .typo-h2 {
+    @apply text-h2 font-semibold tracking-tight;
+    color: #000000;
+  }
+
+  .typo-h3 {
+    @apply text-h3 font-medium tracking-tight;
+    color: #000000;
+  }
+
+  .typo-body-lg {
+    @apply text-body-lg font-normal leading-relaxed;
+    color: #45464D;
+  }
+
+  .typo-body-sm {
+    @apply text-body-sm font-normal;
+    color: #45464D;
+  }
+
+  .typo-caption {
+    @apply text-caption font-normal uppercase tracking-wider;
+    color: #6B7280;
+  }
+}

@@ -1,0 +1,181 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 420" fill="none" class="w-full h-auto">
+  <defs>
+    <filter id="shadow-main" x="30" y="40" width="460" height="340" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#0F172A" flood-opacity="0.08" />
+    </filter>
+    <filter id="shadow-card" x="0" y="0" width="200" height="200" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#0F172A" flood-opacity="0.1" />
+    </filter>
+    <linearGradient id="laptop-screen-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#F8FAFC" />
+    </linearGradient>
+    <linearGradient id="brand-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B" />
+      <stop offset="100%" stop-color="#0F172A" />
+    </linearGradient>
+    <linearGradient id="shield-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3B82F6" />
+      <stop offset="100%" stop-color="#1D4ED8" />
+    </linearGradient>
+  </defs>
+
+  <!-- Ambient Backdrop Circles & Geometric Accents -->
+  <circle cx="260" cy="210" r="170" fill="#F1F5F9" fill-opacity="0.7" />
+  <circle cx="260" cy="210" r="125" fill="#E2E8F0" fill-opacity="0.5" />
+  
+  <!-- Subtle Grid Dots -->
+  <circle cx="90" cy="90" r="2.5" fill="#94A3B8" fill-opacity="0.4" />
+  <circle cx="110" cy="90" r="2.5" fill="#94A3B8" fill-opacity="0.4" />
+  <circle cx="90" cy="110" r="2.5" fill="#94A3B8" fill-opacity="0.4" />
+  <circle cx="110" cy="110" r="2.5" fill="#94A3B8" fill-opacity="0.4" />
+  
+  <circle cx="410" cy="300" r="2.5" fill="#94A3B8" fill-opacity="0.4" />
+  <circle cx="430" cy="300" r="2.5" fill="#94A3B8" fill-opacity="0.4" />
+  <circle cx="410" cy="320" r="2.5" fill="#94A3B8" fill-opacity="0.4" />
+  <circle cx="430" cy="320" r="2.5" fill="#94A3B8" fill-opacity="0.4" />
+
+  <!-- MAIN LAPTOP / WORKSTATION (Center) -->
+  <g filter="url(#shadow-main)">
+    <!-- Laptop Screen Outer Shell -->
+    <rect x="110" y="80" width="300" height="190" rx="14" fill="#1E293B" stroke="#0F172A" stroke-width="2" />
+    <!-- Inner Display Surface -->
+    <rect x="118" y="88" width="284" height="166" rx="8" fill="url(#laptop-screen-grad)" />
+    <!-- Camera Dot -->
+    <circle cx="260" cy="84" r="2" fill="#64748B" />
+
+    <!-- UI: Top Window Navigation Header -->
+    <rect x="118" y="88" width="284" height="24" rx="8" fill="#F1F5F9" />
+    <circle cx="132" cy="100" r="3.5" fill="#EF4444" />
+    <circle cx="143" cy="100" r="3.5" fill="#F59E0B" />
+    <circle cx="154" cy="100" r="3.5" fill="#10B981" />
+    <!-- Mini Search Bar -->
+    <rect x="180" y="93" width="130" height="14" rx="7" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1" />
+    <circle cx="190" cy="100" r="2.5" stroke="#94A3B8" stroke-width="1" />
+
+    <!-- UI: Sidebar & Main Workspace Area -->
+    <rect x="118" y="112" width="55" height="142" fill="#FFFFFF" stroke="#F1F5F9" stroke-width="1" />
+    <rect x="126" y="122" width="38" height="6" rx="3" fill="#1E293B" />
+    <rect x="126" y="134" width="30" height="4" rx="2" fill="#CBD5E1" />
+    <rect x="126" y="144" width="34" height="4" rx="2" fill="#CBD5E1" />
+    <rect x="126" y="154" width="28" height="4" rx="2" fill="#CBD5E1" />
+
+    <!-- UI: HR Dashboard Tiles inside Screen -->
+    <!-- Metric Tile 1 -->
+    <rect x="182" y="122" width="62" height="38" rx="6" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1" />
+    <circle cx="195" cy="134" r="5" fill="#EEF2F6" />
+    <rect x="190" y="146" width="30" height="4" rx="2" fill="#1E293B" />
+    <rect x="190" y="152" width="45" height="3" rx="1.5" fill="#94A3B8" />
+
+    <!-- Metric Tile 2 -->
+    <rect x="252" y="122" width="62" height="38" rx="6" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1" />
+    <circle cx="265" cy="134" r="5" fill="#ECFDF5" />
+    <rect x="260" y="146" width="32" height="4" rx="2" fill="#10B981" />
+    <rect x="260" y="152" width="42" height="3" rx="1.5" fill="#94A3B8" />
+
+    <!-- Metric Tile 3 -->
+    <rect x="322" y="122" width="68" height="38" rx="6" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1" />
+    <rect x="330" y="130" width="52" height="5" rx="2.5" fill="#F1F5F9" />
+    <rect x="330" y="140" width="38" height="5" rx="2.5" fill="#3B82F6" />
+    <rect x="330" y="148" width="48" height="4" rx="2" fill="#CBD5E1" />
+
+    <!-- UI: Team Table Rows inside Screen -->
+    <rect x="182" y="168" width="208" height="74" rx="6" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1" />
+    <!-- Row 1 -->
+    <circle cx="196" cy="184" r="7" fill="#E2E8F0" />
+    <rect x="210" y="181" width="55" height="6" rx="3" fill="#334155" />
+    <rect x="335" y="180" width="44" height="8" rx="4" fill="#ECFDF5" />
+    <circle cx="342" cy="184" r="2" fill="#10B981" />
+    <!-- Row 2 -->
+    <circle cx="196" cy="204" r="7" fill="#E2E8F0" />
+    <rect x="210" y="201" width="48" height="6" rx="3" fill="#334155" />
+    <rect x="335" y="200" width="44" height="8" rx="4" fill="#F1F5F9" />
+    <circle cx="342" cy="204" r="2" fill="#64748B" />
+    <!-- Row 3 -->
+    <circle cx="196" cy="224" r="7" fill="#E2E8F0" />
+    <rect x="210" y="221" width="60" height="6" rx="3" fill="#334155" />
+    <rect x="335" y="220" width="44" height="8" rx="4" fill="#ECFDF5" />
+    <circle cx="342" cy="224" r="2" fill="#10B981" />
+
+    <!-- Laptop Base / Keyboard -->
+    <path d="M70 270H450C458.837 270 466 277.163 466 286V288C466 291.314 463.314 294 460 294H60C56.6863 294 54 291.314 54 288V286C54 277.163 61.1634 270 70 270Z" fill="#CBD5E1" stroke="#94A3B8" stroke-width="1.5" />
+    <!-- Trackpad Notch -->
+    <rect x="225" y="271" width="70" height="5" rx="2.5" fill="#94A3B8" />
+  </g>
+
+  <!-- FLOATING ELEMENT 1: Corporate ID Badge / Lanyard (Left Side) -->
+  <g transform="translate(40, 140) rotate(-6)">
+    <!-- Lanyard Ribbon -->
+    <path d="M50 -30 L50 20" stroke="#64748B" stroke-width="4" stroke-linecap="round" />
+    <rect x="42" y="15" width="16" height="10" rx="3" fill="#94A3B8" />
+
+    <!-- ID Card Container -->
+    <rect x="0" y="24" width="105" height="140" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" />
+    <!-- Header Color Strip -->
+    <path d="M0 34C0 28.4772 4.47715 24 10 24H95C100.523 24 105 28.4772 105 34V46H0V34Z" fill="url(#brand-grad)" />
+    
+    <!-- User Photo / Avatar -->
+    <circle cx="52.5" cy="74" r="18" fill="#F1F5F9" stroke="#E2E8F0" stroke-width="1.5" />
+    <circle cx="52.5" cy="69" r="6" fill="#475569" />
+    <path d="M42 85C42 80 46.5 77 52.5 77C58.5 77 63 80 63 85H42Z" fill="#475569" />
+
+    <!-- Name & Code Lines -->
+    <rect x="22" y="102" width="61" height="6" rx="3" fill="#0F172A" />
+    <rect x="30" y="112" width="45" height="4" rx="2" fill="#94A3B8" />
+
+    <!-- Barcode / Security Strip -->
+    <rect x="20" y="132" width="65" height="14" rx="4" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1" />
+    <line x1="26" y1="136" x2="26" y2="142" stroke="#475569" stroke-width="1.5" />
+    <line x1="30" y1="136" x2="30" y2="142" stroke="#475569" stroke-width="2" />
+    <line x1="35" y1="136" x2="35" y2="142" stroke="#475569" stroke-width="1" />
+    <line x1="40" y1="136" x2="40" y2="142" stroke="#475569" stroke-width="2.5" />
+    <line x1="46" y1="136" x2="46" y2="142" stroke="#475569" stroke-width="1.5" />
+    <line x1="51" y1="136" x2="51" y2="142" stroke="#475569" stroke-width="1" />
+    <line x1="56" y1="136" x2="56" y2="142" stroke="#475569" stroke-width="2" />
+    <line x1="62" y1="136" x2="62" y2="142" stroke="#475569" stroke-width="1.5" />
+    <line x1="68" y1="136" x2="68" y2="142" stroke="#475569" stroke-width="2" />
+    <line x1="74" y1="136" x2="74" y2="142" stroke="#475569" stroke-width="1" />
+    <line x1="78" y1="136" x2="78" y2="142" stroke="#475569" stroke-width="1.5" />
+  </g>
+
+  <!-- FLOATING ELEMENT 2: Microsoft SSO Cloud & Security Shield (Top Right) -->
+  <g transform="translate(370, 50) rotate(5)">
+    <rect x="0" y="0" width="115" height="95" rx="14" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" />
+    
+    <!-- Shield Icon Badge -->
+    <circle cx="32" cy="34" r="16" fill="#F0FDF4" stroke="#DCFCE7" stroke-width="1" />
+    <path d="M32 24L39 27V32C39 36.5 36 40.5 32 41.5C28 40.5 25 36.5 25 32V27L32 24Z" fill="#10B981" />
+    <path d="M29.5 33L31 34.5L34.5 30.5" stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+
+    <!-- Microsoft 4-Color Grid Mini Logo -->
+    <g transform="translate(75, 26)">
+      <rect x="0" y="0" width="7" height="7" fill="#F25022" />
+      <rect x="8" y="0" width="7" height="7" fill="#7FBA00" />
+      <rect x="0" y="8" width="7" height="7" fill="#00A4EF" />
+      <rect x="8" y="8" width="7" height="7" fill="#FFB900" />
+    </g>
+
+    <rect x="18" y="60" width="78" height="6" rx="3" fill="#0F172A" />
+    <rect x="18" y="72" width="55" height="4" rx="2" fill="#94A3B8" />
+  </g>
+
+  <!-- FLOATING ELEMENT 3: Real-Time Clock & Attendance Badge (Bottom Right) -->
+  <g transform="translate(385, 230) rotate(-4)">
+    <rect x="0" y="0" width="105" height="68" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" />
+    <circle cx="24" cy="24" r="10" fill="#EEF2F6" />
+    <circle cx="24" cy="24" r="7" stroke="#334155" stroke-width="1.5" />
+    <path d="M24 20V24L26.5 25.5" stroke="#334155" stroke-width="1.2" stroke-linecap="round" />
+    
+    <!-- Time & Status Text -->
+    <rect x="42" y="18" width="48" height="6" rx="3" fill="#0F172A" />
+    <rect x="42" y="28" width="34" height="4" rx="2" fill="#64748B" />
+
+    <!-- Status Pill -->
+    <rect x="14" y="44" width="77" height="14" rx="7" fill="#ECFDF5" />
+    <circle cx="24" cy="51" r="2.5" fill="#10B981" />
+    <rect x="32" y="49" width="48" height="4" rx="2" fill="#047857" />
+  </g>
+
+  <!-- Ground Shadow Ellipse -->
+  <ellipse cx="260" cy="350" rx="180" ry="14" fill="#CBD5E1" fill-opacity="0.3" />
+</svg>

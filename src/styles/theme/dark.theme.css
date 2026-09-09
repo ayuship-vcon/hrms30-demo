@@ -1,0 +1,39 @@
+[data-theme="dark"] {
+  /* 1. Primary & Secondary */
+  --primary: #38bdf8;
+  --primary-hover: #0ea5e9;
+  --primary-foreground: #090d16;
+  --primary-light: #1e293b;
+
+  --secondary: #64748b;
+  --secondary-hover: #475569;
+  --secondary-foreground: #f8fafc;
+
+  /* 2. Muted & Neutrals */
+  --muted: #94a3b8;
+  --muted-foreground: #cbd5e1;
+  --muted-background: #1e293b;
+
+  /* 3. Feedback & Status */
+  --success: #34d399;
+  --success-foreground: #064e3b;
+  --warning: #fbbf24;
+  --warning-foreground: #78350f;
+  --destructive: #f87171;
+  --destructive-foreground: #450a0a;
+
+  /* 4. Surfaces & Layout */
+  --background: #090d16;
+  --surface: #111827;
+  --surface-hover: #1f2937;
+  --sidebar: #0b0f19;
+  --sidebar-border: #374151;
+  --sidebar-active: #1f2937;
+  --sidebar-active-foreground: #ffffff;
+  --header: #111827;
+
+  /* 5. Borders & Focus Rings */
+  --border: #374151;
+  --border-focus: #38bdf8;
+  --ring: #38bdf8;
+}

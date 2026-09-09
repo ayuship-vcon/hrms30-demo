@@ -1,0 +1,43 @@
+export const API_ENDPOINTS = {
+  AUTH: {
+    SIGNIN: '/Users/signinbyemail',
+    FORGOT_PASSWORD: '/Users/forgotpassword',
+    RESET_PASSWORD: '/Users/resetpassword',
+  },
+
+  MENU: {
+    GETMENUBYEMAIL: '/RolePermissions/menusbyemail',
+  },
+
+  EMPLOYEE: {
+    ROOT: '/Employees',
+  },
+
+  LEAVE: {
+    REQUESTS: '/LeaveRequests',
+    BALANCES: '/LeaveBalances',
+  },
+
+  ATTENDANCE: {
+    ROOT: '/Attendance',
+  },
+
+  HOLIDAY: {
+    ROOT: '/Holidays',
+  },
+
+  ADMIN: {
+    SETTINGS: '/Admin/Settings',
+    AUDIT_LOGS: '/Admin/AuditLogs',
+  },
+} as const;
+
+export const HTTP_STATUS = {
+  OK: 200,
+  CREATED: 201,
+  BAD_REQUEST: 400,
+  UNAUTHORIZED: 401,
+  FORBIDDEN: 403,
+  NOT_FOUND: 404,
+  INTERNAL_SERVER_ERROR: 500,
+} as const;

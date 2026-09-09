@@ -1,0 +1,230 @@
+{
+  "greeting": {
+    "defaultName": "Subodh",
+    "completionPercentage": 85
+  },
+  "users": {
+    "1": {
+      "id": "1",
+      "displayName": "Subodh",
+      "fullName": "Subodh Tapkir",
+      "employeeCode": "VCN-AE-2588",
+      "completionPercentage": 85
+    },
+    "2": {
+      "id": "2",
+      "displayName": "Mahesh",
+      "fullName": "Mahesh Jagdale",
+      "employeeCode": "VCN-HR-1002",
+      "completionPercentage": 92
+    },
+    "3": {
+      "id": "3",
+      "displayName": "Sagar",
+      "fullName": "Sagar Ingle",
+      "employeeCode": "VCN-FE-1003",
+      "completionPercentage": 78
+    },
+    "4": {
+      "id": "4",
+      "displayName": "Vishal",
+      "fullName": "Vishal K",
+      "employeeCode": "VCN-OP-1004",
+      "completionPercentage": 95
+    },
+    "bu": {
+      "id": "bu",
+      "displayName": "BU Lead",
+      "fullName": "Business Unit Lead",
+      "employeeCode": "VCN-BU-001",
+      "completionPercentage": 92
+    },
+    "cu": {
+      "id": "cu",
+      "displayName": "Cluster Lead",
+      "fullName": "Cluster Unit Lead",
+      "employeeCode": "VCN-CU-002",
+      "completionPercentage": 88
+    },
+    "hr1": {
+      "id": "hr1",
+      "displayName": "HR Level 1",
+      "fullName": "HR Operations (Level 1)",
+      "employeeCode": "VCN-HR-101",
+      "completionPercentage": 90
+    },
+    "hr2": {
+      "id": "hr2",
+      "displayName": "HR Level 2",
+      "fullName": "HR Management (Level 2)",
+      "employeeCode": "VCN-HR-202",
+      "completionPercentage": 96
+    },
+    "default": {
+      "id": "1",
+      "displayName": "Subodh",
+      "fullName": "Subodh Tapkir",
+      "employeeCode": "VCN-AE-2588",
+      "completionPercentage": 85
+    }
+  },
+  "organizationalNews": {
+    "title": "Organizational News",
+    "viewAllText": "View all",
+    "viewAllRoute": "/news"
+  },
+  "birthdaysAndAnniversaries": {
+    "title": "Birthdays and Work Anniversaries",
+    "viewAllText": "View all",
+    "events": [
+      {
+        "id": "event-1",
+        "type": "anniversary",
+        "title": "Mahesh Jagdale's 7th work anniversary",
+        "date": "Nov 12, Sunday",
+        "action": "Wish"
+      },
+      {
+        "id": "event-2",
+        "type": "birthday",
+        "title": "Sagar Ingle has birthday today",
+        "date": "Nov 12, Sunday",
+        "action": "Wish"
+      }
+    ]
+  },
+  "exploreServices": {
+    "title": "Explore Services",
+    "viewAllText": "View all",
+    "services": [
+      {
+        "id": "leave-tracker",
+        "title": "Leave Tracker",
+        "iconKey": "calendar",
+        "path": "/leave"
+      },
+      {
+        "id": "time-tracker",
+        "title": "Time Tracker",
+        "iconKey": "time",
+        "path": "/attendance"
+      },
+      {
+        "id": "reimbursements",
+        "title": "Reimbursements",
+        "iconKey": "receipt",
+        "path": "/reimbursements"
+      },
+      {
+        "id": "hr-letters",
+        "title": "HR Letters",
+        "iconKey": "article",
+        "path": "/hr-letters"
+      },
+      {
+        "id": "organization",
+        "title": "Organization",
+        "iconKey": "tree",
+        "path": "/employees"
+      },
+      {
+        "id": "create-request",
+        "title": "Create Request",
+        "iconKey": "plus",
+        "path": "/leave/apply"
+      },
+      {
+        "id": "payroll",
+        "title": "Payroll",
+        "iconKey": "wallet",
+        "path": "/payroll"
+      },
+      {
+        "id": "benefits",
+        "title": "Benefits",
+        "iconKey": "gift",
+        "path": "/benefits"
+      }
+    ]
+  },
+  "upcomingHolidays": {
+    "title": "Upcoming Holidays",
+    "viewAllText": "View all",
+    "holidays": [
+      {
+        "id": "hol-1",
+        "name": "Deepavali",
+        "date": "Nov 12, Sunday"
+      },
+      {
+        "id": "hol-2",
+        "name": "Easter",
+        "date": "Nov 12, Sunday"
+      },
+      {
+        "id": "hol-3",
+        "name": "Gudhi Padwa",
+        "date": "Nov 12, Sunday"
+      }
+    ]
+  },
+  "leaveBalance": {
+    "title": "Leave Balance",
+    "actionText": "Apply New",
+    "actionRoute": "/leave",
+    "balances": [
+      {
+        "id": "bal-1",
+        "label": "Casual",
+        "used": 8,
+        "total": 12,
+        "percentage": 66
+      },
+      {
+        "id": "bal-2",
+        "label": "Sick",
+        "used": 6,
+        "total": 12,
+        "percentage": 50
+      },
+      {
+        "id": "bal-3",
+        "label": "Earned",
+        "used": 5,
+        "total": 56,
+        "percentage": 10
+      }
+    ],
+    "lastApplication": {
+      "title": "Casual Leave from 25/05 to 30/05",
+      "appliedDate": "Applied on 05/05/2026",
+      "status": "Approved",
+      "statusColor": "#e6f9f2",
+      "statusTextColor": "#065f46"
+    }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "viewAllText": "View all",
+    "notifications": [
+      {
+        "id": "notif-1",
+        "title": "Yash has filed a reimbursement request",
+        "date": "Nov 12, Sunday",
+        "action": "View"
+      },
+      {
+        "id": "notif-2",
+        "title": "Leave Request Approved",
+        "date": "Nov 12, Sunday",
+        "action": "View"
+      },
+      {
+        "id": "notif-3",
+        "title": "Sakshi has filed a reimbursement request",
+        "date": "Nov 12, Sunday",
+        "action": "View"
+      }
+    ]
+  }
+}
