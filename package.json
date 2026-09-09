@@ -25,6 +25,7 @@
     "@hookform/resolvers": "^3.10.0",
     "@mui/icons-material": "^6.4.5",
     "@mui/material": "^6.4.5",
+    "@mui/x-data-grid": "^7.29.13",
     "@reduxjs/toolkit": "^2.5.1",
     "clsx": "^2.1.1",
     "react": "^19.2.8",

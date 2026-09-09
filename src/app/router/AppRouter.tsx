@@ -1,15 +1,15 @@
-import React, { Suspense } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { ROUTES } from '@/shared/constants/routes.constants';
-import { ProtectedRoute } from '@/shared/components/ProtectedRoute';
-import { PublicRoute } from '@/shared/components/PublicRoute';
-import { PageLoader } from '@/shared/components/Loading/PageLoader';
-import { useAuth } from '@/features/authentication';
-import { GenericFeaturePage } from '@/shared/components/GenericFeaturePage';
+import React, { Suspense } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { ROUTES } from "@/shared/constants/routes.constants";
+import { ProtectedRoute } from "@/shared/components/ProtectedRoute";
+import { PublicRoute } from "@/shared/components/PublicRoute";
+import { PageLoader } from "@/shared/components/Loading/PageLoader";
+import { useAuth } from "@/features/authentication";
+import { GenericFeaturePage } from "@/shared/components/GenericFeaturePage";
 
 // Layouts
-import { MainLayout } from '@/layouts/MainLayout/MainLayout';
-import { AuthLayout } from '@/layouts/AuthLayout/AuthLayout';
+import { MainLayout } from "@/layouts/MainLayout/MainLayout";
+import { AuthLayout } from "@/layouts/AuthLayout/AuthLayout";
 
 // Feature Pages
 import {
@@ -18,12 +18,17 @@ import {
   ResetPasswordPage,
   AuthSuccessPage,
   AuthFailedPage,
-} from '@/features/authentication';
-import { EmployeePage, EmployeeDetails, CrewDashboard } from '@/features/employee';
-import { LeavePage, LeaveDetails } from '@/features/leave';
-import { AttendancePage, AttendanceDetails } from '@/features/attendance';
-import { HolidayPage, HolidayDetails } from '@/features/holiday';
-import { AdminPage, AdminDetails } from '@/features/administration';
+} from "@/features/authentication";
+import {
+  EmployeePage,
+  EmployeeDetails,
+  CrewDashboard,
+} from "@/features/employee";
+import { LeavePage, LeaveDetails } from "@/features/leave";
+import { AttendancePage, AttendanceDetails } from "@/features/attendance";
+import { HolidayPage, HolidayDetails } from "@/features/holiday";
+import { AdminPage, AdminDetails } from "@/features/administration";
+import EmployeeList from "@/features/employee-list/pages/EmployeeList";
 
 export interface RouteConfig {
   path: string;
@@ -44,30 +49,32 @@ export const PROTECTED_APP_ROUTES: RouteConfig[] = [
   // 2. Employee Directory Routes
   { path: ROUTES.EMPLOYEES.ROOT, element: <EmployeePage /> },
   { path: ROUTES.EMPLOYEES.CREATE, element: <EmployeePage /> },
-  { path: ROUTES.EMPLOYEES.DETAILS(':id'), element: <EmployeeDetails /> },
+  { path: ROUTES.EMPLOYEES.DETAILS(":id"), element: <EmployeeDetails /> },
+
+  { path: ROUTES.EMPLOYEE_LIST.ROOT, element: <EmployeeList /> },
 
   // 3. Leave Routes
   { path: ROUTES.LEAVE.ROOT, element: <LeavePage /> },
   { path: ROUTES.LEAVE.APPLY, element: <LeavePage /> },
   { path: ROUTES.LEAVE.HISTORY, element: <LeavePage /> },
-  { path: ROUTES.LEAVE.DETAILS(':id'), element: <LeaveDetails /> },
+  { path: ROUTES.LEAVE.DETAILS(":id"), element: <LeaveDetails /> },
 
   // 4. Attendance Routes
   { path: ROUTES.ATTENDANCE.ROOT, element: <AttendancePage /> },
   { path: ROUTES.ATTENDANCE.LOGS, element: <AttendancePage /> },
-  { path: ROUTES.ATTENDANCE.DETAILS(':id'), element: <AttendanceDetails /> },
+  { path: ROUTES.ATTENDANCE.DETAILS(":id"), element: <AttendanceDetails /> },
 
   // 5. Holiday Routes
   { path: ROUTES.HOLIDAY.ROOT, element: <HolidayPage /> },
   { path: ROUTES.HOLIDAY.CALENDAR, element: <HolidayPage /> },
-  { path: ROUTES.HOLIDAY.DETAILS(':id'), element: <HolidayDetails /> },
+  { path: ROUTES.HOLIDAY.DETAILS(":id"), element: <HolidayDetails /> },
 
   // 6. Administration Routes
   { path: ROUTES.ADMIN.ROOT, element: <AdminPage /> },
   { path: ROUTES.ADMIN.SETTINGS, element: <AdminPage /> },
   { path: ROUTES.ADMIN.AUDIT, element: <AdminPage /> },
   { path: ROUTES.ADMIN.ROLES, element: <AdminPage /> },
-  { path: ROUTES.ADMIN.DETAILS(':id'), element: <AdminDetails /> },
+  { path: ROUTES.ADMIN.DETAILS(":id"), element: <AdminDetails /> },
 
   // 7. Approvals Module Routes
   {
@@ -347,6 +354,24 @@ export const PROTECTED_APP_ROUTES: RouteConfig[] = [
     ),
   },
   {
+    path: ROUTES.MODULES.TALENT_HUB_RADAR,
+    element: (
+      <GenericFeaturePage
+        title="Radar Chart"
+        description="Visualize employee skill competencies and talent distribution across the organization."
+      />
+    ),
+  },
+  {
+    path: `${ROUTES.DASHBOARD}${ROUTES.MODULES.TALENT_HUB_RADAR}`,
+    element: (
+      <GenericFeaturePage
+        title="Radar Chart"
+        description="Visualize employee skill competencies and talent distribution across the organization."
+      />
+    ),
+  },
+  {
     path: ROUTES.MODULES.EXTERNAL_LINKS,
     element: (
       <GenericFeaturePage
@@ -472,32 +497,120 @@ export const PROTECTED_APP_ROUTES: RouteConfig[] = [
       />
     ),
   },
+
+  // 11. Configurations Module Routes (POC placeholders)
+  {
+    path: ROUTES.CONFIGURATIONS.HORIZONTAL_STRUCTURE,
+    element: (
+      <GenericFeaturePage
+        title="Horizontal Structure"
+        description="Define cross-functional reporting lines, business units, and horizontal org groupings."
+      />
+    ),
+  },
+  {
+    path: `${ROUTES.DASHBOARD}${ROUTES.CONFIGURATIONS.HORIZONTAL_STRUCTURE}`,
+    element: (
+      <GenericFeaturePage
+        title="Horizontal Structure"
+        description="Define cross-functional reporting lines, business units, and horizontal org groupings."
+      />
+    ),
+  },
+  {
+    path: ROUTES.CONFIGURATIONS.VERTICAL_STRUCTURE,
+    element: (
+      <GenericFeaturePage
+        title="Vertical Structure"
+        description="Configure the organization's reporting hierarchy, departments, and management chain."
+      />
+    ),
+  },
+  {
+    path: `${ROUTES.DASHBOARD}${ROUTES.CONFIGURATIONS.VERTICAL_STRUCTURE}`,
+    element: (
+      <GenericFeaturePage
+        title="Vertical Structure"
+        description="Configure the organization's reporting hierarchy, departments, and management chain."
+      />
+    ),
+  },
+  {
+    path: ROUTES.CONFIGURATIONS.ROLES_PRIVILEGES,
+    element: (
+      <GenericFeaturePage
+        title="Roles & Privileges"
+        description="Manage system roles, menu rights, and permission levels across the organization."
+      />
+    ),
+  },
+  {
+    path: `${ROUTES.DASHBOARD}${ROUTES.CONFIGURATIONS.ROLES_PRIVILEGES}`,
+    element: (
+      <GenericFeaturePage
+        title="Roles & Privileges"
+        description="Manage system roles, menu rights, and permission levels across the organization."
+      />
+    ),
+  },
 ];
 
 export const AppRouter: React.FC = () => {
   const { isAuthenticated } = useAuth();
 
   return (
-    <Suspense fallback={<PageLoader fullScreen message="Loading portal workspace..." description="Preparing modules and authentication session" />}>
+    <Suspense
+      fallback={
+        <PageLoader
+          fullScreen
+          message="Loading portal workspace..."
+          description="Preparing modules and authentication session"
+        />
+      }
+    >
       <Routes>
         {/* Standalone Success / Failure Routes for SSO */}
         <Route path={ROUTES.AUTH.SUCCESS} element={<AuthSuccessPage />} />
         <Route path={ROUTES.AUTH.FAILED} element={<AuthFailedPage />} />
 
         {/* Public / Auth Routes */}
-        <Route element={<PublicRoute isAuthenticated={isAuthenticated} redirectPath={ROUTES.DASHBOARD} />}>
+        <Route
+          element={
+            <PublicRoute
+              isAuthenticated={!isAuthenticated}
+              redirectPath={ROUTES.DASHBOARD}
+            />
+          }
+        >
           <Route element={<AuthLayout />}>
             <Route path={ROUTES.AUTH.LOGIN} element={<LoginPage />} />
-            <Route path={ROUTES.AUTH.FORGOT_PASSWORD} element={<ForgotPasswordPage />} />
-            <Route path={ROUTES.AUTH.RESET_PASSWORD} element={<ResetPasswordPage />} />
+            <Route
+              path={ROUTES.AUTH.FORGOT_PASSWORD}
+              element={<ForgotPasswordPage />}
+            />
+            <Route
+              path={ROUTES.AUTH.RESET_PASSWORD}
+              element={<ResetPasswordPage />}
+            />
           </Route>
         </Route>
 
         {/* Protected Main Application Routes (Rendered from Unified Array) */}
-        <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} redirectPath={ROUTES.AUTH.LOGIN} />}>
+        <Route
+          element={
+            <ProtectedRoute
+              isAuthenticated={!isAuthenticated}
+              redirectPath={ROUTES.AUTH.LOGIN}
+            />
+          }
+        >
           <Route element={<MainLayout />}>
             {PROTECTED_APP_ROUTES.map((route) => (
-              <Route key={route.path} path={route.path} element={route.element} />
+              <Route
+                key={route.path}
+                path={route.path}
+                element={route.element}
+              />
             ))}
           </Route>
         </Route>
@@ -505,7 +618,12 @@ export const AppRouter: React.FC = () => {
         {/* Wildcard Fallback */}
         <Route
           path="*"
-          element={<Navigate to={isAuthenticated ? ROUTES.DASHBOARD : ROUTES.AUTH.LOGIN} replace />}
+          element={
+            <Navigate
+              to={!isAuthenticated ? ROUTES.DASHBOARD : ROUTES.AUTH.LOGIN}
+              replace
+            />
+          }
         />
       </Routes>
     </Suspense>

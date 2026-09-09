@@ -22,6 +22,11 @@ export const ROUTES = {
     EDIT: (id: string | number = ":id") => `/employees/${id}/edit`,
   },
 
+  // Employee List
+  EMPLOYEE_LIST: {
+    ROOT: "/employee-list"
+  },
+
   // Leave Management Routes
   LEAVE: {
     ROOT: "/leave",
@@ -89,6 +94,7 @@ export const ROUTES = {
     REIMBURSEMENTS: "/reimbursements",
     TRAVEL: "/travel",
     TALENT_HUB: "/talent-hub",
+    TALENT_HUB_RADAR: "/talent-hub/radar-chart",
     EXTERNAL_LINKS: "/external-links",
     USER_GUIDE: "/user-guide",
     FEEDBACKS: "/feedbacks",
@@ -96,5 +102,13 @@ export const ROUTES = {
     BENEFITS: "/benefits",
     HR_LETTERS: "/hr-letters",
     NEWS: "/news",
+  },
+
+  // Configurations (POC Sidebar Group — Hyphenated paths)
+  CONFIGURATIONS: {
+    ROOT: "/configurations",
+    HORIZONTAL_STRUCTURE: "/configurations/horizontal-structure",
+    VERTICAL_STRUCTURE: "/configurations/vertical-structure",
+    ROLES_PRIVILEGES: "/configurations/roles-privileges",
   },
 } as const;
