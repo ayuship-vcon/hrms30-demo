@@ -1,13 +1,7 @@
 // src/features/employee/pages/EmployeeList.tsx
 
 import React from "react";
-import {
-  Box,
-  Button,
-  Paper,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Paper, Stack, Typography } from "@mui/material";
 
 import AddIcon from "@mui/icons-material/Add";
 
@@ -96,11 +90,7 @@ export const EmployeeList: React.FC = () => {
   };
 
   if (isError) {
-    return (
-      <Typography color="error">
-        Failed to load employee list.
-      </Typography>
-    );
+    return <Typography color="error">Failed to load employee list.</Typography>;
   }
 
   return (
@@ -108,12 +98,25 @@ export const EmployeeList: React.FC = () => {
       component="main"
       sx={{
         flexGrow: 1,
-        p: 3,
         mt: 3,
         minWidth: 0,
         backgroundColor: "#f8fafc69",
       }}
     >
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-surface p-5 sm:p-6 rounded-sm border border-border shadow-card">
+        <div>
+          <div className="flex items-center gap-2">
+            <h1 className="text-xl sm:text-2xl font-bold text-black tracking-tight">
+              Employee List
+            </h1>
+          </div>
+          <p className="text-sm text-muted mt-1">
+            View list of employees and their details. Use the search and filters to find specific employees.
+          </p>
+        </div>
+      </div>
+      <br></br>
+
       <Paper
         elevation={0}
         sx={{
