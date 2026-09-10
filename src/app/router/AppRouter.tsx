@@ -24,7 +24,7 @@ import {
   EmployeeDetails,
   CrewDashboard,
 } from "@/features/employee";
-import { LeavePage, LeaveDetails } from "@/features/leave";
+import { ApplyLeavePage, LeavePage, LeaveDetails } from "@/features/leave";
 import { AttendancePage, AttendanceDetails } from "@/features/attendance";
 import { HolidayPage, HolidayDetails } from "@/features/holiday";
 import { AdminPage, AdminDetails } from "@/features/administration";
@@ -57,7 +57,7 @@ export const PROTECTED_APP_ROUTES: RouteConfig[] = [
 
   // 3. Leave Routes
   { path: ROUTES.LEAVE.ROOT, element: <LeavePage /> },
-  { path: ROUTES.LEAVE.APPLY, element: <LeavePage /> },
+  { path: ROUTES.LEAVE.APPLY, element: <ApplyLeavePage /> },
   { path: ROUTES.LEAVE.HISTORY, element: <LeavePage /> },
   { path: ROUTES.LEAVE.DETAILS(":id"), element: <LeaveDetails /> },
 
