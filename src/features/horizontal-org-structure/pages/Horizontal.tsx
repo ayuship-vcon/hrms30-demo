@@ -45,7 +45,7 @@ export const Horizontal = () => {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-xl sm:text-2xl font-bold text-black tracking-tight">
-              Organization Structure Configuration
+              Horizontal Organization Structure Configuration
             </h1>
           </div>
           <p className="text-sm text-muted mt-1">
@@ -103,7 +103,7 @@ export const Horizontal = () => {
                       color: metric.color,
                     }}
                   />
-                  <Typography variant="h3" fontWeight={800}>
+                  <Typography variant="h5" fontWeight={800}>
                     {metric.value}
                   </Typography>
                   <Typography variant="caption" color="text.secondary">

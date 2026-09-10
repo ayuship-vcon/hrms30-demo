@@ -54,7 +54,7 @@ export const VerticalOrgStructurePage: React.FC = () => {
          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-surface p-5 sm:p-6 rounded-sm border border-border shadow-card">
            <div>
              <div className="flex items-center gap-2">
-               <h1 className="text-xl sm:text-2xl font-bold text-black tracking-tight"> Organization Structure Configuration</h1>
+               <h1 className="text-xl sm:text-2xl font-bold text-black tracking-tight">Vertical Organization Structure Configuration</h1>
              </div>
              <p className="text-sm text-muted mt-1">
               Configure Company, BU, Cluster, Team and future hierarchy
