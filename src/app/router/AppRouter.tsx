@@ -29,6 +29,7 @@ import { AttendancePage, AttendanceDetails } from "@/features/attendance";
 import { HolidayPage, HolidayDetails } from "@/features/holiday";
 import { AdminPage, AdminDetails } from "@/features/administration";
 import EmployeeList from "@/features/employee-list/pages/EmployeeList";
+import { VerticalOrgStructurePage } from "@/features/vertical-org-structure";
 
 export interface RouteConfig {
   path: string;
@@ -519,21 +520,11 @@ export const PROTECTED_APP_ROUTES: RouteConfig[] = [
   },
   {
     path: ROUTES.CONFIGURATIONS.VERTICAL_STRUCTURE,
-    element: (
-      <GenericFeaturePage
-        title="Vertical Structure"
-        description="Configure the organization's reporting hierarchy, departments, and management chain."
-      />
-    ),
+    element: <VerticalOrgStructurePage />,
   },
   {
     path: `${ROUTES.DASHBOARD}${ROUTES.CONFIGURATIONS.VERTICAL_STRUCTURE}`,
-    element: (
-      <GenericFeaturePage
-        title="Vertical Structure"
-        description="Configure the organization's reporting hierarchy, departments, and management chain."
-      />
-    ),
+    element: <VerticalOrgStructurePage />,
   },
   {
     path: ROUTES.CONFIGURATIONS.ROLES_PRIVILEGES,
