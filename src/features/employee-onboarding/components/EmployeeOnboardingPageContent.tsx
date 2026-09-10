@@ -12,13 +12,15 @@ export const EmployeeOnboardingPageContent: React.FC = () => (
     >
       Employee Management
     </Typography>
+    {/* Breadcrumbs are provided by MainLayout. */}
+    {/*
     <Stack direction="row" spacing={1} sx={{ mb: 1.5, color: "#456789" }}>
       <Typography>Home</Typography>
       <Typography>›</Typography>
       <Typography>Employee</Typography>
       <Typography>›</Typography>
       <Typography>Add New Employee</Typography>
-    </Stack>
+    </Stack> */}
 
     <Paper
       variant="outlined"

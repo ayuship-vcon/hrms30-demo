@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowBack, CalendarMonth, CloudUploadOutlined, EditOutlined, EventAvailableOutlined, RestartAlt, SendOutlined } from '@mui/icons-material';
 import { Box, Button, Chip, FormControl, InputLabel, MenuItem, Paper, Select, Stack, TextField, Typography } from '@mui/material';
-import { Breadcrumbs } from '@/shared/components/Breadcrumbs';
 import { DatePicker } from '@/shared/components/Form';
-import { ROUTES } from '@/shared/constants/routes.constants';
 import { ApplyLeaveBalanceCard, ApplyLeaveCustomizeDialog, ApplyLeavePeopleCard, ApplyLeaveSectionHeader } from '../components';
 import { APPROVERS, HRS, LEAVE_CATEGORIES } from '../core/constants/applyLeave.constants';
 import { useApplyLeave } from '../core/hooks/useApplyLeave';
@@ -23,7 +21,6 @@ export const ApplyLeavePage: React.FC = () => {
   const updateEndDate = (value: string) => syncDates(startDate && value < startDate ? value : startDate, value);
 
   return <Box component="main" sx={{ width: '100%' }}>
-    <Breadcrumbs items={[{ label: 'Leave', path: ROUTES.LEAVE.ROOT }, { label: 'Apply for Leave' }]} />
     <Paper elevation={0} sx={{ mt: 1.5, border: `1px solid ${borderColor}`, borderRadius: 2, overflow: 'hidden', bgcolor: '#fbfcfe' }}>
       <Box sx={{ minHeight: 76, px: { xs: 2, md: 3 }, py: 1.5, display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: `1px solid ${borderColor}`, bgcolor: '#fff' }}>
         <Stack direction="row" spacing={2} alignItems="center"><Button aria-label="Back to leave" onClick={() => window.history.back()} sx={{ minWidth: 44, width: 44, height: 44, border: `1px solid ${borderColor}`, p: 0 }}><ArrowBack /></Button><Box><Typography sx={{ fontSize: 20, lineHeight: 1.2, fontWeight: 700, color: '#0b4668' }}>Apply for Leave</Typography><Typography sx={{ mt: .5, color: '#667085', fontSize: 13 }}>Submit your leave request</Typography></Box></Stack>

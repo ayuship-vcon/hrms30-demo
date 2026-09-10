@@ -8,6 +8,7 @@ import { UnauthorizedDialog } from '@/shared/components/Dialog/UnauthorizedDialo
 import { PageLoader } from '@/shared/components/Loading/PageLoader';
 import { useAuth } from '@/features/authentication';
 import LinearProgress from '@mui/material/LinearProgress';
+import { AppBreadcrumbs } from '@/shared/components/Breadcrumbs';
 
 export const MainLayout: React.FC = () => {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -72,6 +73,7 @@ export const MainLayout: React.FC = () => {
 
         {/* Page Container */}
         <main className="flex-1 p-3 sm:p-4 lg:p-6 max-w-[1440px] w-full mx-auto bg-app">
+          <AppBreadcrumbs />
           {isMenuLoading && !menu.length ? (
             <PageLoader message="Loading workspace & permissions..." />
           ) : (
