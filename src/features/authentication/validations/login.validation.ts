@@ -8,10 +8,7 @@ export const loginSchema = yup.object({
     .string()
     .required('Corporate email is required')
     .email('Please enter a valid corporate email address'),
-  password: yup
-    .string()
-    .required('Password is required')
-    .min(6, 'Password must contain at least 6 characters'),
+  password: yup.string().optional(),
 });
 
 export type LoginFormData = yup.InferType<typeof loginSchema>;

@@ -13,7 +13,7 @@ export interface RawApiMenuItem {
   icon: string | null;
   parentKey: string | null;
   sequence: number;
-  rightValue: number;
+  rightValue: number | string | boolean | null;
 }
 
 /**
@@ -39,6 +39,4 @@ export interface MenuGroup {
   menuitems: MenuItem[];
 }
 
-export interface GetMenuParams {
-  email: string;
-}
+export type EmployeeUserId = string | number;

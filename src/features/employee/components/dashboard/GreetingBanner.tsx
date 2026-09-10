@@ -17,7 +17,7 @@ export const GreetingBanner: React.FC<GreetingBannerProps> = ({
   const strokeDash = (completionPercentage / 100) * circumference; // ~160.2 for 85%
 
   return (
-    <div className="bg-white p-4 sm:p-5 rounded-[8px] min-h-[110px] relative overflow-hidden flex items-center w-full isolate shadow-card border border-slate-200">
+    <div className="bg-white p-3 sm:p-4 rounded-[8px] min-h-[110px] relative overflow-hidden flex items-center w-full isolate shadow-card border border-slate-200">
       {/* Decorative Waving Hand Asset from Figma - Positioned on Top Right */}
       <div className="absolute w-[171px] h-[172px] left-[66%] -top-3 pointer-events-none select-none z-0 hidden md:block opacity-90">
         <img
@@ -38,7 +38,7 @@ export const GreetingBanner: React.FC<GreetingBannerProps> = ({
         </h1>
 
         {/* Profile Completion: Big 70x70 Gauge Column */}
-        <div className="flex items-center z-1 sm:mr-auto sm:ml-8 lg:ml-16">
+        <div className="flex items-center z-1 sm:ml-auto mr-0">
           <div className="flex flex-col items-center gap-1.5">
             {/* Big Circular Gauge: 70x70px with cx=35, cy=35, r=30 */}
             <div className="relative w-[70px] h-[70px] shrink-0 flex items-center justify-center rounded-full bg-white">

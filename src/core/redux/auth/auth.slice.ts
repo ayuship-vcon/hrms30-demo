@@ -5,11 +5,17 @@ import { tokenUtils, authUtils } from '@/features/authentication/core/utils';
 // Pure authentication state derived from real Cookie token and stored session
 const initialToken = tokenUtils.getToken();
 const initialUser = authUtils.getStoredUser();
+const hasValidInitialSession = Boolean(tokenUtils.isTokenValid(initialToken) && initialUser);
+
+if (initialToken && !hasValidInitialSession) {
+  tokenUtils.clearToken();
+  authUtils.clearStoredUser();
+}
 
 const initialState: AuthState = {
   user: initialUser,
   token: initialToken,
-  isAuthenticated: Boolean(initialToken && initialUser),
+  isAuthenticated: hasValidInitialSession,
   isLoading: false,
   error: null,
 };
@@ -23,7 +29,7 @@ export const authSlice = createSlice({
     },
     loginSuccess: (
       state,
-      action: PayloadAction<{ user: User; token: string }>,
+      action: PayloadAction<{ user: User; token: string; refreshToken?: string }>,
     ) => {
       state.user = action.payload.user;
       state.token = action.payload.token;
@@ -31,6 +37,9 @@ export const authSlice = createSlice({
       state.isLoading = false;
       state.error = null;
       tokenUtils.setToken(action.payload.token);
+      if (action.payload.refreshToken) {
+        tokenUtils.setRefreshToken(action.payload.refreshToken);
+      }
       authUtils.setStoredUser(action.payload.user);
     },
     loginFailure: (state, action: PayloadAction<string>) => {

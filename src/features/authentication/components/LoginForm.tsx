@@ -13,12 +13,13 @@ import { useMsalLogin } from '../core/hooks/useMsalLogin';
 import { loginSchema, type LoginFormData } from '../validations/login.validation';
 import { useLoginMutation } from '@/core/api/auth';
 import { ROUTES } from '@/shared/constants/routes.constants';
+import { getErrorMessage } from '@/shared/utils';
 import { IconButton } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import CloseIcon from '@mui/icons-material/Close';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import WindowIcon from '@mui/icons-material/Window';
 
 export interface LoginFormProps {
@@ -45,7 +46,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
     resolver: yupResolver(loginSchema),
     defaultValues: {
       email: '',
-      password: '',
+      password: undefined,
     },
     mode: 'onSubmit',
   });
@@ -59,7 +60,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
     }
   }, [handleMicrosoftLogin, onSuccess]);
 
-  // 2. Direct Email & Password Submit Handler (Integrated with Actual Auth API)
+  // 2. POC Email Submit Handler (the backend currently requires email only)
   const handleEmailPasswordSubmit = useCallback(
     async (data: LoginFormData) => {
       try {
@@ -68,11 +69,14 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
 
         const response = await loginMutation({
           email: data.email,
-          password: data.password,
         }).unwrap();
 
         if (response.user && response.token) {
-          dispatch(loginSuccess({ user: response.user, token: response.token }));
+          dispatch(loginSuccess({
+            user: response.user,
+            token: response.token,
+            refreshToken: response.refreshToken,
+          }));
           if (onSuccess) {
             onSuccess();
           } else {
@@ -82,7 +86,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
           throw new Error('Authentication response was incomplete');
         }
       } catch (err: unknown) {
-        const message = err instanceof Error ? err.message : 'Authentication failed. Please check your credentials.';
+        const message = getErrorMessage(err, 'Authentication failed. Please check your email and try again.');
         dispatch(loginFailure(message));
         setFormError(message);
       } finally {

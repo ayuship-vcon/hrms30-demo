@@ -1,12 +1,12 @@
 export const API_ENDPOINTS = {
   AUTH: {
-    SIGNIN: '/Users/signinbyemail',
+    SIGNIN: '/Auth/login',
     FORGOT_PASSWORD: '/Users/forgotpassword',
     RESET_PASSWORD: '/Users/resetpassword',
   },
 
   MENU: {
-    GETMENUBYEMAIL: '/RolePermissions/menusbyemail',
+    GET_ACCESS_RIGHTS: (employeeUserId: string | number) => `/AccessRights/${employeeUserId}`,
   },
 
   EMPLOYEE: {

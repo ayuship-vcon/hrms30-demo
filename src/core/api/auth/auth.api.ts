@@ -11,8 +11,40 @@ import { baseApi, extractApiData } from '../client/baseApi';
 export const authQueries = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation<AuthSessionResponse, LoginRequest>({
-      query: (credentials) => ({ url: API_ENDPOINTS.AUTH.SIGNIN, params: credentials }),
-      transformResponse: (response: unknown) => extractApiData<AuthSessionResponse>(response),
+      query: (credentials) => ({
+        url: API_ENDPOINTS.AUTH.SIGNIN,
+        method: 'POST',
+        body: { email: credentials.email },
+      }),
+      transformResponse: (response: unknown, _meta, request) => {
+        const payload = extractApiData<Record<string, unknown> | string>(response);
+
+        if (typeof payload === 'string') {
+          return {
+            token: payload,
+            user: { id: request.email, email: request.email, name: request.email.split('@')[0], role: 'USER' },
+          };
+        }
+
+        const body = payload ?? {};
+        const rawUser = (body.user ?? body.User ?? body) as Record<string, unknown>;
+        const token = String(body.token ?? body.accessToken ?? body.jwt ?? '');
+        const fallbackName = `${rawUser.firstName ?? ''} ${rawUser.lastName ?? ''}`.trim() || request.email.split('@')[0];
+
+        return {
+          token,
+          user: {
+            id: String(rawUser.id ?? rawUser.userId ?? rawUser.employeeUserId ?? request.email),
+            email: String(rawUser.email ?? rawUser.userName ?? request.email),
+            name: String(rawUser.name ?? rawUser.fullName ?? rawUser.userName ?? fallbackName),
+            role: String(rawUser.role ?? rawUser.roleName ?? 'USER'),
+            department: rawUser.department as string | undefined,
+            designation: rawUser.designation as string | undefined,
+          },
+          roleId: body.roleId as number | string | undefined,
+          refreshToken: body.refreshToken as string | undefined,
+        };
+      },
       invalidatesTags: ['Auth', 'Menu'],
     }),
 

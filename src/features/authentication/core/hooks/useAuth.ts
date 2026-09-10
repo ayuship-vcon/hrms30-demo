@@ -9,11 +9,8 @@ import {
   logout as logoutAction,
 } from "@/core/redux/auth";
 import { usePermission } from "@/shared/hooks/usePermission";
-import { useGetUserMenusQuery } from "@/core/api/menu";
+import { useGetAccessRightsQuery } from "@/core/api/menu";
 import { transformApiMenuToHierarchy } from "@/shared/utils";
-// TEMP: static menu data until the real menu-rights endpoint is available.
-// Remove this import and the fallback below once the backend is connected.
-import { MOCK_MENU_DATA } from "@/shared/data/mockMenu.data";
 import type { AuthState } from "../types";
 import { tokenUtils, authUtils } from "@/features/authentication/core/utils";
 import { msalService } from "@/core/auth";
@@ -37,15 +34,13 @@ export function useAuth() {
   const role = useSelector((state: { auth: AuthState }) =>
     selectUserRole(state),
   );
-  const menuQuery = useGetUserMenusQuery(
-    { email: user?.email as string },
-    { skip: !isAuthenticated || !user?.email },
+  const menuQuery = useGetAccessRightsQuery(
+    user?.id as string | number,
+    { skip: !isAuthenticated || user?.id === undefined || user?.id === null },
   );
-  // TEMP fallback: use static mock data when there's no backend/the query
-  // hasn't returned data yet. Swap `MOCK_MENU_DATA` out once the API is live.
-  const menuGroups = transformApiMenuToHierarchy(
-    menuQuery.data ?? MOCK_MENU_DATA,
-  );
+  console.log("menuQuery", menuQuery); //remove this line after testing
+  const menuGroups = transformApiMenuToHierarchy(menuQuery.data ?? []);
+  console.log("menuGroups", menuGroups); //remove this line after testing
   const isMenuLoading = menuQuery.isLoading || menuQuery.isFetching;
 
   const permissions = usePermission(role);

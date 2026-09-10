@@ -21,6 +21,10 @@ export const tokenUtils = {
     cookieStorage.set(AUTH_STORAGE_KEYS.TOKEN, token);
   },
 
+  setRefreshToken: (token: string): void => {
+    cookieStorage.set(AUTH_STORAGE_KEYS.REFRESH_TOKEN, token);
+  },
+
   /**
    * Clear auth token from Cookies
    */
@@ -30,6 +34,22 @@ export const tokenUtils = {
   },
 
   isTokenValid: (token?: string | null): boolean => {
-    return Boolean(token && token.length > 10);
+    if (!token || token.length <= 10) return false;
+
+    // JWT access tokens carry their expiry in the payload. Fall back to a
+    // structural check for non-JWT tokens used by other auth providers.
+    try {
+      const [, encodedPayload] = token.split('.');
+      if (!encodedPayload) return true;
+      const normalizedPayload = encodedPayload.replace(/-/g, '+').replace(/_/g, '/');
+      const paddedPayload = normalizedPayload.padEnd(
+        normalizedPayload.length + ((4 - (normalizedPayload.length % 4)) % 4),
+        '=',
+      );
+      const payload = JSON.parse(atob(paddedPayload));
+      return typeof payload.exp !== 'number' || payload.exp * 1000 > Date.now();
+    } catch {
+      return true;
+    }
   },
 };

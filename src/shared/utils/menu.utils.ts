@@ -9,6 +9,13 @@ function isNullOrEmpty(val: unknown): boolean {
   return str === '' || str.toUpperCase() === 'NULL';
 }
 
+function hasAccess(rightValue: unknown): boolean {
+  if (rightValue === null || rightValue === undefined || rightValue === '') return true;
+  if (typeof rightValue === 'boolean') return rightValue;
+  if (typeof rightValue === 'number') return rightValue > 0;
+  return ['1', 'true', 'yes', 'allow', 'allowed'].includes(String(rightValue).trim().toLowerCase());
+}
+
 /**
  * Transforms flat raw database API menu items into a sorted, hierarchical structure.
  *
@@ -35,7 +42,9 @@ export function transformApiMenuToHierarchy(rawItems: RawApiMenuItem[]): MenuGro
   rootItems.sort((a, b) => (a.sequence || 0) - (b.sequence || 0));
 
   // 3. Extract Child Items
-  const childItems = rawItems.filter((item) => !isNullOrEmpty(item.parentKey));
+  const childItems = rawItems.filter(
+    (item) => !isNullOrEmpty(item.parentKey) && hasAccess(item.rightValue),
+  );
 
   // 4. Map each Root Group to its child items
   const menuGroups: MenuGroup[] = rootItems.map((root) => {
@@ -55,7 +64,7 @@ export function transformApiMenuToHierarchy(rawItems: RawApiMenuItem[]): MenuGro
         icon: cleanIcon,
         sequence: child.sequence || 0,
         rightKey: child.rightKey,
-        rightValue: typeof child.rightValue === 'number' ? child.rightValue : 0,
+        rightValue: Number(child.rightValue) || (hasAccess(child.rightValue) ? 1 : 0),
       };
     });
 

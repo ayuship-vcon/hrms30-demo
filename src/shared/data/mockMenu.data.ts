@@ -9,34 +9,23 @@ import type { RawApiMenuItem } from "@/core/api/menu";
  * menu-rights endpoint is available.
  */
 export const MOCK_MENU_DATA: RawApiMenuItem[] = [
-  {
-    roleId: 1,
-    role: "Employee",
-    groupIds: null,
-    groups: null,
-    rightKey: "WORKFORCE",
-    menuName: "Workforce",
-    rightType: "Group",
-    route: null,
-    icon: "PeopleAltOutlined",
-    parentKey: null,
-    sequence: 1,
-    rightValue: 1,
-  },
-  {
-    roleId: 1,
-    role: "Employee",
-    groupIds: null,
-    groups: null,
-    rightKey: "EMPLOYEE_LIST",
-    menuName: "Employee List",
-    rightType: "Menu",
-    route: "/employee-list",
-    icon: "PeopleAltOutlined",
-    parentKey: "WORKFORCE",
-    sequence: 1,
-    rightValue: 1,
-  },
+  
+//   {
+//     "id": 2,
+//     "rightKey": "list_emp",
+//     "name": "Can List employees",
+//     "shortName": null,
+//     "description": null,
+//     "rightDefault": 0,
+//     "rightAdmin": 1,
+//     "rightType": "Right",
+//     "createdOnUtc": "2026-08-28T08:20:38.57",
+//     "createdBy": 1,
+//     "modifiedOnUtc": null,
+//     "modifiedBy": null,
+//     "isActive": true,
+//     "hrms2Id": null
+// },
   {
     roleId: 1,
     role: "Employee",

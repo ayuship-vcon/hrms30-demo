@@ -99,7 +99,7 @@
     "services": [
       {
         "id": "leave-tracker",
-        "title": "Leave Tracker",
+        "title": "Leave Management",
         "iconKey": "calendar",
         "path": "/leave"
       },
@@ -111,40 +111,22 @@
       },
       {
         "id": "reimbursements",
-        "title": "Reimbursements",
+        "title": "Expense Management",
         "iconKey": "receipt",
         "path": "/reimbursements"
       },
       {
-        "id": "hr-letters",
-        "title": "HR Letters",
-        "iconKey": "article",
-        "path": "/hr-letters"
-      },
-      {
         "id": "organization",
-        "title": "Organization",
+        "title": "Employee List",
         "iconKey": "tree",
-        "path": "/employees"
+        "path": "/employee-list"
       },
       {
         "id": "create-request",
-        "title": "Create Request",
+        "title": "Apply Leave",
         "iconKey": "plus",
         "path": "/leave/apply"
-      },
-      {
-        "id": "payroll",
-        "title": "Payroll",
-        "iconKey": "wallet",
-        "path": "/payroll"
-      },
-      {
-        "id": "benefits",
-        "title": "Benefits",
-        "iconKey": "gift",
-        "path": "/benefits"
-      }
+      }      
     ]
   },
   "upcomingHolidays": {
