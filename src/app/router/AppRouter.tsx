@@ -30,6 +30,7 @@ import { HolidayPage, HolidayDetails } from "@/features/holiday";
 import { AdminPage, AdminDetails } from "@/features/administration";
 import EmployeeList from "@/features/employee-list/pages/EmployeeList";
 import { VerticalOrgStructurePage } from "@/features/vertical-org-structure";
+import { EmployeeOnboardingPage } from "@/features/employee-onboarding";
 import { Horizontal } from "@/features/horizontal-org-structure";
 
 export interface RouteConfig {
@@ -54,6 +55,7 @@ export const PROTECTED_APP_ROUTES: RouteConfig[] = [
   { path: ROUTES.EMPLOYEES.DETAILS(":id"), element: <EmployeeDetails /> },
 
   { path: ROUTES.EMPLOYEE_LIST.ROOT, element: <EmployeeList /> },
+  { path: ROUTES.EMPLOYEE_LIST.ADD, element: <EmployeeOnboardingPage /> },
 
   // 3. Leave Routes
   { path: ROUTES.LEAVE.ROOT, element: <LeavePage /> },

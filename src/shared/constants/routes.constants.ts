@@ -24,8 +24,10 @@ export const ROUTES = {
 
   // Employee List
   EMPLOYEE_LIST: {
-    ROOT: "/employee-list"
+    ROOT: "/employee-list",
+    ADD: "/add-employee",
   },
+
 
   // Leave Management Routes
   LEAVE: {

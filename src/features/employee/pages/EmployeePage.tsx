@@ -53,6 +53,7 @@ export const EmployeePage: React.FC = () => {
   const handleOpenAdd = useCallback(() => {
     setEditingEmployee(null);
     setIsFormModalOpen(true);
+
   }, []);
 
   const handleOpenEdit = useCallback((employee: Employee) => {
@@ -144,7 +145,7 @@ export const EmployeePage: React.FC = () => {
           onClick={handleOpenAdd}
           size="md"
         >
-          Add Employee
+          Add Employeess
         </Button>
       </div>
 

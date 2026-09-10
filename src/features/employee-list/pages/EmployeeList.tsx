@@ -18,10 +18,12 @@ import { employeeColumns } from "../components/employeeColumn";
 import { EmployeeDetailsDialog } from "../components/EmployeeDetailsDialog";
 import { useEmployeeList } from "../core/hooks/useEmployeeList";
 import { EmployeeRecord } from "../core/types/employee.types";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "@/shared/constants";
 
 export const EmployeeList: React.FC = () => {
   const { records, isLoading, isError } = useEmployeeList();
-
+  const navigate = useNavigate();
   const [search, setSearch] = React.useState("");
   const [filters, setFilters] = React.useState<any[]>([]);
   const [page, setPage] = React.useState(0);
@@ -84,7 +86,7 @@ export const EmployeeList: React.FC = () => {
 
   const handleAddEmployee = () => {
     console.log("Add Employee clicked");
-
+    navigate(ROUTES.EMPLOYEE_LIST.ADD);
     // Open Add Employee modal/drawer here
     // setAddEmployeeOpen(true);
   };

@@ -45,7 +45,7 @@ export const MOCK_MENU_DATA: RawApiMenuItem[] = [
     rightKey: "EMPLOYEE_ONBOARDING",
     menuName: "Employee Onboarding",
     rightType: "Menu",
-    route: "/employees/new",
+    route: "/add-employee",
     icon: "PersonAddOutlined",
     parentKey: "WORKFORCE",
     sequence: 2,
