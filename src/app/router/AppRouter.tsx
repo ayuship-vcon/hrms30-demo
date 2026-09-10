@@ -29,6 +29,7 @@ import { AttendancePage, AttendanceDetails } from "@/features/attendance";
 import { HolidayPage, HolidayDetails } from "@/features/holiday";
 import { AdminPage, AdminDetails } from "@/features/administration";
 import EmployeeList from "@/features/employee-list/pages/EmployeeList";
+import { Horizontal } from "@/features/horizontal-org-structure";
 
 export interface RouteConfig {
   path: string;
@@ -501,21 +502,11 @@ export const PROTECTED_APP_ROUTES: RouteConfig[] = [
   // 11. Configurations Module Routes (POC placeholders)
   {
     path: ROUTES.CONFIGURATIONS.HORIZONTAL_STRUCTURE,
-    element: (
-      <GenericFeaturePage
-        title="Horizontal Structure"
-        description="Define cross-functional reporting lines, business units, and horizontal org groupings."
-      />
-    ),
+    element: <Horizontal />,
   },
   {
     path: `${ROUTES.DASHBOARD}${ROUTES.CONFIGURATIONS.HORIZONTAL_STRUCTURE}`,
-    element: (
-      <GenericFeaturePage
-        title="Horizontal Structure"
-        description="Define cross-functional reporting lines, business units, and horizontal org groupings."
-      />
-    ),
+    element: <Horizontal />,
   },
   {
     path: ROUTES.CONFIGURATIONS.VERTICAL_STRUCTURE,
