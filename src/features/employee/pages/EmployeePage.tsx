@@ -133,9 +133,6 @@ export const EmployeePage: React.FC = () => {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-xl sm:text-2xl font-bold text-black tracking-tight">Workforce Management</h1>
-            <span className="bg-primary-light text-primary text-sm font-semibold px-2.5 py-0.5 rounded-sm border border-primary-light">
-              Live Redux Sync
-            </span>
           </div>
           <p className="text-sm text-muted mt-1">
             Directory, role assignments, compensation, and profile records

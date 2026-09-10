@@ -1,22 +1,42 @@
-import React, { useState } from "react";
-import { Button, Menu, MenuItem, Checkbox, ListItemText } from "@mui/material";
-import { GridColDef } from "@mui/x-data-grid";
+import React from "react";
 
-interface ReportColumnSelectorProps {
-  columns: GridColDef[];
-  visibleColumns: string[];
-  onToggleColumn: (field: string) => void;
+import {
+  Box,
+  Button,
+  Checkbox,
+  ListItemText,
+  Menu,
+  MenuItem,
+  Typography,
+} from "@mui/material";
+
+import ViewColumnOutlinedIcon from "@mui/icons-material/ViewColumnOutlined";
+
+interface ReportColumn {
+  field: string;
+  headerName: string;
+  sticky?: boolean;
 }
 
-export const ReportColumnSelector: React.FC<ReportColumnSelectorProps> = ({
-  columns,
-  visibleColumns,
-  onToggleColumn,
-}) => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+interface ReportColumnSelectorProps {
+  columns?: ReportColumn[];
+  visibleColumns?: Record<string, boolean>;
+  onChange: (visibleColumns: Record<string, boolean>) => void;
+}
+
+export default function ReportColumnSelector({
+  columns = [],
+  visibleColumns = {},
+  onChange,
+}: ReportColumnSelectorProps) {
+  const [anchorEl, setAnchorEl] =
+    React.useState<HTMLElement | null>(null);
+
   const open = Boolean(anchorEl);
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleOpen = (
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -24,43 +44,147 @@ export const ReportColumnSelector: React.FC<ReportColumnSelectorProps> = ({
     setAnchorEl(null);
   };
 
+  const handleToggle = (column: ReportColumn) => {
+    console.log(
+      visibleColumns,
+      column,
+      "visibleColumnsvisibleColumns",
+    );
+
+    if (column.sticky) {
+      return;
+    }
+
+    onChange({
+      ...visibleColumns,
+
+      [column.field]:
+        visibleColumns[column.field] === false,
+    });
+  };
+
   return (
     <>
       <Button
         variant="outlined"
-        onClick={handleClick}
-        className="bg-white"
-        startIcon={
-          <svg
-            className="w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"
-            />
-          </svg>
-        }
+        startIcon={<ViewColumnOutlinedIcon />}
+        onClick={handleOpen}
+        sx={{
+          height: 42,
+          px: 2,
+          borderRadius: "8px",
+
+          textTransform: "none",
+
+          fontWeight: 600,
+
+          color: "#172554",
+
+          borderColor: "#D7DFEA",
+
+          "&:hover": {
+            bgcolor: "#F8FAFC",
+            borderColor: "#B9C5D4",
+          },
+        }}
       >
         Columns
       </Button>
-      <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-        {columns.map((col) => (
-          <MenuItem key={col.field} onClick={() => onToggleColumn(col.field)}>
-            <Checkbox
-              checked={visibleColumns.includes(col.field)}
-              size="small"
-            />
-            <ListItemText primary={col.headerName || col.field} />
-          </MenuItem>
-        ))}
+
+      <Menu
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        PaperProps={{
+          sx: {
+            mt: 1,
+            width: 240,
+            maxHeight: 420,
+
+            borderRadius: "10px",
+
+            border:
+              "1px solid #E5EAF1",
+
+            boxShadow:
+              "0 10px 35px rgba(15, 23, 42, 0.10)",
+          },
+        }}
+      >
+        <Box
+          sx={{
+            px: 2,
+            pt: 1.5,
+            pb: 1,
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: 14,
+              fontWeight: 700,
+              color: "#172554",
+            }}
+          >
+            Select columns
+          </Typography>
+
+          <Typography
+            sx={{
+              mt: 0.25,
+              fontSize: 12,
+              color: "#64748B",
+            }}
+          >
+            Choose columns to display
+          </Typography>
+        </Box>
+
+        {columns.map((column) => {
+          const checked =
+            visibleColumns[column.field] !== false;
+
+          return (
+            <MenuItem
+              key={column.field}
+              disabled={column.sticky}
+              onClick={() =>
+                handleToggle(column)
+              }
+              sx={{
+                minHeight: 42,
+
+                "&.Mui-disabled": {
+                  opacity: 0.65,
+                },
+              }}
+            >
+              <Checkbox
+                size="small"
+                checked={checked}
+                disabled={column.sticky}
+                sx={{
+                  py: 0,
+                }}
+              />
+
+              <ListItemText
+                primary={column.headerName}
+                secondary={
+                  column.sticky
+                    ? "Pinned"
+                    : undefined
+                }
+                primaryTypographyProps={{
+                  fontSize: 13,
+                }}
+                secondaryTypographyProps={{
+                  fontSize: 11,
+                }}
+              />
+            </MenuItem>
+          );
+        })}
       </Menu>
     </>
   );
-};
-
-export default ReportColumnSelector;
+}

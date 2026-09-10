@@ -1,60 +1,60 @@
-import React, { useState, useEffect } from "react";
-import { TextField, InputAdornment } from "@mui/material";
+import {
+  IconButton,
+  InputAdornment,
+  TextField,
+} from "@mui/material";
+
+import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 
 interface ReportSearchProps {
+  value: string;
+  onChange: (value: string) => void;
   placeholder?: string;
-  onSearch: (searchTerm: string) => void;
-  debounceDelay?: number;
-  className?: string;
 }
 
-export const ReportSearch: React.FC<ReportSearchProps> = ({
+export default function ReportSearch({
+  value,
+  onChange,
   placeholder = "Search...",
-  onSearch,
-  debounceDelay = 500,
-  className = "",
-}) => {
-  const [value, setValue] = useState("");
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      onSearch(value);
-    }, debounceDelay);
-
-    return () => clearTimeout(handler);
-  }, [value, onSearch, debounceDelay]);
-
+}: ReportSearchProps) {
   return (
     <TextField
-      variant="outlined"
-      size="small"
-      placeholder={placeholder}
       value={value}
-      onChange={(e) => setValue(e.target.value)}
-      className={`bg-white min-w-[250px] ${className}`}
-      slotProps={{
-        input: {
-          startAdornment: (
-            <InputAdornment position="start">
-              <svg
-                className="w-5 h-5 text-gray-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
-            </InputAdornment>
-          ),
+      onChange={(e) => onChange(e.target.value)}
+      placeholder={placeholder}
+      size="small"
+      sx={{
+        width: 360,
+
+        "& .MuiOutlinedInput-root": {
+          height: 42,
+          borderRadius: "8px",
         },
+      }}
+      InputProps={{
+        startAdornment: (
+          <InputAdornment position="start">
+            <SearchRoundedIcon
+              sx={{
+                fontSize: 20,
+                color: "#64748B",
+              }}
+            />
+          </InputAdornment>
+        ),
+
+        endAdornment: value ? (
+          <InputAdornment position="end">
+            <IconButton
+              size="small"
+              onClick={() => onChange("")}
+            >
+              <CloseRoundedIcon fontSize="small" />
+            </IconButton>
+          </InputAdornment>
+        ) : null,
       }}
     />
   );
-};
-
-export default ReportSearch;
+}

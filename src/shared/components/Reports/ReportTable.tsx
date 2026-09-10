@@ -1,63 +1,177 @@
-// src/components/report/ReportTable.tsx
 import React from "react";
+import { Box } from "@mui/material";
 import {
   DataGrid,
   GridColDef,
-  GridEventListener,
-  GridValidRowModel,
+  GridRowParams,
+  GridRowId,
 } from "@mui/x-data-grid";
-import { Box, LinearProgress, Typography } from "@mui/material";
 
-// We use a generic type T that extends GridValidRowModel
-// to ensure the data passed always satisfies DataGrid's requirement (having an 'id' property).
-interface ReportTableProps<T extends GridValidRowModel> {
-  data: T[];
-  columns: GridColDef<T>[];
-  loading?: boolean;
-  onRowClick?: GridEventListener<"rowClick">;
-  emptyMessage?: string;
+const DEFAULT_WIDTH = 180;
+
+interface ReportColumn<RowType = Record<string, unknown>>
+  extends Omit<GridColDef, "renderCell" | "valueGetter"> {
+  sticky?: boolean;
+  renderCell?: (params: {
+    row: RowType;
+    value: unknown;
+    field: string;
+  }) => React.ReactNode;
+  valueGetter?: (row: RowType) => unknown;
 }
 
-export default function ReportTable<T extends GridValidRowModel>({
-  data,
+interface ReportTableProps<RowType extends Record<string, unknown>> {
+  columns: ReportColumn<RowType>[];
+  rows: RowType[];
+  rowId?: keyof RowType | ((row: RowType) => GridRowId);
+  onRowClick?: (params: GridRowParams<RowType>) => void;
+}
+
+export default function ReportTable<
+  RowType extends Record<string, unknown>,
+>({
   columns,
-  loading = false,
+  rows,
+  rowId = "id" as keyof RowType,
   onRowClick,
-  emptyMessage = "No records found.",
-}: ReportTableProps<T>) {
+}: ReportTableProps<RowType>) {
+  console.log(columns, "columnscolumns");
+
+  const gridColumns = React.useMemo<GridColDef<RowType>[]>(
+    () =>
+      columns.map((column) => ({
+        ...column,
+        width: column.width || DEFAULT_WIDTH,
+        minWidth: column.width || DEFAULT_WIDTH,
+        flex: undefined,
+
+        pinnable: column.sticky === true,
+
+        renderCell: column.renderCell
+          ? (params) =>
+              column.renderCell?.({
+                row: params.row,
+                value: params.value,
+                field: params.field,
+              })
+          : undefined,
+
+        // Keep your existing valueGetter working
+        valueGetter: column.valueGetter
+          ? (_value, row) =>
+              column.valueGetter?.(row)
+          : undefined,
+      })),
+    [columns],
+  );
+
+  const getRowId = React.useCallback(
+    (row: RowType): GridRowId =>
+      typeof rowId === "function"
+        ? rowId(row)
+        : (row[rowId] as GridRowId),
+    [rowId],
+  );
+
+  const pinnedColumns = React.useMemo(
+    () => ({
+      left: columns
+        .filter((column) => column.sticky)
+        .map((column) => column.field),
+    }),
+    [columns],
+  );
+
   return (
-    <Box className="w-full h-[600px] bg-white rounded-lg">
-      <DataGrid
-        rows={data}
-        columns={columns}
-        loading={loading}
-        onRowClick={onRowClick}
-        slots={{
-          loadingOverlay: LinearProgress,
-          noRowsOverlay: () => (
-            <Box className="flex items-center justify-center h-full">
-              <Typography className="text-gray-500">{emptyMessage}</Typography>
-            </Box>
-          ),
-        }}
-        initialState={{
-          pagination: {
-            paginationModel: { pageSize: 10, page: 0 },
-          },
-        }}
-        pageSizeOptions={[10, 25, 50, 100]}
+    <Box
+      sx={{
+        width: "100%",
+
+        "& .MuiDataGrid-root": {
+          border: 0,
+          margin: 2,
+        },
+
+        "& .MuiDataGrid-columnHeaders": {
+          backgroundColor: "#F8FAFC",
+          minHeight: 62,
+          maxHeight: 62,
+        },
+
+        "& .MuiDataGrid-columnHeader": {
+          backgroundColor: "#F8FAFC",
+          color: "#172554",
+          fontWeight: 700,
+          fontSize: 14,
+        },
+
+        "& .MuiDataGrid-columnHeaderTitle": {
+          fontWeight: 700,
+        },
+
+        "& .MuiDataGrid-cell": {
+          height: 72,
+          minHeight: 72,
+          maxHeight: 72,
+          fontSize: 14,
+          borderBottom: "1px solid #EDF1F5",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+        },
+
+        "& .MuiDataGrid-row": {
+          minHeight: 72,
+          maxHeight: 72,
+        },
+
+        "& .MuiDataGrid-row:hover": {
+          backgroundColor: "#F8FAFC",
+        },
+
+        "& .MuiDataGrid-pinnedColumns": {
+          backgroundColor: "#FFFFFF",
+        },
+
+        "& .MuiDataGrid-pinnedColumnHeaders": {
+          backgroundColor: "#F8FAFC",
+        },
+
+        "& .MuiDataGrid-footerContainer": {
+          display: "none",
+        },
+
+        "& .MuiDataGrid-virtualScroller": {
+          overflowX: "auto",
+        },
+
+        "& .MuiDataGrid-scrollbar--horizontal": {
+          height: 7,
+        },
+
+        "& .MuiDataGrid-scrollbar--horizontal::-webkit-scrollbar": {
+          height: 7,
+        },
+
+        "& .MuiDataGrid-scrollbar--horizontal::-webkit-scrollbar-thumb": {
+          backgroundColor: "#CBD5E1",
+          borderRadius: 20,
+        },
+      }}
+    >
+      <DataGrid<RowType>
+        rows={rows}
+        columns={gridColumns}
+        getRowId={getRowId}
+        pinnedColumns={pinnedColumns}
         disableRowSelectionOnClick
-        className="border-none"
-        // Tailwind classes can be passed to sx for deeper MUI slot customization if needed
-        sx={{
-          "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: "#f9fafb", // Tailwind gray-50
-            borderBottom: "1px solid #e5e7eb", // Tailwind gray-200
-          },
-          "& .MuiDataGrid-cell:focus": {
-            outline: "none",
-          },
-        }}
+        disableColumnMenu={false}
+        disableColumnResize={false}
+        hideFooter
+        rowHeight={72}
+        columnHeaderHeight={62}
+        onRowClick={onRowClick}
+        autoHeight
       />
     </Box>
   );

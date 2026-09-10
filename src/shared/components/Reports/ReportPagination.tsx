@@ -1,40 +1,49 @@
-import React from "react";
-import { TablePagination } from "@mui/material";
+import {
+  Box,
+  TablePagination,
+} from "@mui/material";
 
 interface ReportPaginationProps {
   count: number;
   page: number;
   rowsPerPage: number;
-  onPageChange: (
-    event: React.MouseEvent<HTMLButtonElement> | null,
-    newPage: number,
-  ) => void;
-  onRowsPerPageChange: (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => void;
+  onPageChange: (newPage: number) => void;
+  onRowsPerPageChange: (value: number) => void;
   rowsPerPageOptions?: number[];
 }
 
-export const ReportPagination: React.FC<ReportPaginationProps> = ({
+export default function ReportPagination({
   count,
   page,
   rowsPerPage,
   onPageChange,
   onRowsPerPageChange,
-  rowsPerPageOptions = [10, 25, 50, 100],
-}) => {
+  rowsPerPageOptions = [10, 25, 50],
+}: ReportPaginationProps) {
   return (
-    <TablePagination
-      component="div"
-      count={count}
-      page={page}
-      onPageChange={onPageChange}
-      rowsPerPage={rowsPerPage}
-      onRowsPerPageChange={onRowsPerPageChange}
-      rowsPerPageOptions={rowsPerPageOptions}
-      className="border-t border-gray-200"
-    />
+    <Box
+      sx={{
+        borderTop: "1px solid #E5EAF1",
+      }}
+    >
+      <TablePagination
+        component="div"
+        count={count}
+        page={page}
+        rowsPerPage={rowsPerPage}
+        rowsPerPageOptions={rowsPerPageOptions}
+        onPageChange={(_, newPage) =>
+          onPageChange(newPage)
+        }
+        onRowsPerPageChange={(e) =>
+          onRowsPerPageChange(
+            Number(e.target.value),
+          )
+        }
+        labelDisplayedRows={({ from, to, count }) =>
+          `Showing ${from}–${to} of ${count} entries`
+        }
+      />
+    </Box>
   );
-};
-
-export default ReportPagination;
+}

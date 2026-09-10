@@ -70,7 +70,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         [currentMenuGroups[0].id]: true,
       }));
     }
-  }, [currentMenuGroups]);
+  }, []);
 
   // Toggle individual accordion independently (supports multiple open simultaneously)
   const toggleGroup = (groupId: string) => {

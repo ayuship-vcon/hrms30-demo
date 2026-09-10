@@ -37,7 +37,7 @@ export const Header: React.FC<HeaderProps> = ({
         </IconButton>
 
         {/* Search Input powered by MUI */}
-        <Box
+        {/* <Box
           className="w-full relative flex items-center bg-slate-50 border border-border rounded-sm px-3 py-1 transition-all focus-within:border-primary focus-within:bg-white"
           sx={{ height: 38 }}
         >
@@ -51,7 +51,7 @@ export const Header: React.FC<HeaderProps> = ({
               '& input::placeholder': { color: '#94A3B8', opacity: 1 },
             }}
           />
-        </Box>
+        </Box> */}
       </div>
 
       {/* Right: Notifications & User Profile */}

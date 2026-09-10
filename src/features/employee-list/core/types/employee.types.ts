@@ -14,4 +14,5 @@ export interface EmployeeRecord {
   status: 'Active' | 'InActive';
   dateOfLeaving?: string;
   unitName: string;
+  filter?: any;
 }
