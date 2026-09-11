@@ -4,6 +4,8 @@ import { alpha } from "@mui/material/styles";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import GroupIcon from "@mui/icons-material/Group";
+import BusinessIcon from "@mui/icons-material/Business";
+import WorkIcon from "@mui/icons-material/Work";
 import type { OrganizationNode, SelectedOrganization } from "../core/types/horizontal-org.types";
 
 interface TreeNodeProps {
@@ -20,7 +22,7 @@ export const TreeNode = ({ node, depth = 0, selected, onSelect, collapseTrigger,
   useEffect(() => { if (collapseTrigger > 0) setOpen(false); }, [collapseTrigger]);
   useEffect(() => { if (expandTrigger > 0) setOpen(true); }, [expandTrigger]);
   const hasChildren = Boolean(node.children?.length);
-  const NodeIcon = node.icon ?? GroupIcon;
+  const NodeIcon = node.icon ?? (node.level === "Company" ? BusinessIcon : node.level === "Group" ? WorkIcon : GroupIcon);
   const active = selected.name === node.name;
 
   return (

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import {
   Box,
-  Button,
   Card,
   CardContent,
   Chip,
@@ -11,17 +10,27 @@ import {
   Typography,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import SaveIcon from "@mui/icons-material/Save";
-import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import UnfoldLessIcon from "@mui/icons-material/UnfoldLess";
 import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
-import { metrics, orgTree } from "../core/constants/binding";
+import { metrics } from "../core/constants/binding";
 import TreeNode from "../components/TreeNode";
 import HorizontalOrganizationDetails from "../components/HorizontalOrganizationDetails";
 import type { SelectedOrganization } from "../core/types/horizontal-org.types";
+import { useAppDispatch, useAppSelector } from "@/core/redux";
+import {
+  clearHorizontalOrganizationSelection,
+  selectHorizontalOrganization,
+  selectHorizontalOrganizations,
+  selectSelectedHorizontalOrganization,
+  addHorizontalOrganization,
+  updateHorizontalOrganization,
+  deleteHorizontalOrganization,
+} from "@/core/redux/horizontal-org";
 
 export const Horizontal = () => {
-  const [selected, setSelected] = useState<SelectedOrganization>({});
+  const dispatch = useAppDispatch();
+  const organizations = useAppSelector(selectHorizontalOrganizations);
+  const selected = useAppSelector(selectSelectedHorizontalOrganization);
   const [activeTab, setActiveTab] = useState("Add");
   const [collapseTrigger, setCollapseTrigger] = useState(0);
   const [expandTrigger, setExpandTrigger] = useState(0);
@@ -165,19 +174,19 @@ export const Horizontal = () => {
                       borderColor: "divider",
                       borderRadius: 2,
                     }}
-                    onClick={() => setSelected({})}
+                    onClick={() => dispatch(clearHorizontalOrganizationSelection())}
                     title="Add Node"
                   >
                     <AddIcon fontSize="small" />
                   </IconButton>
                 </Stack>
                 <Stack spacing={0.5}>
-                  {orgTree.map((node) => (
+                  {organizations.map((node) => (
                     <TreeNode
                       key={node.name}
                       node={node}
                       selected={selected}
-                      onSelect={setSelected}
+                      onSelect={(node: SelectedOrganization) => dispatch(selectHorizontalOrganization(node))}
                       collapseTrigger={collapseTrigger}
                       expandTrigger={expandTrigger}
                     />
@@ -189,24 +198,13 @@ export const Horizontal = () => {
                   selected={selected}
                   activeTab={activeTab}
                   setActiveTab={setActiveTab}
-                  onSave={() => console.log("")}
-                  onReset={() => console.log("")}
-                />
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    gap: 1,
-                    mt: 2,
+                  onSave={(node, parentName) => {
+                    if (selected.name) dispatch(updateHorizontalOrganization({ node }));
+                    else dispatch(addHorizontalOrganization({ node, parentName }));
                   }}
-                >
-                  <Button variant="contained" startIcon={<SaveIcon />}>
-                    Save
-                  </Button>
-                  <Button variant="outlined" startIcon={<RestartAltIcon />}>
-                    Reset
-                  </Button>
-                </Box>
+                  onReset={() => dispatch(clearHorizontalOrganizationSelection())}
+                  onDelete={() => dispatch(deleteHorizontalOrganization(selected.id ?? `${selected.level}:${selected.name}`))}
+                />
               </Box>
             </Box>
           </Card>
