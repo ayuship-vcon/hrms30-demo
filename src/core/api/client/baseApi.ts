@@ -24,6 +24,6 @@ export const baseApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ['Auth', 'Menu', 'Employees', 'Roles', 'Leave', 'Attendance', 'Holidays', 'AdminSettings', 'AuditLogs', 'HorizontalOrganizations'],
+  tagTypes: ['Auth', 'Menu', 'Employees', 'Roles', 'Leave', 'Attendance', 'Holidays', 'AdminSettings', 'AuditLogs', 'HorizontalOrganizations', 'Organization'],
   endpoints: () => ({}),
 });

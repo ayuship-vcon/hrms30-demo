@@ -561,7 +561,7 @@ export const AppRouter: React.FC = () => {
         <Route
           element={
             <PublicRoute
-              isAuthenticated={isAuthenticated}
+              isAuthenticated={!isAuthenticated}
               redirectPath={ROUTES.DASHBOARD}
             />
           }
@@ -583,7 +583,7 @@ export const AppRouter: React.FC = () => {
         <Route
           element={
             <ProtectedRoute
-              isAuthenticated={isAuthenticated}
+              isAuthenticated={!isAuthenticated}
               redirectPath={ROUTES.AUTH.LOGIN}
             />
           }
@@ -604,7 +604,7 @@ export const AppRouter: React.FC = () => {
           path="*"
           element={
             <Navigate
-              to={isAuthenticated ? ROUTES.DASHBOARD : ROUTES.AUTH.LOGIN}
+              to={!isAuthenticated ? ROUTES.DASHBOARD : ROUTES.AUTH.LOGIN}
               replace
             />
           }

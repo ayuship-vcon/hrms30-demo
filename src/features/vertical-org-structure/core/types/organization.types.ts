@@ -34,3 +34,15 @@ export interface Employee {
   designation: string;
   primary?: string;
 }
+
+export type AssignmentTab = Exclude<OrganizationTab, 'Add'>;
+
+export type OrganizationAssignments = Partial<Record<AssignmentTab, Employee[]>>;
+
+export interface VerticalOrganizationAssignmentState {
+  assignments: Record<string, OrganizationAssignments>;
+  lastUpdatedKey: string | null;
+}
+
+export const getOrganizationKey = (organization: SelectedOrganization): string =>
+  String(organization.id ?? `${organization.level ?? 'organization'}:${organization.name ?? 'new'}`);
