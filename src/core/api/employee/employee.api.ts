@@ -1,6 +1,7 @@
 import type { Employee } from "@/features/employee/core/types/employee.types";
 import type {
   CreateEmployeeRequest,
+  CreateEmployeeOnboardingRequest,
   GetEmployeesParams,
   UpdateEmployeeRequest,
 } from "./employeeApi.types";
@@ -41,6 +42,16 @@ export const employeeQueries = baseApi.injectEndpoints({
       invalidatesTags: ["Employees"],
     }),
 
+    createEmployeeOnboarding: builder.mutation<Employee, CreateEmployeeOnboardingRequest>({
+      query: (body) => ({
+        url: API_ENDPOINTS.EMPLOYEE.ROOT,
+        method: "POST",
+        body,
+      }),
+      transformResponse: (response: unknown) => extractApiData<Employee>(response),
+      invalidatesTags: ["Employees"],
+    }),
+    
     updateEmployee: builder.mutation<
       Employee,
       { id: string | number; data: UpdateEmployeeRequest }
@@ -70,6 +81,7 @@ export const {
   useGetEmployeeByIdQuery,
   useLazyGetEmployeeByIdQuery,
   useCreateEmployeeMutation,
+  useCreateEmployeeOnboardingMutation,
   useUpdateEmployeeMutation,
   useDeleteEmployeeMutation,
 } = employeeQueries;

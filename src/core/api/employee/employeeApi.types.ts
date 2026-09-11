@@ -8,6 +8,18 @@ export interface GetEmployeesParams extends PaginationParams {
 
 export type CreateEmployeeRequest = Omit<Employee, 'id' | 'createdAt' | 'updatedAt'>;
 
+export interface CreateEmployeeOnboardingRequest {
+  userId: number;
+  organizationGroupId: number;
+  roleId: number;
+  employeeId: string;
+  firstName: string;
+  lastName: string;
+  dateOfJoining: string;
+  officeEmailId: string;
+  statusDescription: string;
+}
+
 export type UpdateEmployeeRequest = Partial<CreateEmployeeRequest>;
 
 export interface EmployeeStatsResponse {

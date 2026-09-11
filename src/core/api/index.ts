@@ -7,3 +7,4 @@ export * from './attendance';
 export * from './holiday';
 export * from './admin';
 export * from './organization';
+export * from './roles';

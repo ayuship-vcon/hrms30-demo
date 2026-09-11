@@ -13,6 +13,10 @@ export const API_ENDPOINTS = {
     ROOT: '/Employees',
   },
 
+  ROLES: {
+    ROOT: '/CoreRoles',
+  },
+
   ORGANIZATION: {
     GROUP: '/OrganizationGroups',
     GROUPS: '/OrganizationGroups',

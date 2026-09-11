@@ -35,6 +35,7 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
   const methods = useForm<EmployeeFormData>({
     resolver: yupResolver(employeeFormSchema),
     defaultValues: {
+      userId: 2,
       employeeCode: initialValues?.employeeCode || `EMP-${Math.floor(1000 + Math.random() * 9000)}`,
       firstName: initialValues?.firstName || '',
       lastName: initialValues?.lastName || '',

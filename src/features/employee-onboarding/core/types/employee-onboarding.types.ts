@@ -6,7 +6,7 @@ export interface EmployeeOnboardingFormValues {
   designation: string;
   employeeNumber: string;
   isPastEmployee: boolean;
-  role: string;
+  roleId: number | '';
   initials: string;
   leaveApprover: string;
   gender: string;
@@ -26,7 +26,7 @@ export const INITIAL_EMPLOYEE_FORM: EmployeeOnboardingFormValues = {
   designation: '',
   employeeNumber: 'V26',
   isPastEmployee: false,
-  role: 'Employee',
+  roleId: '',
   initials: '',
   leaveApprover: '',
   gender: 'Autofill',

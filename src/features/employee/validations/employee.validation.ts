@@ -1,6 +1,7 @@
 import * as yup from 'yup';
 
 export const employeeFormSchema = yup.object({
+  userId: yup.number().required('User ID is required'),
   employeeCode: yup.string().required('Employee code is required'),
   firstName: yup.string().required('First name is required'),
   lastName: yup.string().required('Last name is required'),
