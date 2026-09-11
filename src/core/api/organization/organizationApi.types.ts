@@ -9,6 +9,14 @@ export interface OrganizationGroup {
   [key: string]: unknown;
 }
 
+export interface CreateOrganizationGroupRequest {
+  name: string;
+  levelId: number;
+  parentGroupId: number;
+  groupPath: string | null;
+  shortName: string;
+}
+
 export interface OrganizationLevel {
   id: number;
   name: string;

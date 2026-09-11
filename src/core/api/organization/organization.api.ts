@@ -2,6 +2,7 @@ import { API_ENDPOINTS } from '@/shared/constants';
 import { baseApi, extractApiData } from '../client/baseApi';
 import type {
   OrganizationCollection,
+  CreateOrganizationGroupRequest,
   OrganizationGroup,
   OrganizationLevel,
 } from './organizationApi.types';
@@ -29,12 +30,22 @@ export const organizationQueries = baseApi.injectEndpoints({
       transformResponse: (response: unknown) => extractItems<OrganizationLevel>(response),
       providesTags: ['Organization'],
     }),
+    createOrganizationGroup: builder.mutation<OrganizationGroup, CreateOrganizationGroupRequest>({
+      query: (body) => ({
+        url: API_ENDPOINTS.ORGANIZATION.GROUP,
+        method: 'POST',
+        body,
+      }),
+      transformResponse: (response: unknown) => extractApiData<OrganizationGroup>(response),
+      invalidatesTags: ['Organization'],
+    }),
   }),
 });
 
 export const {
   useGetOrganizationGroupsQuery,
   useGetOrganizationLevelsQuery,
+  useCreateOrganizationGroupMutation,
 } = organizationQueries;
 
 export type OrganizationGroupsResponse = OrganizationCollection<OrganizationGroup>;

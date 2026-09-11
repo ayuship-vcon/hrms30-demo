@@ -1,7 +1,6 @@
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import {
   Box,
-  Button,
   Card,
   CardContent,
   Chip,
@@ -11,17 +10,17 @@ import {
   Typography,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import SaveIcon from "@mui/icons-material/Save";
-import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import UnfoldLessIcon from "@mui/icons-material/UnfoldLess";
 import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
 import { buildOrganizationTree, metrics, orgTree as fallbackOrgTree } from "../core/constants";
 import type { OrganizationTab, SelectedOrganization } from "../core/types";
+import type { OrganizationGroupFormValues } from "../components/AddEditTab";
 import { TreeNode } from "../components/TreeNode";
 import { OrganizationDetails } from "../components/OrganizationDetails";
 import {
   useGetOrganizationGroupsQuery,
   useGetOrganizationLevelsQuery,
+  useCreateOrganizationGroupMutation,
 } from "@/core/api/organization";
 import type {
   OrganizationGroup,
@@ -36,6 +35,13 @@ export const VerticalOrgStructurePage: React.FC = () => {
   const [collapseTrigger, setCollapseTrigger] = useState(0);
   const [expandTrigger, setExpandTrigger] = useState(0);
   const [isTreeCollapsed, setIsTreeCollapsed] = useState(false);
+  const [formValues, setFormValues] = useState<OrganizationGroupFormValues>({
+    name: "",
+    levelId: "",
+    parentGroupId: "",
+    shortName: "",
+  });
+  const [createOrganizationGroup] = useCreateOrganizationGroupMutation();
   const groupsQuery = useGetOrganizationGroupsQuery();
   const levelsQuery = useGetOrganizationLevelsQuery();
   const organizationGroups = (groupsQuery.data?.length
@@ -51,6 +57,36 @@ export const VerticalOrgStructurePage: React.FC = () => {
         : fallbackOrgTree,
     [organizationGroups, organizationLevels],
   );
+  const handleFormChange = useCallback(
+    (values: Partial<OrganizationGroupFormValues>) => {
+      setFormValues((previous) => ({ ...previous, ...values }));
+    },
+    [],
+  );
+  const handleSave = async () => {
+    if (selected.level || typeof formValues.levelId !== "number") return;
+    if (!formValues.name.trim() || !formValues.shortName.trim()) return;
+    if (formValues.parentGroupId === "") return;
+
+    try {
+      await createOrganizationGroup({
+        name: formValues.name.trim(),
+        levelId: formValues.levelId,
+        parentGroupId: formValues.parentGroupId,
+        shortName: formValues.shortName.trim(),
+        groupPath: null,
+      }).unwrap();
+      setSelected({});
+      setFormValues({ name: "", levelId: "", parentGroupId: "", shortName: "" });
+      void groupsQuery.refetch();
+    } catch (error) {
+      console.error("Unable to create organization group", error);
+    }
+  };
+  const handleReset = () => {
+    setSelected({});
+    setFormValues({ name: "", levelId: "", parentGroupId: "", shortName: "" });
+  };
   const handleToggleTree = () => {
     if (isTreeCollapsed) setExpandTrigger((previous) => previous + 1);
     else setCollapseTrigger((previous) => previous + 1);
@@ -199,25 +235,14 @@ export const VerticalOrgStructurePage: React.FC = () => {
                   selected={selected}
                   activeTab={activeTab}
                   setActiveTab={setActiveTab}
-                  onSave={() => undefined}
-                  onReset={() => undefined}
+                  onSave={handleSave}
+                  onReset={handleReset}
                   organizationTree={orgTree}
+                  availableLevels={organizationLevels}
+                  organizationGroups={organizationGroups}
+                  formValues={formValues}
+                  onFormChange={handleFormChange}
                 />
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    gap: 1,
-                    mt: 2,
-                  }}
-                >
-                  <Button variant="contained" startIcon={<SaveIcon />}>
-                    Save
-                  </Button>
-                  <Button variant="outlined" startIcon={<RestartAltIcon />}>
-                    Reset
-                  </Button>
-                </Box>
               </Box>
             </Box>
           </Card>

@@ -14,6 +14,7 @@ export const API_ENDPOINTS = {
   },
 
   ORGANIZATION: {
+    GROUP: '/OrganizationGroups',
     GROUPS: '/OrganizationGroups',
     LEVELS: '/OrganizationLevels',
   },
