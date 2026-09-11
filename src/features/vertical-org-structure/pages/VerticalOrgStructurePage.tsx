@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   Box,
   Button,
@@ -15,10 +15,20 @@ import SaveIcon from "@mui/icons-material/Save";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import UnfoldLessIcon from "@mui/icons-material/UnfoldLess";
 import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
-import { metrics, orgTree } from "../core/constants";
+import { buildOrganizationTree, metrics, orgTree as fallbackOrgTree } from "../core/constants";
 import type { OrganizationTab, SelectedOrganization } from "../core/types";
 import { TreeNode } from "../components/TreeNode";
 import { OrganizationDetails } from "../components/OrganizationDetails";
+import {
+  useGetOrganizationGroupsQuery,
+  useGetOrganizationLevelsQuery,
+} from "@/core/api/organization";
+import type {
+  OrganizationGroup,
+  OrganizationLevel,
+} from "@/core/api/organization";
+import fallbackGroups from "../core/data/organization-groups.json";
+import fallbackLevels from "../core/data/organization-levels.json";
 
 export const VerticalOrgStructurePage: React.FC = () => {
   const [selected, setSelected] = useState<SelectedOrganization>({});
@@ -26,6 +36,21 @@ export const VerticalOrgStructurePage: React.FC = () => {
   const [collapseTrigger, setCollapseTrigger] = useState(0);
   const [expandTrigger, setExpandTrigger] = useState(0);
   const [isTreeCollapsed, setIsTreeCollapsed] = useState(false);
+  const groupsQuery = useGetOrganizationGroupsQuery();
+  const levelsQuery = useGetOrganizationLevelsQuery();
+  const organizationGroups = (groupsQuery.data?.length
+    ? groupsQuery.data
+    : fallbackGroups.items) as OrganizationGroup[];
+  const organizationLevels = (levelsQuery.data?.length
+    ? levelsQuery.data
+    : fallbackLevels.items) as OrganizationLevel[];
+  const orgTree = useMemo(
+    () =>
+      organizationGroups.length > 0 && organizationLevels.length > 0
+        ? buildOrganizationTree(organizationGroups, organizationLevels)
+        : fallbackOrgTree,
+    [organizationGroups, organizationLevels],
+  );
   const handleToggleTree = () => {
     if (isTreeCollapsed) setExpandTrigger((previous) => previous + 1);
     else setCollapseTrigger((previous) => previous + 1);
@@ -176,6 +201,7 @@ export const VerticalOrgStructurePage: React.FC = () => {
                   setActiveTab={setActiveTab}
                   onSave={() => undefined}
                   onReset={() => undefined}
+                  organizationTree={orgTree}
                 />
                 <Box
                   sx={{

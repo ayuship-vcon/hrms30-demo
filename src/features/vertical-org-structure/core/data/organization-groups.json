@@ -1,0 +1,24 @@
+{
+  "items": [
+    { "id": 1, "name": "Vconstruct", "levelId": 100, "parentGroupId": null, "shortName": "VCon", "isActive": true },
+    { "id": 2, "name": "Virtual Builder", "levelId": 200, "parentGroupId": 1, "shortName": "VB", "isActive": true },
+    { "id": 3, "name": "Software Solutions for Construction", "levelId": 200, "parentGroupId": 1, "shortName": "SSC", "isActive": true },
+    { "id": 4, "name": "Design Science & Analytics", "levelId": 200, "parentGroupId": 1, "shortName": "DSA", "isActive": true },
+    { "id": 5, "name": "Corporate functions", "levelId": 200, "parentGroupId": 1, "shortName": "CF", "isActive": true },
+    { "id": 6, "name": "Operations", "levelId": 300, "parentGroupId": 2, "shortName": "OP", "isActive": true },
+    { "id": 7, "name": "Northwest", "levelId": 400, "parentGroupId": 6, "shortName": "NW", "isActive": true },
+    { "id": 8, "name": "Southwest", "levelId": 400, "parentGroupId": 6, "shortName": "SW", "isActive": true },
+    { "id": 9, "name": "East Coast & Central", "levelId": 400, "parentGroupId": 6, "shortName": "EC&C", "isActive": true },
+    { "id": 10, "name": "West Coast & International", "levelId": 400, "parentGroupId": 6, "shortName": "WC&I", "isActive": true },
+    { "id": 11, "name": "Data Analytics", "levelId": 400, "parentGroupId": 4, "shortName": "DA", "isActive": true },
+    { "id": 12, "name": "Data Engineering", "levelId": 400, "parentGroupId": 4, "shortName": "DE", "isActive": true },
+    { "id": 13, "name": "Office 365", "levelId": 400, "parentGroupId": 3, "shortName": "O365", "isActive": true },
+    { "id": 14, "name": "Integration Planning", "levelId": 400, "parentGroupId": 3, "shortName": "IP", "isActive": true },
+    { "id": 15, "name": "HR-ops", "levelId": 400, "parentGroupId": 5, "shortName": "HR", "isActive": true },
+    { "id": 16, "name": "Systems", "levelId": 300, "parentGroupId": 5, "shortName": "Sys", "isActive": true },
+    { "id": 17, "name": "Enterprise App", "levelId": 400, "parentGroupId": 16, "shortName": "EA", "isActive": true },
+    { "id": 19, "name": "VC Labs", "levelId": 200, "parentGroupId": 1, "shortName": "VCLab", "isActive": true },
+    { "id": 20, "name": "Leadership", "levelId": 400, "parentGroupId": 1, "shortName": "Leaders", "isActive": true },
+    { "id": 21, "name": "Niramaan", "levelId": 400, "parentGroupId": 19, "shortName": "Niramaan", "isActive": true }
+  ]
+}

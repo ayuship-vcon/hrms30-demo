@@ -8,6 +8,7 @@ import {
   parentOrganizations,
 } from "../core/constants";
 import type { SelectedOrganization } from "../core/types";
+import type { OrganizationNode } from "../core/types";
 
 const ReadOnlyField: React.FC<{ label: string; value: string }> = ({
   label,
@@ -22,9 +23,10 @@ const ReadOnlyField: React.FC<{ label: string; value: string }> = ({
     InputProps={{ readOnly: true }}
   />
 );
-export const AddEditTab: React.FC<{ selected: SelectedOrganization }> = ({
-  selected,
-}) => {
+export const AddEditTab: React.FC<{
+  selected: SelectedOrganization;
+  organizationTree?: OrganizationNode[];
+}> = ({ selected, organizationTree = orgTree }) => {
   const [status, setStatus] = useState("Active");
   const [groupName, setGroupName] = useState("");
   const [level, setLevel] = useState("");
@@ -42,10 +44,10 @@ export const AddEditTab: React.FC<{ selected: SelectedOrganization }> = ({
         ? "Team responsible for regional operations and implementation delivery."
         : "",
     );
-    const parent = findParent(orgTree, selected.name);
+    const parent = findParent(organizationTree, selected.name);
     setParentGroup(parent?.level ?? "");
     setParentGroupName(parent?.name ?? "");
-  }, [selected, isEdit]);
+  }, [selected, isEdit, organizationTree]);
   const handleLevelChange = (value: string) => {
     setLevel(value);
     setParentGroup(parentGroupOptions[value]?.[0] ?? "");

@@ -26,9 +26,10 @@ const accessRightIsAllowed = (right: AccessRight): boolean =>
 /** Menu metadata used when /AccessRights/{id} returns permission records only. */
 const ACCESS_RIGHT_MENU: Array<RawApiMenuItem & { aliases?: string[] }> = [
   { rightKey: 'list_emp', aliases: ['employee_list', 'employees'], menuName: 'Employee List', rightType: 'Menu', route: '/employee-list', icon: 'PeopleOutlined', parentKey: 'WORKFORCE', sequence: 1, roleId: null, role: null, groupIds: null, groups: null, rightValue: 1 },
-  { rightKey: 'horizontal_str', aliases: ['horizontal_structure'], menuName: 'Horizontal Structure', rightType: 'Menu', route: '/configurations/horizontal-structure', icon: 'AccountTreeOutlined', parentKey: 'CONFIGURATIONS', sequence: 1, roleId: null, role: null, groupIds: null, groups: null, rightValue: 1 },
-  { rightKey: 'vertical_str', aliases: ['vertical_structure'], menuName: 'Vertical Structure', rightType: 'Menu', route: '/configurations/vertical-structure', icon: 'AccountTreeOutlined', parentKey: 'CONFIGURATIONS', sequence: 2, roleId: null, role: null, groupIds: null, groups: null, rightValue: 1 },
+  { rightKey: 'horizontal_org_str', aliases: ['horizontal_structure'], menuName: 'Horizontal Structure', rightType: 'Menu', route: '/configurations/horizontal-structure', icon: 'AccountTreeOutlined', parentKey: 'CONFIGURATIONS', sequence: 1, roleId: null, role: null, groupIds: null, groups: null, rightValue: 1 },
+  { rightKey: 'vertical_org_str', aliases: ['vertical_structure'], menuName: 'Vertical Structure', rightType: 'Menu', route: '/configurations/vertical-structure', icon: 'AccountTreeOutlined', parentKey: 'CONFIGURATIONS', sequence: 2, roleId: null, role: null, groupIds: null, groups: null, rightValue: 1 },
   { rightKey: 'roles_privileges', aliases: ['roles_privileges'], menuName: 'Roles & Privileges', rightType: 'Menu', route: '/configurations/roles-privileges', icon: 'AdminPanelSettingsOutlined', parentKey: 'CONFIGURATIONS', sequence: 3, roleId: null, role: null, groupIds: null, groups: null, rightValue: 1 },
+  { rightKey: 'add_emp', aliases: ['add_emp'], menuName: 'Employee Onboarding', rightType: 'Menu', route: '/add-employee', icon: 'AdminPanelSettingsOutlined', parentKey: 'WORKFORCE', sequence: 4, roleId: null, role: null, groupIds: null, groups: null, rightValue: 1 },
 ];
 
 const ACCESS_RIGHT_GROUPS: RawApiMenuItem[] = [
