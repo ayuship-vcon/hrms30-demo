@@ -30,6 +30,11 @@ export const API_ENDPOINTS = {
     SETTINGS: '/Admin/Settings',
     AUDIT_LOGS: '/Admin/AuditLogs',
   },
+
+  HORIZONTAL_ORGANIZATION: {
+    ROOT: '/HorizontalOrganizations',
+    BY_ID: (id: string | number) => `/HorizontalOrganizations/${id}`,
+  },
 } as const;
 
 export const HTTP_STATUS = {
