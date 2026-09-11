@@ -6,12 +6,20 @@ import { LeaveApproversTab } from "./LeaveApproversTab";
 import { ActionButtons } from "./ActionButtons";
 import { leadTabs, TAB_CONFIG } from "../core/constants";
 import type { OrganizationTab, SelectedOrganization } from "../core/types";
+import type { OrganizationNode } from "../core/types";
+import type { OrganizationGroup, OrganizationLevel as ApiOrganizationLevel } from "@/core/api/organization";
+import type { OrganizationGroupFormValues } from "./AddEditTab";
 interface Props {
   selected: SelectedOrganization;
   activeTab: OrganizationTab;
   setActiveTab: (tab: OrganizationTab) => void;
   onSave: () => void;
   onReset: () => void;
+  organizationTree?: OrganizationNode[];
+  availableLevels?: ApiOrganizationLevel[];
+  organizationGroups?: OrganizationGroup[];
+  formValues: OrganizationGroupFormValues;
+  onFormChange: (values: Partial<OrganizationGroupFormValues>) => void;
 }
 export const OrganizationDetails: React.FC<Props> = ({
   selected,
@@ -19,12 +27,24 @@ export const OrganizationDetails: React.FC<Props> = ({
   setActiveTab,
   onSave,
   onReset,
+  organizationTree,
+  availableLevels,
+  organizationGroups,
+  formValues,
+  onFormChange,
 }) => {
   const tabs = TAB_CONFIG[selected.level ?? "Company"] ?? ["Add"];
   useEffect(() => setActiveTab("Add"), [selected, setActiveTab]);
   const renderTab = () =>
     activeTab === "Add" ? (
-      <AddEditTab selected={selected} />
+      <AddEditTab
+        selected={selected}
+        organizationTree={organizationTree}
+        availableLevels={availableLevels}
+        organizationGroups={organizationGroups}
+        formValues={formValues}
+        onFormChange={onFormChange}
+      />
     ) : leadTabs.includes(activeTab) ? (
       <TeamLeadTab selected={selected} activeTab={activeTab} />
     ) : activeTab === "Leave Approvers" ? (

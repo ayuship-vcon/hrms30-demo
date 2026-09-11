@@ -6,11 +6,17 @@ export const API_ENDPOINTS = {
   },
 
   MENU: {
-    GET_ACCESS_RIGHTS: (employeeUserId: string | number) => `/AccessRights/${employeeUserId}`,
+    GET_ACCESS_RIGHTS: (employeeUserId: string | number) => `/RoleAccessRights/role/${employeeUserId}`,
   },
 
   EMPLOYEE: {
     ROOT: '/Employees',
+  },
+
+  ORGANIZATION: {
+    GROUP: '/OrganizationGroups',
+    GROUPS: '/OrganizationGroups',
+    LEVELS: '/OrganizationLevels',
   },
 
   LEAVE: {

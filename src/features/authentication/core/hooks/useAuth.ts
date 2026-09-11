@@ -38,9 +38,7 @@ export function useAuth() {
     user?.id as string | number,
     { skip: !isAuthenticated || user?.id === undefined || user?.id === null },
   );
-  console.log("menuQuery", menuQuery); //remove this line after testing
   const menuGroups = transformApiMenuToHierarchy(menuQuery.data ?? []);
-  console.log("menuGroups", menuGroups); //remove this line after testing
   const isMenuLoading = menuQuery.isLoading || menuQuery.isFetching;
 
   const permissions = usePermission(role);

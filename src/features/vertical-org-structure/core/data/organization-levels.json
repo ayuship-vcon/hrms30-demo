@@ -1,0 +1,10 @@
+{
+  "items": [
+    { "id": 100, "name": "Company", "parentLevelId": null, "shortName": "Company", "levelType": "primary", "sequence": 0, "structure": "Vertical", "isActive": true },
+    { "id": 200, "name": "Business Unit", "parentLevelId": 100, "shortName": "BU", "levelType": "primary", "sequence": 1, "structure": "Vertical", "isActive": true },
+    { "id": 300, "name": "Cluster", "parentLevelId": 200, "shortName": "CL", "levelType": "primary", "sequence": 2, "structure": "Vertical", "isActive": true },
+    { "id": 350, "name": "Sub-Cluster", "parentLevelId": 300, "shortName": "SCL", "levelType": "primary", "sequence": 3, "structure": "Vertical", "isActive": true },
+    { "id": 400, "name": "Team", "parentLevelId": 350, "shortName": "TM", "levelType": "primary", "sequence": 4, "structure": "Vertical", "isActive": true },
+    { "id": 1000, "name": "Function", "parentLevelId": 100, "shortName": "FN", "levelType": "deputation", "sequence": 5, "structure": "Horizantal", "isActive": true }
+  ]
+}

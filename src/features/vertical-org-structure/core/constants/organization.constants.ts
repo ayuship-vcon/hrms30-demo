@@ -2,6 +2,10 @@ import BusinessIcon from "@mui/icons-material/Business";
 import WorkIcon from "@mui/icons-material/Work";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import type { Metric, OrganizationLevel, OrganizationNode } from "../types";
+import type {
+  OrganizationGroup as ApiOrganizationGroup,
+  OrganizationLevel as ApiOrganizationLevel,
+} from "@/core/api/organization";
 
 export const orgTree: OrganizationNode[] = [
   {
@@ -86,6 +90,50 @@ export const orgTree: OrganizationNode[] = [
     ],
   },
 ];
+
+const normalizeLevel = (
+  group: ApiOrganizationGroup,
+  levels: Map<number, ApiOrganizationLevel>,
+): OrganizationLevel => {
+  const levelName = levels.get(group.levelId)?.name?.toLowerCase() ?? "";
+  if (group.levelId === 100 || levelName === "company") return "Company";
+  if (group.levelId === 200 || levelName === "business unit") return "BU";
+  if (group.levelId === 300 || levelName === "cluster") return "Cluster";
+  if (group.levelId === 350 || levelName === "sub-cluster") return "SubCluster";
+  return "Team";
+};
+
+export const buildOrganizationTree = (
+  groups: ApiOrganizationGroup[],
+  levels: ApiOrganizationLevel[],
+): OrganizationNode[] => {
+  const levelMap = new Map(levels.map((level) => [level.id, level]));
+  const activeGroups = groups.filter((group) => group.isActive !== false);
+  const groupMap = new Map(activeGroups.map((group) => [group.id, group]));
+
+  const buildNodes = (parentGroupId: number | null): OrganizationNode[] =>
+    activeGroups
+      .filter((group) => {
+        const parentExists = group.parentGroupId !== null && groupMap.has(group.parentGroupId);
+        return parentGroupId === null
+          ? group.parentGroupId === null || !parentExists
+          : group.parentGroupId === parentGroupId;
+      })
+      .map((group) => {
+        const level = normalizeLevel(group, levelMap);
+        const children = buildNodes(group.id);
+        return {
+          id: group.id,
+          name: group.name,
+          level,
+          code: group.shortName ?? group.name,
+          children: children.length > 0 ? children : undefined,
+          icon: level === "Company" ? BusinessIcon : level === "BU" ? WorkIcon : AccountTreeIcon,
+        };
+      });
+
+  return buildNodes(null);
+};
 
 export const metrics: Metric[] = [
   {

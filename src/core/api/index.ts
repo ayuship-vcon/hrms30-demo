@@ -7,3 +7,4 @@ export * from './attendance';
 export * from './holiday';
 export * from './admin';
 export * from './horizontal-org';
+export * from './organization';

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { IconButton, ButtonBase } from '@mui/material';
 import { useAuth } from '@/features/authentication';
@@ -50,7 +50,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
     location.pathname === '/' ||
     location.pathname === ROUTES.DASHBOARD;
 
-  const currentMenuGroups: MenuGroup[] = menuGroups || [];
+  // menuGroups is permission-filtered by rightKey before it reaches the sidebar.
+  // Avoid rendering malformed rights as blank navigation links.
+  const currentMenuGroups: MenuGroup[] = useMemo(
+    () =>
+      (menuGroups || [])
+        .map((group) => ({
+          ...group,
+          menuitems: group.menuitems.filter((item) => Boolean(item.rightKey && item.route)),
+        }))
+        .filter((group) => group.menuitems.length > 0),
+    [menuGroups],
+  );
 
   // =========================================================================
   // Accordion State: Multi-open allowed, 1st Accordion Open by Default
@@ -70,7 +81,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         [currentMenuGroups[0].id]: true,
       }));
     }
-  }, []);
+  }, [currentMenuGroups]);
 
   // Toggle individual accordion independently (supports multiple open simultaneously)
   const toggleGroup = (groupId: string) => {

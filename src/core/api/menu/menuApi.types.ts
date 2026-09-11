@@ -16,6 +16,20 @@ export interface RawApiMenuItem {
   rightValue: number | string | boolean | null;
 }
 
+/** Access-right record returned by GET /AccessRights/{employeeId}. */
+export interface AccessRight {
+  id?: number;
+  rightKey: string;
+  name?: string | null;
+  shortName?: string | null;
+  description?: string | null;
+  rightDefault?: number | boolean | null;
+  rightAdmin?: number | boolean | null;
+  rightType?: string | null;
+  isActive?: boolean | number | null;
+  [key: string]: unknown;
+}
+
 /**
  * Transformed Child Menu Item
  */
