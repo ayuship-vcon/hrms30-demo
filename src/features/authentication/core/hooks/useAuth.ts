@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "@/core/redux/hooks/useAppDispatch";
 import {
@@ -38,7 +39,10 @@ export function useAuth() {
     user?.id as string | number,
     { skip: !isAuthenticated || user?.id === undefined || user?.id === null },
   );
-  const menuGroups = transformApiMenuToHierarchy(menuQuery.data ?? []);
+  const menuGroups = useMemo(
+    () => transformApiMenuToHierarchy(menuQuery.data ?? []),
+    [menuQuery.data],
+  );
   const isMenuLoading = menuQuery.isLoading || menuQuery.isFetching;
 
   const permissions = usePermission(role);

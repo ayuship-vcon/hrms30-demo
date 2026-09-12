@@ -75,12 +75,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   // Whenever the menu changes, reset so the first accordion is open by default
   useEffect(() => {
-    if (currentMenuGroups.length > 0) {
-      setOpenGroups((prev) => ({
-        ...prev,
-        [currentMenuGroups[0].id]: true,
-      }));
-    }
+    const firstGroupId = currentMenuGroups[0]?.id;
+    if (!firstGroupId) return;
+
+    setOpenGroups((prev) => {
+      if (prev[firstGroupId]) return prev;
+      return { ...prev, [firstGroupId]: true };
+    });
   }, [currentMenuGroups]);
 
   // Toggle individual accordion independently (supports multiple open simultaneously)
