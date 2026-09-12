@@ -23,7 +23,7 @@ export const Header: React.FC<HeaderProps> = ({
   const userRoleDisplay = user?.role || user?.designation || user?.email || 'Team Member';
 
   return (
-    <header className="h-16 bg-surface border-b border-border px-4 sm:px-8 flex items-center justify-between sticky top-0 z-30 shadow-2xs">
+    <header className="h-16 bg-surface border-b border-border px-3 sm:px-6 flex items-center justify-between sticky top-0 z-30 shadow-2xs">
       {/* Left: Menu + Search */}
       <div className="flex items-center gap-3 w-full max-w-md">
         {/* Mobile-only hamburger */}
@@ -69,9 +69,6 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="text-right hidden sm:block">
             <p className="text-sm font-semibold text-primary leading-tight">
               {userFullName}
-            </p>
-            <p className="text-[11px] font-medium text-muted capitalize leading-tight">
-              {userRoleDisplay}
             </p>
           </div>
           <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-slate-100 border border-border text-primary font-bold text-sm flex items-center justify-center shadow-xs">

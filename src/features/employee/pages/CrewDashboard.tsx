@@ -19,7 +19,7 @@ export const CrewDashboard: React.FC = () => {
   const { user } = useAuth();;
 
   return (
-    <div className="flex flex-col gap-4 w-full max-w-7xl mx-auto pb-6 relative">
+    <div className="flex flex-col gap-4 w-full pb-6 relative">
       {/* 1. Welcome Greeting Banner (Dynamically resolved per User ID) */}
       <GreetingBanner
         displayName={user?.name || 'Crew Member'}

@@ -49,7 +49,7 @@ export const Horizontal = () => {
           minHeight: "100vh",
         }}
       >
-        <Stack spacing={2.5} sx={{ maxWidth: 1500, mx: "auto" }}>
+        <Stack spacing={2.5} sx={{ width: "100%" }}>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-surface p-5 sm:p-6 rounded-sm border border-border shadow-card">
         <div>
           <div className="flex items-center gap-2">

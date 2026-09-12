@@ -4,6 +4,7 @@ import { IconButton, ButtonBase } from '@mui/material';
 import { useAuth } from '@/features/authentication';
 import { ROUTES } from '@/shared/constants/routes.constants';
 import styles from './styles.module.css';
+import { vconstructLogo } from '@/assets/images';
 
 // Material 3 Design Kit Icons (@mui/icons-material)
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
@@ -118,7 +119,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       {/* Sidebar */}
       <aside
         className={[
-          'bg-white text-[#45464D] h-screen flex flex-col justify-between border-r border-slate-200 shadow-2xs overflow-y-auto shrink-0 z-50 p-3.5 sm:p-4',
+          'bg-white text-[#45464D] h-screen flex flex-col justify-between border-r border-slate-200 shadow-2xs overflow-y-auto shrink-0 z-50',
           collapsed ? styles.sidebarCollapsed : styles.sidebarExpanded,
           // Mobile: fixed drawer that slides in/out
           'fixed lg:sticky top-0',
@@ -131,7 +132,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
           {/* Brand Header: vConstruct and Hamburger Toggle */}
           <div className="flex items-center justify-between py-1">
             {!collapsed && (
-              <div className="flex items-center justify-start pl-1">
+              <div className="flex items-center justify-start gap-2 pl-1">
+                <img
+                  src={vconstructLogo}
+                  alt="vConstruct Logo"
+                  className="h-7 w-auto shrink-0 select-none"
+                />
                 <span className="font-black text-[22px] text-black tracking-tight select-none">
                   vConstruct
                 </span>

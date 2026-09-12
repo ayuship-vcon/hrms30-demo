@@ -32,6 +32,7 @@ import EmployeeList from "@/features/employee-list/pages/EmployeeList";
 import { VerticalOrgStructurePage } from "@/features/vertical-org-structure";
 import { EmployeeOnboardingPage } from "@/features/employee-onboarding";
 import { Horizontal } from "@/features/horizontal-org-structure";
+import UnauthorizedPage from "@/shared/pages/UnauthorizedPage";
 
 export interface RouteConfig {
   path: string;
@@ -589,6 +590,7 @@ export const AppRouter: React.FC = () => {
           }
         >
           <Route element={<MainLayout />}>
+            <Route path={ROUTES.AUTH.UNAUTHORIZED} element={<UnauthorizedPage />} />
             {PROTECTED_APP_ROUTES.map((route) => (
               <Route
                 key={route.path}

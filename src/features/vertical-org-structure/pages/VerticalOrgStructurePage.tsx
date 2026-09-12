@@ -136,10 +136,7 @@ export const VerticalOrgStructurePage: React.FC = () => {
         <Stack
           spacing={2.5}
           sx={{
-            maxWidth: 1500,
-            mx: "auto",
             width: "100%",
-            px: { xs: 2, sm: 3, md: 0 },
             mb: 6,
           }}
         >

@@ -4,7 +4,6 @@ import { Header } from './Header';
 import { Sidebar } from './Sidebar';
 import { Footer } from './Footer';
 import { useRoleRouteGuard } from '@/shared/hooks/useRoleRouteGuard';
-import { UnauthorizedDialog } from '@/shared/components/Dialog/UnauthorizedDialog';
 import { PageLoader } from '@/shared/components/Loading/PageLoader';
 import { useAuth } from '@/features/authentication';
 import LinearProgress from '@mui/material/LinearProgress';
@@ -15,8 +14,7 @@ export const MainLayout: React.FC = () => {
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const { menu, isMenuLoading, isLoading } = useAuth();
 
-  const { isUnauthorizedOpen, handleLogout, handleGoBack } =
-    useRoleRouteGuard(menu);
+  useRoleRouteGuard(menu);
 
   const toggleSidebarCollapse = () => {
     setIsSidebarCollapsed((prev) => !prev);
@@ -34,13 +32,7 @@ export const MainLayout: React.FC = () => {
 
   return (
     <div className="flex min-h-screen bg-app w-full">
-      {/* Unauthorized Access Dialog — shown when user navigates to a restricted route */}
-      <UnauthorizedDialog
-        isOpen={isUnauthorizedOpen}
-        onLogout={handleLogout}
-        onGoBack={handleGoBack}
-      />
-
+      {/* Responsive application shell */}
       {/* Responsive Collapsible & Mobile Sidebar */}
       <Sidebar
         isCollapsed={isSidebarCollapsed}
@@ -72,7 +64,7 @@ export const MainLayout: React.FC = () => {
         )}
 
         {/* Page Container */}
-        <main className="flex-1 p-3 sm:p-4 lg:p-6 max-w-[1440px] w-full mx-auto bg-app">
+        <main className="flex-1 p-2 sm:p-3 lg:p-4 w-full mx-auto bg-app">
           <AppBreadcrumbs />
           {isMenuLoading && !menu.length ? (
             <PageLoader message="Loading workspace & permissions..." />

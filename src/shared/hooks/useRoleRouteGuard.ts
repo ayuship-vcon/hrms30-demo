@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useEffect, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '@/core/redux/hooks/useAppDispatch';
 import { logout } from '@/core/redux/auth';
@@ -8,7 +8,6 @@ import type { MenuGroup } from '@/core/api/menu';
 import { extractAllowedRoutesFromMenu } from '@/shared/utils';
 
 export interface RoleRouteGuardState {
-  isUnauthorizedOpen: boolean;
   handleLogout: () => void;
   handleGoBack: () => void;
 }
@@ -17,10 +16,7 @@ export function useRoleRouteGuard(menu: MenuGroup[] = []): RoleRouteGuardState {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const [isUnauthorizedOpen, setIsUnauthorizedOpen] = useState(false);
-
   const handleLogout = useCallback(() => {
-    setIsUnauthorizedOpen(false);
     tokenUtils.clearToken();
     authUtils.clearStoredUser();
     dispatch(logout());
@@ -28,7 +24,6 @@ export function useRoleRouteGuard(menu: MenuGroup[] = []): RoleRouteGuardState {
   }, [dispatch, navigate]);
 
   const handleGoBack = useCallback(() => {
-    setIsUnauthorizedOpen(false);
     navigate(ROUTES.DASHBOARD, { replace: true });
   }, [navigate]);
 
@@ -43,16 +38,18 @@ export function useRoleRouteGuard(menu: MenuGroup[] = []): RoleRouteGuardState {
     });
 
     if (!menu.length) {
-      setIsUnauthorizedOpen(false);
       return;
     }
 
-    if (!isAllowed && currentPath !== ROUTES.AUTH.LOGIN && currentPath !== ROUTES.AUTH.SUCCESS) {
-      setIsUnauthorizedOpen(true);
-    } else {
-      setIsUnauthorizedOpen(false);
+    const exemptPaths: string[] = [
+      ROUTES.AUTH.LOGIN,
+      ROUTES.AUTH.SUCCESS,
+      ROUTES.AUTH.UNAUTHORIZED,
+    ];
+    if (!isAllowed && !exemptPaths.includes(currentPath)) {
+      navigate(ROUTES.AUTH.UNAUTHORIZED, { replace: true });
     }
-  }, [location.pathname, menu]);
+  }, [location.pathname, menu, navigate]);
 
-  return { isUnauthorizedOpen, handleLogout, handleGoBack };
+  return { handleLogout, handleGoBack };
 }

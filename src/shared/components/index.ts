@@ -11,7 +11,6 @@ export * from './ActionMenu';
 export * from './Dialog/Modal';
 export * from './Dialog/ConfirmDialog';
 export * from './Dialog/DeleteConfirmDialog';
-export * from './Dialog/UnauthorizedDialog';
 export * from './DataGrid/DataGrid';
 export * from './Loading/Loader';
 export * from './Loading/PageLoader';

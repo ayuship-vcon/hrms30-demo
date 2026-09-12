@@ -7,6 +7,7 @@ export const ROUTES = {
     RESET_PASSWORD: "/reset-password/:token",
     SUCCESS: "/success",
     FAILED: "/failed",
+    UNAUTHORIZED: "/unauthorized",
   },
 
   // Main Dashboard Routes
