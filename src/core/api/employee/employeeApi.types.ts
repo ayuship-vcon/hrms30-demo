@@ -20,6 +20,17 @@ export interface CreateEmployeeOnboardingRequest {
   statusDescription: string;
 }
 
+export interface EmployeeDirectoryApiRecord {
+  id: number;
+  userId: number;
+  employeeId: string;
+  firstName: string;
+  lastName: string;
+  dateOfJoining: string;
+  officeEmailId: string;
+  statusDescription: string;
+}
+
 export type UpdateEmployeeRequest = Partial<CreateEmployeeRequest>;
 
 export interface EmployeeStatsResponse {

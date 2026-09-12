@@ -2,6 +2,7 @@ import type { Employee } from "@/features/employee/core/types/employee.types";
 import type {
   CreateEmployeeRequest,
   CreateEmployeeOnboardingRequest,
+  EmployeeDirectoryApiRecord,
   GetEmployeesParams,
   UpdateEmployeeRequest,
 } from "./employeeApi.types";
@@ -21,6 +22,20 @@ export const employeeQueries = baseApi.injectEndpoints({
       }),
       transformResponse: (response: unknown) =>
         extractApiData<PaginatedResult<Employee>>(response),
+      providesTags: ["Employees"],
+    }),
+
+    getEmployeeDirectory: builder.query<EmployeeDirectoryApiRecord[], void>({
+      query: () => API_ENDPOINTS.EMPLOYEE.ROOT,
+      transformResponse: (response: unknown) => {
+        const payload = extractApiData<unknown>(response);
+        if (Array.isArray(payload)) return payload as EmployeeDirectoryApiRecord[];
+        if (payload && typeof payload === "object") {
+          const items = (payload as Record<string, unknown>).items;
+          if (Array.isArray(items)) return items as EmployeeDirectoryApiRecord[];
+        }
+        return [];
+      },
       providesTags: ["Employees"],
     }),
 
@@ -78,6 +93,7 @@ export const employeeQueries = baseApi.injectEndpoints({
 
 export const {
   useGetEmployeesQuery,
+  useGetEmployeeDirectoryQuery,
   useGetEmployeeByIdQuery,
   useLazyGetEmployeeByIdQuery,
   useCreateEmployeeMutation,

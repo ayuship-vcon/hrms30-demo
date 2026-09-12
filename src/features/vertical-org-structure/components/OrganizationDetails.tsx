@@ -20,6 +20,8 @@ interface Props {
   organizationGroups?: OrganizationGroup[];
   formValues: OrganizationGroupFormValues;
   onFormChange: (values: Partial<OrganizationGroupFormValues>) => void;
+  isSaving?: boolean;
+  validationErrors?: Record<string, string>;
 }
 export const OrganizationDetails: React.FC<Props> = ({
   selected,
@@ -32,6 +34,8 @@ export const OrganizationDetails: React.FC<Props> = ({
   organizationGroups,
   formValues,
   onFormChange,
+  isSaving = false,
+  validationErrors,
 }) => {
   const tabs = TAB_CONFIG[selected.level ?? "Company"] ?? ["Add"];
   useEffect(() => setActiveTab("Add"), [selected, setActiveTab]);
@@ -44,6 +48,7 @@ export const OrganizationDetails: React.FC<Props> = ({
         organizationGroups={organizationGroups}
         formValues={formValues}
         onFormChange={onFormChange}
+        validationErrors={validationErrors}
       />
     ) : leadTabs.includes(activeTab) ? (
       <TeamLeadTab selected={selected} activeTab={activeTab} />
@@ -91,7 +96,7 @@ export const OrganizationDetails: React.FC<Props> = ({
         </Tabs>
       </Paper>
       {renderTab()}
-      <ActionButtons onSave={onSave} onReset={onReset} selected={selected} />
+      <ActionButtons onSave={onSave} onReset={onReset} selected={selected} isSaving={isSaving} />
     </Box>
   );
 };

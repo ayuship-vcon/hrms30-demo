@@ -15,6 +15,8 @@ import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
 import { buildOrganizationTree, metrics, orgTree as fallbackOrgTree } from "../core/constants";
 import type { OrganizationTab, SelectedOrganization } from "../core/types";
 import type { OrganizationGroupFormValues } from "../components/AddEditTab";
+import { Toast } from "@/shared/components";
+import { getErrorMessage } from "@/shared/utils/apiError.utils";
 import { TreeNode } from "../components/TreeNode";
 import { OrganizationDetails } from "../components/OrganizationDetails";
 import {
@@ -38,10 +40,13 @@ export const VerticalOrgStructurePage: React.FC = () => {
   const [formValues, setFormValues] = useState<OrganizationGroupFormValues>({
     name: "",
     levelId: "",
+    parentLevelId: "",
     parentGroupId: "",
     shortName: "",
   });
-  const [createOrganizationGroup] = useCreateOrganizationGroupMutation();
+  const [toast, setToast] = useState<{ message: string; severity: "success" | "error" } | null>(null);
+  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
+  const [createOrganizationGroup, { isLoading: isSaving }] = useCreateOrganizationGroupMutation();
   const groupsQuery = useGetOrganizationGroupsQuery();
   const levelsQuery = useGetOrganizationLevelsQuery();
   const organizationGroups = (groupsQuery.data?.length
@@ -60,13 +65,36 @@ export const VerticalOrgStructurePage: React.FC = () => {
   const handleFormChange = useCallback(
     (values: Partial<OrganizationGroupFormValues>) => {
       setFormValues((previous) => ({ ...previous, ...values }));
+      setValidationErrors((previous) => {
+        const next = { ...previous };
+        Object.keys(values).forEach((key) => delete next[key]);
+        return next;
+      });
     },
     [],
   );
   const handleSave = async () => {
-    if (selected.level || typeof formValues.levelId !== "number") return;
-    if (!formValues.name.trim() || !formValues.shortName.trim()) return;
-    if (formValues.parentGroupId === "") return;
+    const nextErrors: Record<string, string> = {};
+    if (selected.level || typeof formValues.levelId !== "number") {
+      nextErrors.levelId = "Select a level.";
+    }
+    if (!formValues.name.trim() || formValues.name.trim().length < 2) {
+      nextErrors.name = "Enter at least 2 characters.";
+    }
+    if (!formValues.shortName.trim()) {
+      nextErrors.shortName = "Enter a short name.";
+    }
+    if (formValues.parentGroupId === "") {
+      nextErrors.parentGroupId = "Select a parent group.";
+    }
+    if (formValues.parentLevelId === "") {
+      nextErrors.parentLevelId = "Select a parent level.";
+    }
+    if (Object.keys(nextErrors).length > 0) {
+      setValidationErrors(nextErrors);
+      setToast({ message: "Please correct the highlighted fields.", severity: "error" });
+      return;
+    }
 
     try {
       await createOrganizationGroup({
@@ -77,15 +105,18 @@ export const VerticalOrgStructurePage: React.FC = () => {
         groupPath: null,
       }).unwrap();
       setSelected({});
-      setFormValues({ name: "", levelId: "", parentGroupId: "", shortName: "" });
+      setFormValues({ name: "", levelId: "", parentLevelId: "", parentGroupId: "", shortName: "" });
+      setValidationErrors({});
       void groupsQuery.refetch();
+      setToast({ message: "Organization group created successfully.", severity: "success" });
     } catch (error) {
-      console.error("Unable to create organization group", error);
+      setToast({ message: getErrorMessage(error, "Unable to create organization group."), severity: "error" });
     }
   };
   const handleReset = () => {
     setSelected({});
-    setFormValues({ name: "", levelId: "", parentGroupId: "", shortName: "" });
+    setFormValues({ name: "", levelId: "", parentLevelId: "", parentGroupId: "", shortName: "" });
+    setValidationErrors({});
   };
   const handleToggleTree = () => {
     if (isTreeCollapsed) setExpandTrigger((previous) => previous + 1);
@@ -242,12 +273,15 @@ export const VerticalOrgStructurePage: React.FC = () => {
                   organizationGroups={organizationGroups}
                   formValues={formValues}
                   onFormChange={handleFormChange}
+                  isSaving={isSaving}
+                  validationErrors={validationErrors}
                 />
               </Box>
             </Box>
           </Card>
         </Stack>
       </Box>
+      <Toast isOpen={Boolean(toast)} message={toast?.message ?? ""} severity={toast?.severity} onClose={() => setToast(null)} />
     </Box>
   );
 };

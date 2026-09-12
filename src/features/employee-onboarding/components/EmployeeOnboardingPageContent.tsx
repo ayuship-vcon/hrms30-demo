@@ -5,12 +5,15 @@ import { useCreateEmployeeOnboardingMutation } from "@/core/api/employee";
 import { useGetCoreRolesQuery } from "@/core/api/roles";
 import type { CreateEmployeeOnboardingRequest } from "@/core/api/employee";
 import type { EmployeeOnboardingFormValues } from "../core/types";
+import { Toast } from "@/shared/components";
+import { getErrorMessage } from "@/shared/utils/apiError.utils";
 import { EmployeeForm } from "./EmployeeForm";
 import { OrganizationPanel } from "./OrganizationPanel";
 
 export const EmployeeOnboardingPageContent: React.FC = () => {
   const [organizationGroupId, setOrganizationGroupId] = useState(0);
   const [formResetKey, setFormResetKey] = useState(0);
+  const [toast, setToast] = useState<{ message: string; severity: "success" | "error" } | null>(null);
   const [createEmployee, { isLoading }] = useCreateEmployeeOnboardingMutation();
   const rolesQuery = useGetCoreRolesQuery();
 
@@ -26,8 +29,13 @@ export const EmployeeOnboardingPageContent: React.FC = () => {
       officeEmailId: values.officeEmail.trim(),
       statusDescription: values.status || "Active",
     };
-    await createEmployee(payload).unwrap();
-    setFormResetKey((value) => value + 1);
+    try {
+      await createEmployee(payload).unwrap();
+      setFormResetKey((value) => value + 1);
+      setToast({ message: "Employee created successfully.", severity: "success" });
+    } catch (error) {
+      setToast({ message: getErrorMessage(error, "Unable to create employee."), severity: "error" });
+    }
   }, [createEmployee, organizationGroupId]);
 
   return (
@@ -47,6 +55,7 @@ export const EmployeeOnboardingPageContent: React.FC = () => {
           <OrganizationPanel onOrganizationGroupChange={setOrganizationGroupId} />
         </Box>
       </Paper>
+      <Toast isOpen={Boolean(toast)} message={toast?.message ?? ""} severity={toast?.severity} onClose={() => setToast(null)} />
     </Box>
   );
 };
