@@ -2,6 +2,9 @@ import { useMemo } from "react";
 import { useGetEmployeeDirectoryQuery } from "@/core/api/employee";
 import type { EmployeeRecord } from "../types/employee.types";
 
+const toDateOnly = (value: string | null | undefined): string =>
+  value ? value.split("T")[0] : "";
+
 export function useEmployeeList() {
   const query = useGetEmployeeDirectoryQuery();
   const records = useMemo<EmployeeRecord[]>(
@@ -13,7 +16,7 @@ export function useEmployeeList() {
         businessUnit: "",
         clusterName: "",
         teamName: "",
-        dateOfJoining: employee.dateOfJoining,
+        dateOfJoining: toDateOnly(employee.dateOfJoining),
         designation: "",
         emailId: employee.officeEmailId,
         officeLocation: "",

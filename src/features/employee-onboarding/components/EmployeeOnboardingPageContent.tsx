@@ -54,28 +54,20 @@ export const EmployeeOnboardingPageContent: React.FC = () => {
 
   return (
     <Box sx={{ color: "#102a4c" }}>
-      <Box
-        sx={{
-          display: "flex",
-          gap: 1.5,
-          alignItems: "center",
-          p: 1.5,
-          bgcolor: "#f1f8fd",
-          borderRadius: 1.5,
-          mb: 2
-        }}
-      >
-        <PersonAddAlt1OutlinedIcon sx={{ color: "#075985", fontSize: 34 }} />
-        <Box>
-          <Typography variant="h6" fontWeight={800} color="#075985">
-            Add New vConstruct Employee
-          </Typography>
-          <Typography variant="body2" color="#285784">
-            Fill in the employee details and select the organizational placement
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-surface p-5 sm:p-6 rounded-sm border border-border shadow-card">
+        <div>
+          <div className="flex items-center gap-2">
+            <h1 className="text-xl sm:text-2xl font-bold text-black tracking-tight">
+              Add New vConstruct Employee
+            </h1>
+          </div>
+          <p className="text-sm text-muted mt-1">
+              Fill in the employee details and select the organizational placement
             from the right panel.
-          </Typography>
-        </Box>
-      </Box>
+          </p>
+        </div>
+      </div>
+      <br></br>
       <Paper
         variant="outlined"
         sx={{

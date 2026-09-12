@@ -5,7 +5,7 @@ export const employeeColumns: GridColDef<EmployeeRecord>[] = [
   {
     field: "employeeId",
     headerName: "Employee ID",
-    width: 130,
+    width: 200,
     filter: {
       type: "text",
       operators: [
@@ -19,7 +19,7 @@ export const employeeColumns: GridColDef<EmployeeRecord>[] = [
   {
     field: "name",
     headerName: "Name",
-    width: 200,
+    width: 400,
     filter: {
       type: "text",
       operators: [
@@ -75,7 +75,7 @@ export const employeeColumns: GridColDef<EmployeeRecord>[] = [
   {
     field: "dateOfJoining",
     headerName: "Date of Joining",
-    width: 150,
+    width: 230,
     filter: {
       type: "date",
       operators: [
@@ -104,7 +104,7 @@ export const employeeColumns: GridColDef<EmployeeRecord>[] = [
   {
     field: "emailId",
     headerName: "Email ID",
-    width: 220,
+    width: 330,
     filter: {
       type: "text",
       operators: [
@@ -173,7 +173,7 @@ export const employeeColumns: GridColDef<EmployeeRecord>[] = [
   {
     field: "status",
     headerName: "Status",
-    width: 130,
+    width: 200,
     filter: {
       type: "select",
       operators: [

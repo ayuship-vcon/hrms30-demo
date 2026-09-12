@@ -39,7 +39,15 @@ export const EmployeeList: React.FC = () => {
     Record<string, boolean>
   >(() =>
     employeeColumns.reduce<Record<string, boolean>>((acc, column) => {
-      acc[column.field] = true;
+      // Keep all columns available in the selector, but only show fields
+      // populated by the employee-directory response by default.
+      acc[column.field] = [
+        "employeeId",
+        "name",
+        "dateOfJoining",
+        "emailId",
+        "status",
+      ].includes(column.field);
       return acc;
     }, {}),
   );

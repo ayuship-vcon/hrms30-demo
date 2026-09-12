@@ -49,6 +49,7 @@ export const AddEditTab = ({
   const [parentGroupName, setParentGroupName] = useState("");
   const [shortName, setShortName] = useState("");
   const [description, setDescription] = useState("");
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const isEdit = Object.keys(selected).length > 0;
 
   useEffect(() => {
@@ -63,17 +64,39 @@ export const AddEditTab = ({
     const parent = selected.name ? findParent(orgTree, selected.name) : null;
     setParentGroup(parent?.level ?? "");
     setParentGroupName(parent?.name ?? "");
+    setErrors({});
   }, [selected, isEdit]);
+
+  const clearError = (field: string) => {
+    if (errors[field]) {
+      setErrors((current) => ({ ...current, [field]: "" }));
+    }
+  };
 
   const handleLevelChange = (value: string) => {
     const nextLevel = value as OrganizationLevel;
     setLevel(nextLevel);
     setParentGroup(parentGroupOptions[nextLevel]?.[0] ?? "");
     setParentGroupName("");
+    clearError("level");
+    clearError("parentGroupName");
   };
 
   const handleSave = () => {
-    if (!groupName.trim() || !level || !shortName.trim()) return;
+    const nextErrors: Record<string, string> = {};
+    if (!level) nextErrors.level = "Select a level.";
+    if (!groupName.trim()) nextErrors.groupName = "Enter a name.";
+    else if (groupName.trim().length < 2) nextErrors.groupName = "Enter at least 2 characters.";
+    if (!shortName.trim()) nextErrors.shortName = "Enter a short name.";
+    else if (!/^[a-z0-9_-]+$/i.test(shortName.trim())) {
+      nextErrors.shortName = "Use only letters, numbers, hyphens, or underscores.";
+    }
+    if (level === "Team" && !parentGroupName) {
+      nextErrors.parentGroupName = "Select a parent group.";
+    }
+    setErrors(nextErrors);
+    if (Object.keys(nextErrors).length > 0) return;
+
     const icon = level === "Group" ? WorkIcon : GroupIcon;
     onSave(
       {
@@ -113,6 +136,8 @@ export const AddEditTab = ({
           size="small"
           fullWidth
           value={level}
+          error={Boolean(errors.level)}
+          helperText={errors.level || " "}
           onChange={(event) => handleLevelChange(event.target.value)}
           disabled={isEdit}
         >
@@ -127,13 +152,23 @@ export const AddEditTab = ({
           size="small"
           value={groupName}
           disabled={isEdit}
-          onChange={(event) => setGroupName(event.target.value)}
+          error={Boolean(errors.groupName)}
+          helperText={errors.groupName || " "}
+          onChange={(event) => {
+            setGroupName(event.target.value);
+            clearError("groupName");
+          }}
         />
         <TextField
           label="Short Name"
           value={shortName}
           disabled={isEdit}
-          onChange={(event) => setShortName(event.target.value)}
+          error={Boolean(errors.shortName)}
+          helperText={errors.shortName || " "}
+          onChange={(event) => {
+            setShortName(event.target.value);
+            clearError("shortName");
+          }}
           size="small"
         />
         {parentGroupOptions[level as OrganizationLevel]?.length > 0 && (
@@ -143,7 +178,13 @@ export const AddEditTab = ({
             size="small"
             fullWidth
             value={parentGroupName}
-            onChange={(event) => setParentGroupName(event.target.value)}
+            disabled={isEdit}
+            error={Boolean(errors.parentGroupName)}
+            helperText={errors.parentGroupName || " "}
+            onChange={(event) => {
+              setParentGroupName(event.target.value);
+              clearError("parentGroupName");
+            }}
           >
             {availableParentGroups.map(
               (item) => (
@@ -178,7 +219,6 @@ export const AddEditTab = ({
       <ActionButtons
         onSave={handleSave}
         onReset={onReset}
-        onDelete={onDelete}
         selected={selected}
       />
     </>

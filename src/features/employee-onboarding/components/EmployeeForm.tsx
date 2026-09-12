@@ -112,7 +112,7 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
         <MenuItem value="">Select Role</MenuItem>
         {roles.filter((role) => role.isActive !== false).sort((a, b) => a.sequence - b.sequence).map((role) => <MenuItem key={role.id} value={role.id}>{role.name}</MenuItem>)}
       </TextField>
-      <TextField fullWidth size="small" required label="Emp No." value={values.employeeNumber} error={Boolean(errors.employeeNumber)} helperText={errors.employeeNumber || ' '} onChange={(event) => update('employeeNumber', event.target.value)} />
+      <TextField fullWidth size="small" required label="Employee No." value={values.employeeNumber} error={Boolean(errors.employeeNumber)} helperText={errors.employeeNumber || ' '} onChange={(event) => update('employeeNumber', event.target.value)} />
       <Box sx={{ minHeight: 40, display: 'flex', alignItems: 'center' }}><FormControlLabel control={<Checkbox size="small" checked={values.isPastEmployee} onChange={(event) => update('isPastEmployee', event.target.checked)} />} label="Is Past Employee" /></Box>
       {selectField('initials', 'Initials', initials, true)}
       {selectField('leaveApprover', 'Leave Approver', approvers)}
