@@ -118,6 +118,7 @@ export const AddEditTab: React.FC<AddEditTabProps> = ({
             fullWidth
             value={formValues.parentLevelId}
             error={Boolean(validationErrors.parentLevelId)}
+            disabled={isEdit}
             helperText={validationErrors.parentLevelId || ' '}
             onChange={(event) => onFormChange({ parentLevelId: Number(event.target.value), parentGroupId: "" })}
           >

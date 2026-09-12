@@ -45,11 +45,7 @@ export default function ReportColumnSelector({
   };
 
   const handleToggle = (column: ReportColumn) => {
-    console.log(
-      visibleColumns,
-      column,
-      "visibleColumnsvisibleColumns",
-    );
+    
 
     if (column.sticky) {
       return;

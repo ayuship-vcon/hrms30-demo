@@ -130,13 +130,20 @@ export const Horizontal = () => {
                   xs: "1fr",
                   lg: "310px minmax(0, 1fr) 40px",
                 },
+                gridTemplateRows: { xs: "auto", lg: "minmax(0, 1fr)" },
                 p: 2,
-                minHeight: 650,
+                height: { xs: "auto", lg: 650 },
+                alignItems: "stretch",
               }}
             >
               <Box
                 sx={{
                   p: 2,
+                  minHeight: 0,
+                  height: { xs: "auto", lg: "100%" },
+                  maxHeight: { xs: "none", lg: "100%" },
+                  display: "flex",
+                  flexDirection: "column",
                   borderRight: { lg: "1px solid" },
                   borderColor: "divider",
                 }}
@@ -180,6 +187,7 @@ export const Horizontal = () => {
                     <AddIcon fontSize="small" />
                   </IconButton>
                 </Stack>
+                <Box sx={{ minHeight: 0, flex: 1, overflowY: { xs: "visible", lg: "auto" }, overflowX: "hidden" }}>
                 <Stack spacing={0.5}>
                   {organizations.map((node) => (
                     <TreeNode
@@ -192,6 +200,7 @@ export const Horizontal = () => {
                     />
                   ))}
                 </Stack>
+                </Box>
               </Box>
               <Box>
                 <HorizontalOrganizationDetails

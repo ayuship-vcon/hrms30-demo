@@ -193,15 +193,22 @@ export const VerticalOrgStructurePage: React.FC = () => {
                 display: "grid",
                 gridTemplateColumns: {
                   xs: "1fr",
-                  lg: "310px minmax(0, 1fr) 40px",
+                  lg: "400px minmax(0, 1fr) 40px",
                 },
+                gridTemplateRows: { xs: "auto", lg: "minmax(0, 1fr)" },
                 p: 2,
-                minHeight: 650,
+                height: { xs: "auto", lg: 700 },
+                alignItems: "stretch",
               }}
             >
               <Box
                 sx={{
                   p: 2,
+                  minHeight: 0,
+                  height: { xs: "auto", lg: "100%" },
+                  maxHeight: { xs: "none", lg: "100%" },
+                  display: "flex",
+                  flexDirection: "column",
                   borderRight: { lg: "1px solid" },
                   borderColor: "divider",
                 }}
@@ -239,24 +246,29 @@ export const VerticalOrgStructurePage: React.FC = () => {
                       borderColor: "divider",
                       borderRadius: 2,
                     }}
-                    onClick={() => setSelected({})}
+                    onClick={() => {
+                      setSelected({});
+                      setFormValues({name: "", levelId: "", parentLevelId: "", parentGroupId: "", shortName: "" });
+                    }}
                     title="Add Node"
                   >
                     <AddIcon fontSize="small" />
                   </IconButton>
                 </Stack>
-                <Stack spacing={0.5}>
-                  {orgTree.map((node) => (
-                    <TreeNode
-                      key={node.name}
-                      node={node}
-                      selected={selected}
-                      onSelect={setSelected}
-                      collapseTrigger={collapseTrigger}
-                      expandTrigger={expandTrigger}
-                    />
-                  ))}
-                </Stack>
+                <Box sx={{ minHeight: 0, flex: 1, overflowY: { xs: "visible", lg: "auto" }, overflowX: "hidden" }}>
+                  <Stack spacing={0.5}>
+                    {orgTree.map((node) => (
+                      <TreeNode
+                        key={node.name}
+                        node={node}
+                        selected={selected}
+                        onSelect={setSelected}
+                        collapseTrigger={collapseTrigger}
+                        expandTrigger={expandTrigger}
+                      />
+                    ))}
+                  </Stack>
+                </Box>
               </Box>
               <Box>
                 <OrganizationDetails

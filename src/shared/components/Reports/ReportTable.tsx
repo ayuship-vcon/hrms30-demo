@@ -35,7 +35,6 @@ export default function ReportTable<
   rowId = "id" as keyof RowType,
   onRowClick,
 }: ReportTableProps<RowType>) {
-  console.log(columns, "columnscolumns");
 
   const gridColumns = React.useMemo<GridColDef<RowType>[]>(
     () =>

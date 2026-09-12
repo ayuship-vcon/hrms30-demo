@@ -85,7 +85,6 @@ export const EmployeeList: React.FC = () => {
   };
 
   const handleAddEmployee = () => {
-    console.log("Add Employee clicked");
     navigate(ROUTES.EMPLOYEE_LIST.ADD);
     // Open Add Employee modal/drawer here
     // setAddEmployeeOpen(true);
