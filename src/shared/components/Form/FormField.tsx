@@ -220,14 +220,16 @@ export function FormField<TFieldValues extends FieldValues = FieldValues>({
             case 'date':
               return (
                 <DatePicker
-                  {...field}
                   label={label}
+                  name={field.name}
                   error={fieldError}
                   helperText={helperText}
                   required={required}
                   disabled={disabled}
                   className={className}
                   value={field.value ?? ''}
+                  onChange={(nextValue) => field.onChange(nextValue)}
+                  onBlur={field.onBlur}
                 />
               );
 
@@ -291,8 +293,8 @@ export function FormField<TFieldValues extends FieldValues = FieldValues>({
         <Select
           label={label}
           options={options}
-          value={value}
-          onChange={onChange}
+          value={value as string | undefined}
+          onChange={(nextValue) => onChange?.(nextValue)}
           error={error}
           helperText={helperText}
           required={required}
@@ -401,8 +403,8 @@ export function FormField<TFieldValues extends FieldValues = FieldValues>({
       return (
         <DatePicker
           label={label}
-          value={value}
-          onChange={onChange}
+          value={value as string | undefined}
+          onChange={(nextValue) => onChange?.(nextValue)}
           error={error}
           helperText={helperText}
           required={required}

@@ -39,8 +39,8 @@ export const CustomizeDateModal: React.FC<CustomizeDateModalProps> = ({
       }
     >
       <div className="flex flex-col gap-4">
-        <DatePicker label="Start Date" value={start} onChange={(e) => setStart(e.target.value)} />
-        <DatePicker label="End Date" value={end} onChange={(e) => setEnd(e.target.value)} />
+        <DatePicker label="Start Date" value={start} onChange={setStart} />
+        <DatePicker label="End Date" value={end} onChange={setEnd} />
       </div>
     </Modal>
   );

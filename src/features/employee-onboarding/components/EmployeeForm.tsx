@@ -9,6 +9,7 @@ import {
   TextField,
 } from '@mui/material';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
+import { DatePicker } from '@/shared/components/Form';
 import type { CoreRole } from '@/core/api/roles';
 import type { EmployeeOnboardingFormValues } from '../core/types';
 import { INITIAL_EMPLOYEE_FORM } from '../core/types';
@@ -96,7 +97,14 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
   return (
     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(2, minmax(0, 1fr))' }, columnGap: { xs: 0, md: 4 }, rowGap: 2.1 }}>
       {selectField('officeName', 'Office Name', ['Select Office', ...officeLocations.map((location) => location.office)], true)}
-      <TextField type="date" fullWidth size="small" required label="Date of Joining" value={values.dateOfJoining} error={Boolean(errors.dateOfJoining)} helperText={errors.dateOfJoining || ' '} onChange={(event) => update('dateOfJoining', event.target.value)} InputLabelProps={{ shrink: true }} />
+      <DatePicker
+        required
+        label="Date of Joining"
+        value={values.dateOfJoining}
+        error={errors.dateOfJoining}
+        helperText={errors.dateOfJoining || ' '}
+        onChange={(value) => update('dateOfJoining', value)}
+      />
       <TextField fullWidth size="small" disabled label="Unit Name" value={unitName} error={Boolean(errors.organizationGroupId)} helperText={errors.organizationGroupId || ' '} />
       {selectField('designation', 'Designation', designations)}
       {selectField('status', 'Status', statuses, true)}

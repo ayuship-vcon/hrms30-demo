@@ -44,5 +44,5 @@ export const ApplyLeavePage: React.FC = () => {
   </Box>;
 };
 
-const DateField: React.FC<{ label: string; value: string; onChange: (value: string) => void }> = ({ label, value, onChange }) => <Box><Typography sx={fieldLabelSx}>{label} <Required /></Typography><DatePicker value={value} onChange={(event) => onChange(event.target.value)} sx={inputSx} /></Box>;
+const DateField: React.FC<{ label: string; value: string; onChange: (value: string) => void }> = ({ label, value, onChange }) => <Box><Typography sx={fieldLabelSx}>{label} <Required /></Typography><DatePicker value={value} onChange={onChange} sx={inputSx} /></Box>;
 const Required: React.FC = () => <Box component="span" sx={{ color: '#b22b32' }}>*</Box>;

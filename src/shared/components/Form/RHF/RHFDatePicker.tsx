@@ -30,12 +30,14 @@ export function RHFDatePicker<TFieldValues extends FieldValues = FieldValues>({
 
         return (
           <DatePicker
-            {...field}
             {...props}
+            name={field.name}
+            value={field.value ?? ''}
+            onChange={(value) => field.onChange(value)}
+            onBlur={field.onBlur}
             error={error?.message}
             isSuccess={isSuccess}
             helperText={helperText}
-            value={field.value ?? ''}
           />
         );
       }}
