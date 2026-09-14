@@ -28,21 +28,18 @@ export const LEAVE_CATEGORIES: LeaveCategory[] = [
 ];
 
 export const APPROVERS: LeavePerson[] = [
-  { id: 1, name: 'Rohit Verma', role: 'Team Lead · Design' },
-  { id: 2, name: 'Aarav Mehta', role: 'Design Manager' },
+  { id: 1, name: 'Surendra Raghuvanshi', role: 'Team Lead · Admin' },
+  { id: 2, name: 'Nachiket Chavan', role: 'HR Level 2' },
 ];
 
 export const HRS: LeavePerson[] = [
-  { id: 1, name: 'Neha Kapoor', role: 'HR Manager' },
-  { id: 2, name: 'Priya Shah', role: 'People Operations' },
+  { id: 1, name: 'Intequab Khan', role: 'HR Level 1' },
+  { id: 2, name: 'Mamta Bhandar', role: 'HR Level 1' },
 ];
 
 export const LEAVE_BALANCES = [
-  { name: 'Earned Leave', days: 12, color: '#f59e0b' },
-  { name: 'Casual Leave', days: 6, color: '#22c55e' },
-  { name: 'Flexi Leave', days: 4, color: '#6366f1' },
-  { name: 'Working Remotely (WR)', days: 8, color: '#0ea5e9' },
+  { name: 'Earned Leave', days: 9, color: '#f59e0b' },
+  { name: 'Casual Leave', days: 9, color: '#22c55e' },
+  { name: 'Flexi Leave', days: 1, color: '#6366f1' },
+  { name: 'Working Remotely (WR)', days: 12, color: '#0ea5e9' },
 ];
-
-export const DEFAULT_START_DATE = '2024-05-12';
-export const DEFAULT_END_DATE = '2024-05-16';

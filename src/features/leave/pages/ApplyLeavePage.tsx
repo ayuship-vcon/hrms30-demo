@@ -19,6 +19,16 @@ export const ApplyLeavePage: React.FC = () => {
 
   const updateStartDate = (value: string) => syncDates(value, endDate && value > endDate ? value : endDate);
   const updateEndDate = (value: string) => syncDates(startDate && value < startDate ? value : startDate, value);
+  const canSubmit = Boolean(
+    selectedCategory && leaveType && startDate && endDate && days.length > 0 && reason.trim(),
+  );
+  const clearForm = () => {
+    syncDates('', '');
+    setSelectedCategory(LEAVE_CATEGORIES[0].label);
+    setLeaveType(LEAVE_CATEGORIES[0].options[0]);
+    setReason('');
+    setCustomizeOpen(false);
+  };
 
   return <Box component="main" sx={{ width: '100%' }}>
     <Paper elevation={0} sx={{ mt: 1.5, border: `1px solid ${borderColor}`, borderRadius: 2, overflow: 'hidden', bgcolor: '#fbfcfe' }}>
@@ -33,9 +43,11 @@ export const ApplyLeavePage: React.FC = () => {
           <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr auto' }, gap: 2, mt: 2.5, alignItems: 'end' }}><DateField label="Start Date" value={startDate} onChange={updateStartDate} /><DateField label="End Date" value={endDate} onChange={updateEndDate} /><Button variant="outlined" startIcon={<EventAvailableOutlined />} sx={{ height: 41, px: 2.5, whiteSpace: 'nowrap' }}>Forecasted Leave Balance</Button></Box>
           <Paper variant="outlined" sx={{ mt: 2, px: 2, py: 1.4, borderColor: '#cfd9ff', bgcolor: '#f8faff', display: 'flex', justifyContent: 'space-between', gap: 2, alignItems: 'center' }}><Stack direction="row" spacing={1.5} alignItems="center"><CalendarMonth sx={{ color: 'primary.main' }} /><Box><Typography sx={{ fontSize: 13, fontWeight: 700 }}>{days.length} day{days.length === 1 ? '' : 's'} selected</Typography><Typography sx={{ fontSize: 11.5, color: '#667085' }}>Includes {totals.fullDays} Full Days, {totals.halfDays} Half Day{totals.halfDays === 1 ? '' : 's'}</Typography></Box></Stack><Button size="small" endIcon={<EditOutlined />} onClick={() => setCustomizeOpen(true)} sx={{ whiteSpace: 'nowrap' }}>Customize dates</Button></Paper>
           <Box sx={{ mt: 2.5 }}><Typography sx={fieldLabelSx}>Reason for Leave <Required /></Typography><Box sx={{ position: 'relative' }}><TextField multiline minRows={4} fullWidth placeholder="Please provide the reason for your leave..." value={reason} onChange={(event) => setReason(event.target.value.slice(0, 500))} sx={inputSx} /><Typography sx={{ position: 'absolute', bottom: 9, right: 10, fontSize: 10, color: '#98a2b3' }}>{reason.length}/500</Typography></Box></Box>
-          <Box sx={{ mt: 2.5, maxWidth: 440 }}><Typography sx={fieldLabelSx}>CC (Optional)</Typography><FormControl fullWidth size="small"><InputLabel>Select people to CC</InputLabel><Select label="Select people to CC" defaultValue="" sx={inputSx}><MenuItem value="aarav">Aarav Mehta</MenuItem><MenuItem value="priya">Priya Shah</MenuItem><MenuItem value="neha">Neha Kapoor</MenuItem></Select></FormControl></Box>
-          <Box sx={{ mt: 2.5, maxWidth: 440 }}><Typography sx={fieldLabelSx}>Attachment (Optional)</Typography><Typography sx={{ fontSize: 11.5, color: '#7b8496', mb: 1 }}>Upload any supporting documents</Typography><Box component="label" sx={{ height: 104, border: '1px dashed #ccd5e3', borderRadius: 2, display: 'grid', placeItems: 'center', cursor: 'pointer', bgcolor: '#fff' }}><input type="file" hidden /><Stack alignItems="center" spacing={.5}><CloudUploadOutlined sx={{ color: '#667085' }} /><Typography sx={{ fontSize: 12, color: '#475467' }}>Click to upload or drag and drop</Typography><Typography sx={{ fontSize: 10.5, color: '#98a2b3' }}>PDF, JPG, PNG up to 5MB</Typography></Stack></Box></Box>
-          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.5} sx={{ mt: 5, pt: 2, borderTop: `1px solid ${borderColor}` }}><Button variant="outlined" startIcon={<RestartAlt />} sx={{ minWidth: 190, height: 44 }}>Clear / Reset</Button><Button type="submit" variant="contained" startIcon={<SendOutlined />} disableElevation sx={{ flex: 1, height: 44 }}>Submit Leave Request</Button></Stack>
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 2, mt: 2.5 }}>
+            <Box><Typography sx={fieldLabelSx}>CC (Optional)</Typography><FormControl fullWidth size="small"><InputLabel>Select people to CC</InputLabel><Select label="Select people to CC" defaultValue="" sx={inputSx}><MenuItem value="aarav">Aarav Mehta</MenuItem><MenuItem value="priya">Priya Shah</MenuItem><MenuItem value="neha">Neha Kapoor</MenuItem></Select></FormControl></Box>
+            <Box><Typography sx={fieldLabelSx}>Attachment (Optional)</Typography><Typography sx={{ fontSize: 11.5, color: '#7b8496', mb: 1 }}>Upload any supporting documents</Typography><Box component="label" sx={{ height: 104, border: '1px dashed #ccd5e3', borderRadius: 2, display: 'grid', placeItems: 'center', cursor: 'pointer', bgcolor: '#fff' }}><input type="file" hidden /><Stack alignItems="center" spacing={.5}><CloudUploadOutlined sx={{ color: '#667085' }} /><Typography sx={{ fontSize: 12, color: '#475467' }}>Click to upload or drag and drop</Typography><Typography sx={{ fontSize: 10.5, color: '#98a2b3' }}>PDF, JPG, PNG up to 5MB</Typography></Stack></Box></Box>
+          </Box>
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.5} alignItems="flex-end" justifyContent="flex-end" sx={{ mt: 5, pt: 2, borderTop: `1px solid ${borderColor}` }}><Button variant="outlined" startIcon={<RestartAlt />} onClick={clearForm} sx={{ minWidth: 190, height: 44 }}>Clear / Reset</Button><Button type="submit" variant="contained" startIcon={<SendOutlined />} disableElevation disabled={!canSubmit} sx={{ minWidth: 190, height: 44 }}>Submit Leave Request</Button></Stack>
         </Paper>
         <Stack spacing={1.5}><ApplyLeaveBalanceCard /><ApplyLeavePeopleCard title="Approvers" subtitle="Your leave request will be sent to" people={APPROVERS} /><ApplyLeavePeopleCard title="HRs" subtitle="Your request will also be visible to" people={HRS} /></Stack>
       </Box>

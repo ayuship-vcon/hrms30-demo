@@ -30,7 +30,7 @@ const ACCESS_RIGHT_MENU: Array<RawApiMenuItem & { aliases?: string[] }> = [
   { rightKey: 'vertical_org_str', aliases: ['vertical_structure'], menuName: 'Vertical Structure', rightType: 'Menu', route: '/configurations/vertical-structure', icon: 'AccountTreeOutlined', parentKey: 'CONFIGURATIONS', sequence: 2, roleId: null, role: null, groupIds: null, groups: null, rightValue: 1 },
   { rightKey: 'roles_privileges', aliases: ['roles_privileges'], menuName: 'Roles & Privileges', rightType: 'Menu', route: '/configurations/roles-privileges', icon: 'AdminPanelSettingsOutlined', parentKey: 'CONFIGURATIONS', sequence: 3, roleId: null, role: null, groupIds: null, groups: null, rightValue: 1 },
   { rightKey: 'add_emp', aliases: ['add_emp'], menuName: 'Employee Onboarding', rightType: 'Menu', route: '/add-employee', icon: 'AdminPanelSettingsOutlined', parentKey: 'WORKFORCE', sequence: 4, roleId: null, role: null, groupIds: null, groups: null, rightValue: 1 },
-  { rightKey: 'apply-leave', aliases: ['apply-leave'], menuName: 'Apply Leave', rightType: 'Menu', route: '/apply-leave', icon: 'AdminPanelSettingsOutlined', parentKey: 'WORKFORCE', sequence: 5, roleId: null, role: null, groupIds: null, groups: null, rightValue: 1 },
+  { rightKey: 'apply-leave', aliases: ['apply-leave'], menuName: 'Apply Leave', rightType: 'Menu', route: '/leave/apply', icon: 'EventAvailableOutlined', parentKey: 'WORKFORCE', sequence: 5, roleId: null, role: null, groupIds: null, groups: null, rightValue: 1 },
 ];
 
 const ACCESS_RIGHT_GROUPS: RawApiMenuItem[] = [
@@ -48,9 +48,12 @@ const ACCESS_RIGHT_GROUPS: RawApiMenuItem[] = [
  * 4. Child Sorting: Sorted ascending by child sequence (1, 2, 3...).
  */
 export function transformApiMenuToHierarchy(rawItems: Array<RawApiMenuItem | AccessRight>): MenuGroup[] {
-  if (!Array.isArray(rawItems) || rawItems.length === 0) {
+  if (!Array.isArray(rawItems)) {
     return [];
   }
+
+  const applyLeaveMenuItem = ACCESS_RIGHT_MENU.find((item) => item.rightKey === 'apply-leave')!;
+  const workforceGroup = ACCESS_RIGHT_GROUPS.find((group) => group.rightKey === 'WORKFORCE')!;
 
   const isAccessRightRecord = (item: RawApiMenuItem | AccessRight): item is AccessRight =>
     typeof item.rightKey === 'string' && !('menuName' in item);
@@ -64,10 +67,18 @@ export function transformApiMenuToHierarchy(rawItems: Array<RawApiMenuItem | Acc
     const menuItems = ACCESS_RIGHT_MENU.filter((item) =>
       [item.rightKey, ...(item.aliases ?? [])].some((key) => allowed.has(normalizeRightKey(key))),
     );
+    if (!menuItems.some((item) => item.rightKey === applyLeaveMenuItem.rightKey)) {
+      menuItems.push(applyLeaveMenuItem);
+    }
     const groups = ACCESS_RIGHT_GROUPS.filter((group) =>
       menuItems.some((item) => item.parentKey === group.rightKey),
     );
     rawItems = [...groups, ...menuItems];
+  } else if (!rawItems.some((item) => normalizeRightKey(item.rightKey) === normalizeRightKey(applyLeaveMenuItem.rightKey))) {
+    const hasWorkforceGroup = rawItems.some(
+      (item) => normalizeRightKey(item.rightKey) === normalizeRightKey(workforceGroup.rightKey),
+    );
+    rawItems = [...rawItems, ...(hasWorkforceGroup ? [] : [workforceGroup]), applyLeaveMenuItem];
   }
 
   // The menu endpoint is already scoped to the logged-in user. Every returned
@@ -95,8 +106,17 @@ export function transformApiMenuToHierarchy(rawItems: Array<RawApiMenuItem | Acc
     children.sort((a, b) => (a.sequence || 0) - (b.sequence || 0));
 
     const transformedMenuItems: MenuItem[] = children.map((child) => {
-      const cleanRoute = isNullOrEmpty(child.route) ? '' : String(child.route).trim();
-      const cleanIcon = isNullOrEmpty(child.icon) ? undefined : String(child.icon).trim();
+      const isApplyLeave = normalizeRightKey(child.rightKey) === normalizeRightKey(applyLeaveMenuItem.rightKey);
+      const cleanRoute = isApplyLeave
+        ? applyLeaveMenuItem.route!
+        : isNullOrEmpty(child.route)
+          ? ''
+          : String(child.route).trim();
+      const cleanIcon = isApplyLeave
+        ? applyLeaveMenuItem.icon ?? undefined
+        : isNullOrEmpty(child.icon)
+          ? undefined
+          : String(child.icon).trim();
 
       return {
         title: child.menuName,

@@ -1,12 +1,11 @@
 import { useMemo, useState } from 'react';
-import { DEFAULT_END_DATE, DEFAULT_START_DATE } from '../constants/applyLeave.constants';
 import { calculateLeaveTotals, createLeaveDays, updateLeaveDayMode } from '../utils/applyLeave.utils';
 import type { LeaveDayMode } from '../types/applyLeave.types';
 
 export const useApplyLeave = () => {
-  const [startDate, setStartDate] = useState(DEFAULT_START_DATE);
-  const [endDate, setEndDate] = useState(DEFAULT_END_DATE);
-  const [days, setDays] = useState(() => createLeaveDays(DEFAULT_START_DATE, DEFAULT_END_DATE));
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [days, setDays] = useState(() => createLeaveDays('', ''));
 
   const syncDates = (nextStartDate: string, nextEndDate: string) => {
     setStartDate(nextStartDate);
