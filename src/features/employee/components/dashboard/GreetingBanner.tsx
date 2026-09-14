@@ -8,12 +8,18 @@ export interface GreetingBannerProps {
 }
 
 const warmGreetings = [
-  'Good morning',
   'Hello there',
   'Great to see you',
   'Welcome back',
   'Hope you’re having a lovely day',
   'Wishing you a wonderful day',
+  'Good to have you here',
+  'Glad you’re here',
+  'Hope your day is going well',
+  'Wishing you a great one',
+  'Here’s to a productive day ahead',
+  'Nice to see you again',
+  'Hope things are going smoothly for you',
 ];
 
 export const GreetingBanner: React.FC<GreetingBannerProps> = ({
