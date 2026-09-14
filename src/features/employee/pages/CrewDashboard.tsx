@@ -23,7 +23,6 @@ export const CrewDashboard: React.FC = () => {
       {/* 1. Welcome Greeting Banner (Dynamically resolved per User ID) */}
       <GreetingBanner
         displayName={user?.name || 'Crew Member'}
-        completionPercentage={0}
       />
 
       {/* 2. Top Row: Organizational News & Birthdays/Anniversaries */}

@@ -24,16 +24,22 @@ const warmGreetings = [
 
 export const GreetingBanner: React.FC<GreetingBannerProps> = ({
   displayName = 'Subodh',
-  completionPercentage = 85,
+  completionPercentage,
 }) => {
   const [greeting] = useState(
     () => warmGreetings[Math.floor(Math.random() * warmGreetings.length)],
   );
+  const [demoCompletionPercentage] = useState(
+    () => Math.floor(Math.random() * 31) + 65,
+  );
+  const resolvedCompletionPercentage =
+    completionPercentage ?? demoCompletionPercentage;
 
   // SVG Circle calculations for prominent 70x70 gauge with center (35, 35) and radius 30
   const radius = 30;
   const circumference = 2 * Math.PI * radius; // ~188.5
-  const strokeDash = (completionPercentage / 100) * circumference; // ~160.2 for 85%
+  const strokeDash =
+    (resolvedCompletionPercentage / 100) * circumference;
 
   return (
     <div className="bg-white p-3 sm:p-4 rounded-[8px] min-h-[110px] relative overflow-hidden flex items-center w-full isolate shadow-card border border-slate-200">
@@ -89,7 +95,7 @@ export const GreetingBanner: React.FC<GreetingBannerProps> = ({
 
               {/* Centered 85% label */}
               <span className="absolute font-bold text-[14px] sm:text-[15px] text-[#0b4668] tracking-[0.13px] leading-[18px]">
-                {completionPercentage}%
+                {resolvedCompletionPercentage}%
               </span>
             </div>
 
