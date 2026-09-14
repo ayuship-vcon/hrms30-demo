@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   Box,
   Card,
@@ -16,6 +16,7 @@ import { metrics } from "../core/constants/binding";
 import TreeNode from "../components/TreeNode";
 import HorizontalOrganizationDetails from "../components/HorizontalOrganizationDetails";
 import type { SelectedOrganization } from "../core/types/horizontal-org.types";
+import type { OrganizationNode } from "../core/types/horizontal-org.types";
 import { useAppDispatch, useAppSelector } from "@/core/redux";
 import {
   clearHorizontalOrganizationSelection,
@@ -27,10 +28,24 @@ import {
   deleteHorizontalOrganization,
 } from "@/core/redux/horizontal-org";
 
+const countNodesByLevel = (nodes: OrganizationNode[], level: OrganizationNode["level"]): number =>
+  nodes.reduce(
+    (count, node) => count + (node.level === level ? 1 : 0) + countNodesByLevel(node.children ?? [], level),
+    0,
+  );
+
 export const Horizontal = () => {
   const dispatch = useAppDispatch();
   const organizations = useAppSelector(selectHorizontalOrganizations);
   const selected = useAppSelector(selectSelectedHorizontalOrganization);
+  const metricValues = useMemo(
+    () => ({
+      Company: countNodesByLevel(organizations, "Company"),
+      "Functional Groups": countNodesByLevel(organizations, "Group"),
+      "Functional Teams": countNodesByLevel(organizations, "Team"),
+    }),
+    [organizations],
+  );
   const [activeTab, setActiveTab] = useState("Add");
   const [collapseTrigger, setCollapseTrigger] = useState(0);
   const [expandTrigger, setExpandTrigger] = useState(0);
@@ -113,7 +128,7 @@ export const Horizontal = () => {
                     }}
                   />
                   <Typography variant="h5" fontWeight={800}>
-                    {metric.value}
+                    {metricValues[metric.label as keyof typeof metricValues]}
                   </Typography>
                   <Typography variant="caption" color="text.secondary">
                     Configured in current hierarchy

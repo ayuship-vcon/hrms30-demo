@@ -13,7 +13,7 @@ import AddIcon from "@mui/icons-material/Add";
 import UnfoldLessIcon from "@mui/icons-material/UnfoldLess";
 import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
 import { buildOrganizationTree, metrics, orgTree as fallbackOrgTree } from "../core/constants";
-import type { OrganizationTab, SelectedOrganization } from "../core/types";
+import type { OrganizationNode, OrganizationTab, SelectedOrganization } from "../core/types";
 import type { OrganizationGroupFormValues } from "../components/AddEditTab";
 import { Toast } from "@/shared/components";
 import { getErrorMessage } from "@/shared/utils/apiError.utils";
@@ -30,6 +30,12 @@ import type {
 } from "@/core/api/organization";
 import fallbackGroups from "../core/data/organization-groups.json";
 import fallbackLevels from "../core/data/organization-levels.json";
+
+const countNodesByLevel = (nodes: OrganizationNode[], level: OrganizationNode["level"]): number =>
+  nodes.reduce(
+    (count, node) => count + (node.level === level ? 1 : 0) + countNodesByLevel(node.children ?? [], level),
+    0,
+  );
 
 export const VerticalOrgStructurePage: React.FC = () => {
   const [selected, setSelected] = useState<SelectedOrganization>({});
@@ -61,6 +67,15 @@ export const VerticalOrgStructurePage: React.FC = () => {
         ? buildOrganizationTree(organizationGroups, organizationLevels)
         : fallbackOrgTree,
     [organizationGroups, organizationLevels],
+  );
+  const metricValues = useMemo(
+    () => ({
+      "Business Units": countNodesByLevel(orgTree, "BU"),
+      Clusters: countNodesByLevel(orgTree, "Cluster"),
+      Teams: countNodesByLevel(orgTree, "Team"),
+      "Sub Cluster": countNodesByLevel(orgTree, "SubCluster"),
+    }),
+    [orgTree],
   );
   const handleFormChange = useCallback(
     (values: Partial<OrganizationGroupFormValues>) => {
@@ -178,7 +193,7 @@ export const VerticalOrgStructurePage: React.FC = () => {
                     }}
                   />
                   <Typography variant="h5" fontWeight={800}>
-                    {metric.value}
+                    {metricValues[metric.label as keyof typeof metricValues]}
                   </Typography>
                   <Typography variant="caption" color="text.secondary">
                     Configured in current hierarchy
