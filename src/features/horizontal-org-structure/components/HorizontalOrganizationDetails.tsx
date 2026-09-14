@@ -22,6 +22,8 @@ export const HorizontalOrganizationDetails = ({
   onReset,
   onDelete,
 }: DetailsProps) => {
+  const isEditing = Boolean(selected.level);
+
   useEffect(() => {
     setActiveTab("Add");
   }, [selected, setActiveTab]);
@@ -57,7 +59,7 @@ export const HorizontalOrganizationDetails = ({
         >
           <Tab
             value="Add"
-            label="Add"
+            label={isEditing ? "Update" : "Add"}
             sx={{ textTransform: "none", fontWeight: 700 }}
           />
         </Tabs>

@@ -17,7 +17,7 @@ export const ActionButtons: React.FC<ActionButtonsProps> = ({
 }) => (
   <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1, mt: 3 }}>
     <Button variant="contained" startIcon={isSaving ? <CircularProgress size={16} color="inherit" /> : <SaveIcon />} onClick={onSave} disabled={isSaving}>
-      Save
+      {selected.level ? "Update" : "Add"}
     </Button>
     <Button
       variant="outlined"

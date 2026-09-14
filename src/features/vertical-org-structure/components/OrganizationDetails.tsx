@@ -38,6 +38,7 @@ export const OrganizationDetails: React.FC<Props> = ({
   validationErrors,
 }) => {
   const tabs = TAB_CONFIG[selected.level ?? "Company"] ?? ["Add"];
+  const isEditing = Boolean(selected.level);
   useEffect(() => setActiveTab("Add"), [selected, setActiveTab]);
   const renderTab = () =>
     activeTab === "Add" ? (
@@ -89,7 +90,7 @@ export const OrganizationDetails: React.FC<Props> = ({
             <Tab
               key={tab}
               value={tab}
-              label={tab}
+              label={tab === "Add" && isEditing ? "Update" : tab}
               sx={{ textTransform: "none", fontWeight: 700 }}
             />
           ))}

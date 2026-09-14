@@ -16,7 +16,7 @@ export const ActionButtons = ({
 }: ActionButtonsProps) => (
   <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1, mt: 3 }}>
     <Button variant="contained" startIcon={<SaveIcon />} onClick={onSave}>
-      Save
+      {selected.level ? "Update" : "Add"}
     </Button>
     <Button
       variant="outlined"
