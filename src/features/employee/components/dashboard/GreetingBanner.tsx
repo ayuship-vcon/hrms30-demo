@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { greetingHand } from '@/assets/images';
 import { THEME_CONFIG } from '@/config/theme.config';
 
@@ -7,10 +7,23 @@ export interface GreetingBannerProps {
   completionPercentage?: number;
 }
 
+const warmGreetings = [
+  'Good morning',
+  'Hello there',
+  'Great to see you',
+  'Welcome back',
+  'Hope you’re having a lovely day',
+  'Wishing you a wonderful day',
+];
+
 export const GreetingBanner: React.FC<GreetingBannerProps> = ({
   displayName = 'Subodh',
   completionPercentage = 85,
 }) => {
+  const [greeting] = useState(
+    () => warmGreetings[Math.floor(Math.random() * warmGreetings.length)],
+  );
+
   // SVG Circle calculations for prominent 70x70 gauge with center (35, 35) and radius 30
   const radius = 30;
   const circumference = 2 * Math.PI * radius; // ~188.5
@@ -34,7 +47,7 @@ export const GreetingBanner: React.FC<GreetingBannerProps> = ({
           style={{ fontFamily: THEME_CONFIG.fonts.display, fontWeight: 700 }}
           className="text-[32px] text-[#0b4668] tracking-tight leading-[38px] select-none font-display font-bold"
         >
-          Good Morning, {displayName}!
+          {greeting}, {displayName}!
         </h1>
 
         {/* Profile Completion: Big 70x70 Gauge Column */}
