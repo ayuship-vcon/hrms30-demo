@@ -81,14 +81,14 @@
         "id": "event-1",
         "type": "anniversary",
         "title": "Mahesh Jagdale's 7th work anniversary",
-        "date": "Nov 12, Sunday",
+        "date": "Sep 15, Tuesday",
         "action": "Wish"
       },
       {
         "id": "event-2",
         "type": "birthday",
         "title": "Sagar Ingle has birthday today",
-        "date": "Nov 12, Sunday",
+        "date": "Sep 15, Tuesday",
         "action": "Wish"
       }
     ]
@@ -135,18 +135,18 @@
     "holidays": [
       {
         "id": "hol-1",
-        "name": "Deepavali",
-        "date": "Nov 12, Sunday"
+        "name": "Gandhi Jayanti",
+        "date": "Oct 2, Friday"
       },
       {
         "id": "hol-2",
-        "name": "Easter",
-        "date": "Nov 12, Sunday"
+        "name": "Diwali",
+        "date": "Nov 9, Monday"
       },
       {
         "id": "hol-3",
-        "name": "Gudhi Padwa",
-        "date": "Nov 12, Sunday"
+        "name": "Christmas",
+        "date": "Dec 25, Friday"
       }
     ]
   },
@@ -191,7 +191,7 @@
     "notifications": [
       {
         "id": "notif-1",
-        "title": "Yash has filed a reimbursement request",
+        "title": "Abhay has filed a reimbursement request",
         "date": "Nov 12, Sunday",
         "action": "View"
       },
@@ -203,7 +203,7 @@
       },
       {
         "id": "notif-3",
-        "title": "Sakshi has filed a reimbursement request",
+        "title": "Abhishek has filed a reimbursement request",
         "date": "Nov 12, Sunday",
         "action": "View"
       }
