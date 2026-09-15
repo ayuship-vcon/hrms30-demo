@@ -24,7 +24,7 @@ export const INITIAL_EMPLOYEE_FORM: EmployeeOnboardingFormValues = {
   unitName: '',
   status: '',
   designation: '',
-  employeeNumber: 'V26',
+  employeeNumber: '',
   isPastEmployee: false,
   roleId: '',
   initials: '',

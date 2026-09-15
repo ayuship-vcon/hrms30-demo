@@ -10,6 +10,8 @@ import { getErrorMessage } from "@/shared/utils/apiError.utils";
 import { EmployeeForm } from "./EmployeeForm";
 import { OrganizationPanel } from "./OrganizationPanel";
 
+const employeePrefix = `V${new Date().getFullYear().toString().slice(-2)}`;
+
 export const EmployeeOnboardingPageContent: React.FC = () => {
   const [organizationGroupId, setOrganizationGroupId] = useState(0);
   const [formResetKey, setFormResetKey] = useState(0);
@@ -26,7 +28,7 @@ export const EmployeeOnboardingPageContent: React.FC = () => {
         userId: 2,
         organizationGroupId,
         roleId: Number(values.roleId),
-        employeeId: values.employeeNumber.trim(),
+        employeeId: `${employeePrefix}${values.employeeNumber.trim().padStart(4, "0")}`,
         firstName: values.firstName.trim(),
         lastName: values.lastName.trim(),
         dateOfJoining: new Date(

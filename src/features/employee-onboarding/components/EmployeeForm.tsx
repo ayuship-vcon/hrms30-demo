@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Box,
   Button,
@@ -24,11 +24,12 @@ interface EmployeeFormProps {
 }
 
 const statuses = ['Select Employee Status', 'Active', 'Inactive'];
-const designations = ['Select Designation', 'Associate', 'Manager', 'Architect', 'Developer'];
+const designations = ['Select Designation', 'Project Manager', 'Team Lead', 'Solution Architect', 'Software Engineer', 'Software Engineer Trainee', 'Intern', 'HR Manager', 'HR Executive', 'HR Intern', 'Finance Manager', 'Finance Executive', 'Finance Intern', 'Admin Manager', 'Admin Executive', 'Admin Intern'];
 const initials = ['Select Initials', 'Mr.', 'Miss.', 'Mrs.'];
-const approvers = ['Select Leave Approver', 'HR Operations', 'Team Manager'];
+const approvers = ['Select Leave Approver', 'Intequab Khan', 'Nachiket Chavan'];
 const sources = ['Select Source', 'Referral', 'Career Portal', 'Internal Transfer'];
-const qualifications = ['Enter Highest Qualification', 'Bachelor’s Degree', 'Master’s Degree', 'Doctorate'];
+const employeePrefix = `V${new Date().getFullYear().toString().slice(-2)}`;
+const qualifications = ['Enter Highest Qualification', 'Bachelor’s Degree', 'Master’s Degree', 'PhD', 'Diploma', 'Certificate', 'Other'];
 
 export const EmployeeForm: React.FC<EmployeeFormProps> = ({
   organizationGroupId,
@@ -39,6 +40,7 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
 }) => {
   const [values, setValues] = useState<EmployeeOnboardingFormValues>(INITIAL_EMPLOYEE_FORM);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const previousGeneratedEmail = useRef('');
   useEffect(() => {
     if (resetKey > 0) {
       setValues(INITIAL_EMPLOYEE_FORM);
@@ -49,6 +51,23 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
     () => officeLocations.find((location) => location.office === values.officeName)?.unit ?? '',
     [values.officeName],
   );
+  const generatedOfficeEmail = useMemo(() => {
+    const firstName = values.firstName.trim().replace(/\s+/g, '').toLowerCase();
+    const lastNameInitial = values.lastName.trim().charAt(0).toLowerCase();
+    return firstName && lastNameInitial
+      ? `${firstName}${lastNameInitial}@vconstruct.in`
+      : '';
+  }, [values.firstName, values.lastName]);
+
+  useEffect(() => {
+    setValues((current) => {
+      if (!current.officeEmail || current.officeEmail === previousGeneratedEmail.current) {
+        return { ...current, officeEmail: generatedOfficeEmail };
+      }
+      return current;
+    });
+    previousGeneratedEmail.current = generatedOfficeEmail;
+  }, [generatedOfficeEmail]);
 
   const update = <K extends keyof EmployeeOnboardingFormValues>(
     key: K,
@@ -84,7 +103,9 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
     if (!values.dateOfJoining) nextErrors.dateOfJoining = 'Select the date of joining.';
     if (!values.status) nextErrors.status = 'Select an employee status.';
     if (!values.roleId) nextErrors.roleId = 'Select a role.';
-    if (!values.employeeNumber.trim()) nextErrors.employeeNumber = 'Enter the employee number.';
+    if (!/^\d{4}$/.test(values.employeeNumber.trim())) {
+      nextErrors.employeeNumber = 'Enter a 4-digit employee ID (for example, 0001).';
+    }
     if (!values.initials) nextErrors.initials = 'Select initials.';
     if (values.firstName.trim().length < 2) nextErrors.firstName = 'Enter at least 2 characters.';
     if (values.lastName.trim().length < 2) nextErrors.lastName = 'Enter at least 2 characters.';
@@ -112,7 +133,32 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
         <MenuItem value="">Select Role</MenuItem>
         {roles.filter((role) => role.isActive !== false).sort((a, b) => a.sequence - b.sequence).map((role) => <MenuItem key={role.id} value={role.id}>{role.name}</MenuItem>)}
       </TextField>
-      <TextField fullWidth size="small" required label="Employee No." value={values.employeeNumber} error={Boolean(errors.employeeNumber)} helperText={errors.employeeNumber || ' '} onChange={(event) => update('employeeNumber', event.target.value)} />
+      <Box sx={{ display: 'flex', gap: 1 }}>
+        <TextField
+          size="small"
+          label="Prefix"
+          value={employeePrefix}
+          InputProps={{ readOnly: true }}
+          sx={{ width: 92 }}
+        />
+        <TextField
+          fullWidth
+          size="small"
+          required
+          label="Employee ID"
+          type="number"
+          value={values.employeeNumber}
+          error={Boolean(errors.employeeNumber)}
+          helperText={errors.employeeNumber || ' '}
+          inputProps={{ min: 1, max: 9999, step: 1, inputMode: 'numeric' }}
+          onChange={(event) => update('employeeNumber', event.target.value.replace(/\D/g, '').slice(0, 4))}
+          onBlur={() => {
+            if (values.employeeNumber) {
+              update('employeeNumber', values.employeeNumber.padStart(4, '0'));
+            }
+          }}
+        />
+      </Box>
       <Box sx={{ minHeight: 40, display: 'flex', alignItems: 'center' }}><FormControlLabel control={<Checkbox size="small" checked={values.isPastEmployee} onChange={(event) => update('isPastEmployee', event.target.checked)} />} label="Is Past Employee" /></Box>
       {selectField('initials', 'Initials', initials, true)}
       {selectField('leaveApprover', 'Leave Approver', approvers)}
@@ -122,7 +168,18 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
       {selectField('highestQualification', 'Highest Qualification', qualifications)}
       <TextField fullWidth size="small" required label="Last Name" value={values.lastName} error={Boolean(errors.lastName)} helperText={errors.lastName || ' '} inputProps={{ minLength: 2 }} onChange={(event) => update('lastName', event.target.value)} />
       <Box sx={{ minHeight: 40, display: 'flex', alignItems: 'center' }}><FormControlLabel control={<Checkbox size="small" checked={values.accommodation} onChange={(event) => update('accommodation', event.target.checked)} />} label="Accommodation" /></Box>
-      <TextField fullWidth size="small" required type="email" label="Office Email Id" value={values.officeEmail} error={Boolean(errors.officeEmail)} helperText={errors.officeEmail || ' '} onChange={(event) => update('officeEmail', event.target.value)} sx={{ gridColumn: { md: '1 / 2' } }} />
+      <TextField
+        fullWidth
+        size="small"
+        required
+        type="email"
+        label="Office Email Id"
+        value={values.officeEmail}
+        error={Boolean(errors.officeEmail)}
+        helperText={errors.officeEmail || ' '}
+        onChange={(event) => update('officeEmail', event.target.value)}
+        sx={{ gridColumn: { md: '1 / 2' } }}
+      />
       <Box sx={{ gridColumn: { xs: '1', md: '1 / -1' }, display: 'flex', gap: 1.5, mt: { xs: 1, md: 2 } }}>
         <Button type="submit" variant="contained" startIcon={isSaving ? <CircularProgress size={16} color="inherit" /> : <SaveOutlinedIcon />} sx={{ minWidth: 138 }} disabled={isSaving || !organizationGroupId}>Save</Button>
         <Button type="button" variant="outlined" onClick={() => { setValues(INITIAL_EMPLOYEE_FORM); setErrors({}); }} sx={{ minWidth: 124 }}>Cancel</Button>
