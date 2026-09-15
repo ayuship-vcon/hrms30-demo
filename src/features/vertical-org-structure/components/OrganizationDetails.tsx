@@ -37,8 +37,11 @@ export const OrganizationDetails: React.FC<Props> = ({
   isSaving = false,
   validationErrors,
 }) => {
-  const tabs = TAB_CONFIG[selected.level ?? "Company"] ?? ["Add"];
   const isEditing = Boolean(selected.level);
+  const configuredTabs = TAB_CONFIG[selected.level ?? "Company"] ?? ["Add"];
+  const tabs = isEditing
+    ? configuredTabs
+    : configuredTabs.filter((tab) => !leadTabs.includes(tab) && tab !== "Leave Approvers");
   useEffect(() => setActiveTab("Add"), [selected, setActiveTab]);
   const renderTab = () =>
     activeTab === "Add" ? (
