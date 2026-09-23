@@ -47,7 +47,7 @@ export function useRoleRouteGuard(menu: MenuGroup[] = []): RoleRouteGuardState {
       ROUTES.AUTH.UNAUTHORIZED,
     ];
     if (!isAllowed && !exemptPaths.includes(currentPath)) {
-      navigate(ROUTES.AUTH.UNAUTHORIZED, { replace: true });
+      navigate(ROUTES.LOCATION.ROOT, { replace: true });
     }
   }, [location.pathname, menu, navigate]);
 

@@ -22,7 +22,9 @@ export const ROUTES = {
     CREATE: "/employees/new",
     EDIT: (id: string | number = ":id") => `/employees/${id}/edit`,
   },
-
+LOCATION: {
+  ROOT: "/location",
+},
   // Employee List
   EMPLOYEE_LIST: {
     ROOT: "/employee-list",

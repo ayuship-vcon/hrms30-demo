@@ -33,6 +33,7 @@ import { VerticalOrgStructurePage } from "@/features/vertical-org-structure";
 import { EmployeeOnboardingPage } from "@/features/employee-onboarding";
 import { Horizontal } from "@/features/horizontal-org-structure";
 import UnauthorizedPage from "@/shared/pages/UnauthorizedPage";
+import { LocationConfigurationPage } from "@/features/location-configuration";
 
 export interface RouteConfig {
   path: string;
@@ -80,6 +81,8 @@ export const PROTECTED_APP_ROUTES: RouteConfig[] = [
   { path: ROUTES.ADMIN.AUDIT, element: <AdminPage /> },
   { path: ROUTES.ADMIN.ROLES, element: <AdminPage /> },
   { path: ROUTES.ADMIN.DETAILS(":id"), element: <AdminDetails /> },
+
+    { path: ROUTES.LOCATION.ROOT, element: <LocationConfigurationPage /> },
 
   // 7. Approvals Module Routes
   {

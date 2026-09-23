@@ -6,14 +6,11 @@ export interface OrganizationNode {
   id?: number | string;
   name: string;
   level: OrganizationLevel;
-  code: string;
+  code?: string;
   icon?: ElementType;
   children?: OrganizationNode[];
 }
 
-export interface OrganizationNodeWithParent extends OrganizationNode {
-  parent: OrganizationNode | null;
-}
 
 export interface OrganizationMetric {
   label: string;

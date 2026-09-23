@@ -25,3 +25,4 @@ export * from './ProtectedRoute';
 export * from './PublicRoute';
 export * from './PermissionRoute';
 export * from './GenericFeaturePage';
+export { default } from './TreeNode';

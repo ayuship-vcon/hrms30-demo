@@ -11,8 +11,8 @@ export interface OrganizationGroup {
 
 export interface CreateOrganizationGroupRequest {
   name: string;
-  levelId: number;
-  parentGroupId: number;
+  levelId: number | '';
+  parentGroupId: number | '';
   groupPath: string | null;
   shortName: string;
 }

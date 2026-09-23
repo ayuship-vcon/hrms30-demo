@@ -16,8 +16,8 @@ import { buildOrganizationTree, metrics, orgTree as fallbackOrgTree } from "../c
 import type { OrganizationNode, OrganizationTab, SelectedOrganization } from "../core/types";
 import type { OrganizationGroupFormValues } from "../components/AddEditTab";
 import { Toast } from "@/shared/components";
+import TreeNode from "@/shared/components";
 import { getErrorMessage } from "@/shared/utils/apiError.utils";
-import { TreeNode } from "../components/TreeNode";
 import { OrganizationDetails } from "../components/OrganizationDetails";
 import {
   useGetOrganizationGroupsQuery,

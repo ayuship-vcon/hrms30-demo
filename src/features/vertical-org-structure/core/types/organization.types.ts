@@ -1,6 +1,6 @@
 import type { SvgIconComponent } from '@mui/icons-material';
 
-export type OrganizationLevel = 'Company' | 'BU' | 'Cluster' | 'SubCluster' | 'Team';
+export type OrganizationLevel = 'Company' | 'BU' | 'Cluster' | 'SubCluster' | 'Team' | "Group" | "Team";
 
 export interface OrganizationNode {
   id?: number;

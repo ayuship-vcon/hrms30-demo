@@ -4,7 +4,7 @@ import { alpha } from "@mui/material/styles";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import GroupIcon from "@mui/icons-material/Group";
-import type { OrganizationNode, SelectedOrganization } from "../core/types";
+import type { OrganizationNode, SelectedOrganization } from "../types/treenode.types";
 
 interface TreeNodeProps {
   node: OrganizationNode;
@@ -14,7 +14,7 @@ interface TreeNodeProps {
   expandTrigger: number;
 }
 
-export const TreeNode: React.FC<TreeNodeProps> = ({
+ const TreeNode: React.FC<TreeNodeProps> = ({
   node,
   selected,
   onSelect,
@@ -35,7 +35,7 @@ export const TreeNode: React.FC<TreeNodeProps> = ({
   return (
     <Box>
       <Box
-        onClick={() => onSelect(node.level === "Company" ? {} : node)}
+        onClick={() => onSelect(node?.level === "Company" ? {} : node)}
         sx={{
           display: "flex",
           alignItems: "center",
@@ -108,3 +108,5 @@ export const TreeNode: React.FC<TreeNodeProps> = ({
     </Box>
   );
 };
+
+export default TreeNode;

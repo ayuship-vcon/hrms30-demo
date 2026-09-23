@@ -15,7 +15,7 @@ import {
   buildOrganizationTree,
   orgTree as fallbackOrgTree,
 } from "@/features/vertical-org-structure/core";
-import { TreeNode } from "@/features/vertical-org-structure/components/TreeNode";
+import TreeNode from "@/shared/components";
 import type {
   OrganizationNode,
   SelectedOrganization,

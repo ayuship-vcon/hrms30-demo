@@ -13,7 +13,7 @@ import AddIcon from "@mui/icons-material/Add";
 import UnfoldLessIcon from "@mui/icons-material/UnfoldLess";
 import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
 import { metrics } from "../core/constants/binding";
-import TreeNode from "../components/TreeNode";
+import TreeNode  from "@/shared/components";
 import HorizontalOrganizationDetails from "../components/HorizontalOrganizationDetails";
 import type { SelectedOrganization } from "../core/types/horizontal-org.types";
 import type { OrganizationNode } from "../core/types/horizontal-org.types";
