@@ -2,20 +2,21 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { AuthState, User } from '@/features/authentication/core/types';
 import { tokenUtils, authUtils } from '@/features/authentication/core/utils';
 
-// Pure authentication state derived from real Cookie token and stored session
-const initialToken = tokenUtils.getToken();
-const initialUser = authUtils.getStoredUser();
-const hasValidInitialSession = Boolean(tokenUtils.isTokenValid(initialToken) && initialUser);
-
-if (initialToken && !hasValidInitialSession) {
-  tokenUtils.clearToken();
-  authUtils.clearStoredUser();
-}
+// UI-only demo session: the workspace is available immediately without login.
+const initialToken = 'ui-demo-token';
+const initialUser: User = {
+  id: 'demo-user',
+  name: 'Demo User',
+  email: 'demo@vconstruct.in',
+  role: 'SUPER_ADMIN',
+  department: 'Product Design',
+  designation: 'UI/UX Demo User',
+};
 
 const initialState: AuthState = {
   user: initialUser,
   token: initialToken,
-  isAuthenticated: hasValidInitialSession,
+  isAuthenticated: true,
   isLoading: false,
   error: null,
 };

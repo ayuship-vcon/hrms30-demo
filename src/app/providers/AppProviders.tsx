@@ -1,6 +1,4 @@
-import React, { useEffect } from 'react';
-import { MsalProvider } from '@azure/msal-react';
-import { msalInstance, initializeMsal } from '@/core/auth';
+import React from 'react';
 import { ReduxProvider } from './ReduxProvider';
 import { RouterProvider } from './RouterProvider';
 import { ThemeProvider } from './ThemeProvider';
@@ -8,20 +6,13 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 export const AppProviders: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  useEffect(() => {
-    // Ensure MSAL initializes on app mount
-    initializeMsal();
-  }, []);
-
   return (
-    <MsalProvider instance={msalInstance}>
-      <ReduxProvider>
+    <ReduxProvider>
         <ThemeProvider>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <RouterProvider>{children}</RouterProvider>
           </LocalizationProvider>
         </ThemeProvider>
       </ReduxProvider>
-    </MsalProvider>
   );
 };

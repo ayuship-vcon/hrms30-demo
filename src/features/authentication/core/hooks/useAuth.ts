@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "@/core/redux/hooks/useAppDispatch";
 import {
@@ -10,11 +9,10 @@ import {
   logout as logoutAction,
 } from "@/core/redux/auth";
 import { usePermission } from "@/shared/hooks/usePermission";
-import { useGetAccessRightsQuery } from "@/core/api/menu";
 import { transformApiMenuToHierarchy } from "@/shared/utils";
+import { MOCK_MENU_DATA } from "@/shared/data/mockMenu.data";
 import type { AuthState } from "../types";
 import { tokenUtils, authUtils } from "@/features/authentication/core/utils";
-import { msalService } from "@/core/auth";
 import { baseApi } from "@/core/api";
 
 export function useAuth() {
@@ -35,15 +33,8 @@ export function useAuth() {
   const role = useSelector((state: { auth: AuthState }) =>
     selectUserRole(state),
   );
-  const menuQuery = useGetAccessRightsQuery(
-    user?.id as string | number,
-    { skip: !isAuthenticated || user?.id === undefined || user?.id === null },
-  );
-  const menuGroups = useMemo(
-    () => transformApiMenuToHierarchy(menuQuery.data ?? []),
-    [menuQuery.data],
-  );
-  const isMenuLoading = menuQuery.isLoading || menuQuery.isFetching;
+  const menuGroups = transformApiMenuToHierarchy(MOCK_MENU_DATA);
+  const isMenuLoading = false;
 
   const permissions = usePermission(role);
 
@@ -53,11 +44,9 @@ export function useAuth() {
     dispatch(logoutAction());
     dispatch(baseApi.util.resetApiState());
 
-    const account = msalService.getActiveAccount();
-    if (account) void msalService.logout().catch(() => undefined);
   };
 
-  const refreshMenus = () => menuQuery.refetch();
+  const refreshMenus = () => undefined;
 
   return {
     user,

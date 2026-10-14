@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../core/hooks/useAuth';
 import { ResetPasswordForm } from '../components/ResetPasswordForm';
 import { ROUTES } from '@/shared/constants/routes.constants';
 import { authIllustration, vconstructLogo } from '@/assets/images';
@@ -9,15 +8,7 @@ import { Button } from '@/shared/components';
 
 export const ResetPasswordPage: React.FC = () => {
   const { token } = useParams<{ token: string }>();
-  const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
-
-  // If already authenticated, redirect to Dashboard
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate(ROUTES.DASHBOARD, { replace: true });
-    }
-  }, [isAuthenticated, navigate]);
 
   return (
     <div className="min-h-screen w-full flex flex-col md:flex-row bg-white overflow-hidden">

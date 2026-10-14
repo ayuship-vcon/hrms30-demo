@@ -606,7 +606,7 @@ export const AppRouter: React.FC = () => {
           path="*"
           element={
             <Navigate
-              to={isAuthenticated ? ROUTES.DASHBOARD : ROUTES.AUTH.LOGIN}
+              to={ROUTES.DASHBOARD}
               replace
             />
           }

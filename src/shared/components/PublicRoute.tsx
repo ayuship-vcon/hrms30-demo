@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { ROUTES } from '../constants/routes.constants';
 
 export interface PublicRouteProps {
@@ -16,9 +16,8 @@ export const PublicRoute: React.FC<PublicRouteProps> = ({
   redirectPath = ROUTES.DASHBOARD,
   children,
 }) => {
-  if (isAuthenticated) {
-    return <Navigate to={redirectPath} replace />;
-  }
+  void isAuthenticated;
+  void redirectPath;
 
   return children ? <>{children}</> : <Outlet />;
 };

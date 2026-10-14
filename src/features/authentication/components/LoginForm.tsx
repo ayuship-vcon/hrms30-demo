@@ -9,15 +9,11 @@ import {
   FormProvider,
   RHFInput,
 } from '@/shared/components';
-import { useMsalLogin } from '../core/hooks/useMsalLogin';
 import { loginSchema, type LoginFormData } from '../validations/login.validation';
-import { useLoginMutation } from '@/core/api/auth';
 import { ROUTES } from '@/shared/constants/routes.constants';
-import { getErrorMessage } from '@/shared/utils';
 import { IconButton } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import CloseIcon from '@mui/icons-material/Close';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import WindowIcon from '@mui/icons-material/Window';
@@ -31,15 +27,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
   const navigate = useNavigate();
   const [isSubmittingManual, setIsSubmittingManual] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
-  const [loginMutation, { isLoading: isLoginLoading }] = useLoginMutation();
-
-  const {
-    handleMicrosoftLogin,
-    isMsalLoading,
-    msalError,
-    clearMsalError,
-    resetLoginState,
-  } = useMsalLogin();
+  const [isDemoLoading, setIsDemoLoading] = useState(false);
 
   // Initialize React Hook Form with Yup Validation Schema
   const methods = useForm<LoginFormData>({
@@ -54,11 +42,22 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
   // 1. Single Sign-On (SSO) Handler
   const onSsoSignIn = useCallback(async () => {
     setFormError(null);
-    const success = await handleMicrosoftLogin();
-    if (success && onSuccess) {
-      onSuccess();
-    }
-  }, [handleMicrosoftLogin, onSuccess]);
+    setIsDemoLoading(true);
+    dispatch(loginSuccess({
+      user: {
+        id: 'demo-user',
+        name: 'Demo User',
+        email: 'demo@vconstruct.in',
+        role: 'SUPER_ADMIN',
+        department: 'Product Design',
+        designation: 'UI/UX Demo User',
+      },
+      token: 'ui-demo-token',
+    }));
+    navigate(ROUTES.DASHBOARD, { replace: true });
+    onSuccess?.();
+    setIsDemoLoading(false);
+  }, [dispatch, navigate, onSuccess]);
 
   // 2. POC Email Submit Handler (the backend currently requires email only)
   const handleEmailPasswordSubmit = useCallback(
@@ -67,36 +66,31 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
         setIsSubmittingManual(true);
         setFormError(null);
 
-        const response = await loginMutation({
-          email: data.email,
-        }).unwrap();
-
-        if (response.user && response.token) {
-          dispatch(loginSuccess({
-            user: response.user,
-            token: response.token,
-            refreshToken: response.refreshToken,
-          }));
-          if (onSuccess) {
-            onSuccess();
-          } else {
-            navigate(ROUTES.DASHBOARD, { replace: true });
-          }
-        } else {
-          throw new Error('Authentication response was incomplete');
-        }
+        dispatch(loginSuccess({
+          user: {
+            id: 'demo-user',
+            name: data.email.split('@')[0] || 'Demo User',
+            email: data.email,
+            role: 'SUPER_ADMIN',
+            department: 'Product Design',
+            designation: 'UI/UX Demo User',
+          },
+          token: 'ui-demo-token',
+        }));
+        onSuccess?.();
+        navigate(ROUTES.DASHBOARD, { replace: true });
       } catch (err: unknown) {
-        const message = getErrorMessage(err, 'Authentication failed. Please check your email and try again.');
+        const message = 'Demo sign-in could not be completed.';
         dispatch(loginFailure(message));
         setFormError(message);
       } finally {
         setIsSubmittingManual(false);
       }
     },
-    [dispatch, loginMutation, navigate, onSuccess]
+    [dispatch, navigate, onSuccess]
   );
 
-  const errorMessage = msalError || formError;
+  const errorMessage = formError;
 
   return (
     <div className="w-full flex flex-col">
@@ -110,7 +104,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
           <IconButton
             size="small"
             onClick={() => {
-              clearMsalError();
               setFormError(null);
             }}
             className="text-destructive hover:bg-rose-100"
@@ -128,25 +121,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
           variant="primary"
           size="md"
           onClick={onSsoSignIn}
-          isLoading={isMsalLoading}
+          isLoading={isDemoLoading}
           leftIcon={<WindowIcon sx={{ fontSize: 18 }} />}
           className="w-full h-10 shadow-xs font-semibold"
         >
-          <span>{isMsalLoading ? 'Connecting to SSO...' : 'Single Sign On (SSO)'}</span>
+          <span>{isDemoLoading ? 'Opening demo workspace...' : 'Enter UI Demo'}</span>
         </Button>
 
-        {isMsalLoading && (
-          <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            onClick={resetLoginState}
-            leftIcon={<RestartAltIcon sx={{ fontSize: 14 }} />}
-            className="text-center text-xs text-muted hover:text-primary mt-1"
-          >
-            Cancel and unlock button
-          </Button>
-        )}
       </div>
 
       {/* 2. Divider with "Or sign in with email" */}
@@ -156,7 +137,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
         </div>
         <div className="relative flex justify-center text-sm">
           <span className="px-3 bg-white text-muted text-xs font-medium uppercase tracking-wider">
-            Or sign in with credentials
+            Or continue with a demo profile
           </span>
         </div>
       </div>

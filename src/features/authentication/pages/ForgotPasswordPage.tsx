@@ -1,21 +1,8 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../core/hooks/useAuth';
+import React from 'react';
 import { ForgotPasswordForm } from '../components/ForgotPasswordForm';
-import { ROUTES } from '@/shared/constants/routes.constants';
 import { authIllustration, vconstructLogo } from '@/assets/images';
 
 export const ForgotPasswordPage: React.FC = () => {
-  const { isAuthenticated } = useAuth();
-  const navigate = useNavigate();
-
-  // If already authenticated, redirect to Dashboard
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate(ROUTES.DASHBOARD, { replace: true });
-    }
-  }, [isAuthenticated, navigate]);
-
   return (
     <div className="min-h-screen w-full flex flex-col md:flex-row bg-white overflow-hidden">
       {/* Left Panel: Clean Neutral Illustration Surface */}

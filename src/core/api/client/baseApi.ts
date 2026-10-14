@@ -1,6 +1,4 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { ENV } from '@/config/env.config';
-import { tokenUtils } from '@/features/authentication/core/utils/token.utils';
+import { createApi, type BaseQueryFn } from '@reduxjs/toolkit/query/react';
 
 export function extractApiData<T>(response: unknown): T {
   if (response && typeof response === 'object') {
@@ -13,17 +11,8 @@ export function extractApiData<T>(response: unknown): T {
 
 export const baseApi = createApi({
   reducerPath: 'api',
-  baseQuery: fetchBaseQuery({
-    baseUrl: ENV.apiUrl,
-    timeout: ENV.apiTimeout,
-    prepareHeaders: (headers) => {
-      headers.set('Accept', 'application/json');
-      headers.set('Content-Type', 'application/json');
-      const token = tokenUtils.getToken();
-      if (token) headers.set('Authorization', `Bearer ${token}`);
-      return headers;
-    },
-  }),
+  // UI-only demo mode: preserve feature query contracts without making network requests.
+  baseQuery: (async () => ({ data: [] })) as BaseQueryFn,
   tagTypes: ['Auth', 'Menu', 'Employees', 'Roles', 'Leave', 'Attendance', 'Holidays', 'AdminSettings', 'AuditLogs', 'HorizontalOrganizations', 'Organization'],
   endpoints: () => ({}),
 });
